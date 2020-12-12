@@ -1,11 +1,16 @@
 package Actions.Ultimate;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.io.IOException;
+
+import Actions.HardwareWrappers.ServoHandler;
 import Autonomous.ConfigVariables;
+import MotorControllers.MotorController;
 import SensorHandlers.MagneticLimitSwitch;
 
 /**
@@ -14,21 +19,21 @@ import SensorHandlers.MagneticLimitSwitch;
  *
  * Used for shooting rings
  */
-public class ShooterSystemV1 {
+public class ShooterSystemV1Test {
 
-    public Servo aimServo;
+    public ServoHandler aimServo;
     public static final double HIGHEST_POSITION = 0;
     public static final double POWER_SHOT_POSITION = 0.45;
     public static final double LOWERED_POSITION = 1;
     final double ANGLE_INCREMENT = 0.05;
 
     // good
-    public WheelMotor wheelMotor;
+    public MotorController wheelMotor;
     private boolean wheelSpinning;
-    private static final int SHOOTER_ON_RPM = 4800;
+    private static final int SHOOTER_ON_SPEED = 418; // inches per second
 
     // good
-    public CRServo elevatorServo;
+    public ServoHandler elevatorServo;
     public static final int TOP = 2;
     public static final int MIDDLE = 1;
     public static final int BOTTOM = 0;
@@ -43,12 +48,14 @@ public class ShooterSystemV1 {
     public static final double PINBALL_TURNED = 1;
     public static final double PINBALL_REST = 0;
 
-    private volatile boolean shouldRun;
-
-    public ShooterSystemV1(HardwareMap hardwareMap, final LinearOpMode mode) {
-        aimServo = hardwareMap.servo.get("aimServo");
-        wheelMotor = new WheelMotor("wheelMotor", hardwareMap, mode);
-        elevatorServo = hardwareMap.crservo.get("elevatorServo");
+    public ShooterSystemV1Test(HardwareMap hardwareMap, final LinearOpMode mode) {
+        aimServo = new ServoHandler("aimServo", hardwareMap);
+        try {
+            wheelMotor = new MotorController("wheelMotor", "MotorConfig/NoLoad40.json", hardwareMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        elevatorServo = new ServoHandler("elevatorServo", hardwareMap);
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
         elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));
 
@@ -58,30 +65,21 @@ public class ShooterSystemV1 {
         elevatorPosition = BOTTOM;
         pinballAngle = PINBALL_REST;
         stayAtTop = false;
-
-        shouldRun = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (shouldRun && mode.opModeIsActive())
-                    update();
-            }
-        }).start();
     }
 
     public void toggleWheelPower() {
         wheelSpinning = !wheelSpinning;
-        wheelMotor.setRPM(wheelSpinning ? SHOOTER_ON_RPM : 0);
+        wheelMotor.setInchesPerSecondVelocity(wheelSpinning ? SHOOTER_ON_SPEED : 0);
     }
 
     public void turnOnShooterWheel() {
         wheelSpinning = true;
-        wheelMotor.setRPM(SHOOTER_ON_RPM);
+        wheelMotor.setInchesPerSecondVelocity(SHOOTER_ON_SPEED);
     }
 
     public void turnOffShooterWheel() {
         wheelSpinning = false;
-        wheelMotor.setRPM(0);
+        wheelMotor.brake();
     }
 
     // moves the pinball servo
@@ -106,13 +104,13 @@ public class ShooterSystemV1 {
 
     public void raiseElevator() {
         if (elevatorPosition != TOP)
-            elevatorServo.setPower(-1);
+            elevatorServo.setPosition(0);
     }
 
     public void lowerElevator() {
         stayAtTop = false;
         if (elevatorPosition != BOTTOM)
-            elevatorServo.setPower(1);
+            elevatorServo.setPosition(1);
     }
 
     public void keepElevatorAtTop() {
@@ -120,22 +118,20 @@ public class ShooterSystemV1 {
         raiseElevator();
     }
 
-    public void stopElevator() { elevatorServo.setPower(0); }
+    public void stopElevator() { elevatorServo.setPosition(0.5); }
 
-    private void update() {
+    public void update() {
         if (elevatorTopSwitch.isActivated() && elevatorPosition != TOP) {
             elevatorPosition = TOP;
-            elevatorServo.setPower(-0.02);
+            elevatorServo.setPosition(0.5);
         } else if (elevatorBottomSwitch.isActivated() && !stayAtTop) { //watch out for the zero case because then the robot will think its at the bottom when its at the top
             elevatorPosition = BOTTOM;
-            elevatorServo.setPower(0);
+            elevatorServo.setPosition(0.5);
         } else if (!elevatorTopSwitch.isActivated() && stayAtTop)
-            elevatorServo.setPower(-1);
+            elevatorServo.setPosition(0);
 
         if (!elevatorTopSwitch.isActivated() && !elevatorBottomSwitch.isActivated())
             elevatorPosition = MIDDLE;
-
-        wheelMotor.updateShooterRPM();
     }
 
     public double calculateRingVelocity(double xDistance, double yDistance) {
@@ -145,46 +141,4 @@ public class ShooterSystemV1 {
         double temp1 = Math.sqrt(-4.9 * xDistance * temp0);
         return Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
     }
-
-    public void stop() { shouldRun = false; }
-
-    // TODO
-//    public void shootWithAdjustedAngle(Location robotLocation) {
-//        // targets: top goal, powershots
-//
-//        double shooterHeightCM = 5;
-//        Vector3 robotVector = new Vector3(robotLocation.getX(), robotLocation.getY(), shooterHeightCM);
-//
-//        Vector3 targetVector;
-//        if (aimPosition == POWER_SHOT_POSITION) {
-//            targetVector = new Vector3(ConfigVariables.POWER_SHOT_MIDDLE.getX(),
-//                    ConfigVariables.POWER_SHOT_MIDDLE.getY(),
-//                    ConfigVariables.POWER_SHOT_HEIGHT_CM);
-//        } else {
-//            targetVector = new Vector3(ConfigVariables.TOP_GOAL.getX(),
-//                    ConfigVariables.TOP_GOAL.getY(),
-//                    ConfigVariables.TOP_GOAL_HEIGHT_CM);
-//        }
-//
-//        Vector3 differenceVector = robotVector.distanceFromVector(targetVector);
-//        double distanceFromTargetCM = differenceVector.length();
-//
-//        double motorPower = calculateMotorPower(distanceFromTargetCM);
-//        double servoAngle = calculateShootingAngle(motorPower, distanceFromTargetCM);
-//
-//        wheelMotor.setPower(motorPower);
-//        aimServo.setPosition(servoAngle);
-//    }
-//
-//    // TODO
-//    public double calculateMotorPower(double distanceCM) {
-//        // constrain it to like 0.6 to 1 or something
-//        return 0;
-//    }
-//
-//    // TODO
-//    public double calculateShootingAngle(double motorPower, double distance) {
-//        // probably gonna be something like 30 - 40 degrees
-//        return 0;
-//    }
 }

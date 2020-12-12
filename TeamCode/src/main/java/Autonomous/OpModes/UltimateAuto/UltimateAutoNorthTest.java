@@ -100,7 +100,7 @@ public class UltimateAutoNorthTest extends LinearOpMode {
         robot.dropWobbleGoal();
         robot.getWobbleGrabber().raiseArm();
         
-        robot.driveToLeftWobbleGoal();
+        robot.driveToLeftWobbleGoalAndGrab();
         robot.robot.turnToHeading(UltimateNavigation.SOUTH, this);
         robot.pickupWobbleGoal();
         robot.driveToLocationOnHeading(ringZone, UltimateNavigation.SOUTH);

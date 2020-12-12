@@ -150,8 +150,6 @@ public class UltimateV1 extends LinearOpMode {
                     playerOneFunctions(controllerOne);
                     playerTwoFunctions(controllerTwo);
                 }
-
-                controlMiscFunctions();
             }
 
             if (eStop)
@@ -185,6 +183,9 @@ public class UltimateV1 extends LinearOpMode {
 
         if (controllerOne.bPressed())
             shooter.keepElevatorAtTop();
+
+        if (controllerOne.xPressed())
+            shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
 
         if (controller.dpadUpPressed())
             robot.turnToShoot(ConfigVariables.TOP_GOAL, this);  // set angle to aim at the top goal
@@ -230,18 +231,6 @@ public class UltimateV1 extends LinearOpMode {
 
         if (controller.leftBumperPressed())
             shooter.lowerElevator();
-    }
-
-    private void controlMiscFunctions() {
-        shooter.update();
-//        telemetry.addData("SHooerer pors", shooter.wheelMotor.motor.getCurrentPosition() + "");
-//        telemetry.addData("SHooerer powier", shooter.wheelMotor.motor.getPower() + "");
-//        telemetry.addData("SHooerer rpkm", shooter.wheelMotor.curRPM + "");
-//        telemetry.addData("top sense", shooter.elevatorTopSwitch.isActivated());
-//        telemetry.addData("bottom sense", shooter.elevatorBottomSwitch.isActivated());
-//        telemetry.addData("state", shooter.elevatorPosition);
-//        telemetry.addData("stay", shooter.stayAtTop);
-//        telemetry.addData("power", shooter.elevatorServo.getPower());
     }
 
     private void stopActions() {

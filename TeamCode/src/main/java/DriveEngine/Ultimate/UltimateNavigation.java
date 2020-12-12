@@ -84,8 +84,6 @@ public class UltimateNavigation extends Thread {
 
     private HardwareMap hardwareMap;
 
-    // TODO fix this class
-
     public UltimateNavigation(HardwareMap hw, Location startLocation, String configFile, boolean ignoreInitialSensorLocation) {
         hardwareMap = hw;
         initializeUsingConfigFile(configFile);
@@ -1020,8 +1018,8 @@ public class UltimateNavigation extends Thread {
     public void setDrivePower(double power) { applyMotorPowers(new double[] { power, power, power, power }); }
 
     public void turnToShoot(Location target, LinearOpMode mode) {
-        double dx = target.getX() - myLocation.getX();
-        double dy = target.getY() - myLocation.getY();
+        double dx = target.getX() - getRobotLocation().getX();
+        double dy = target.getY() - getRobotLocation().getY();
         double angle = -77 - Math.toDegrees(Math.atan(-dy / Math.abs(dx)));
         if (dx > 0)
             angle *= -1;
@@ -1069,6 +1067,40 @@ public class UltimateNavigation extends Thread {
     }
 
     private void driveToLocation(Location startLocation, Location targetLocation, double desiredSpeed, LinearOpMode mode){
+        double distanceToTravel = startLocation.distanceToLocation(targetLocation);
+        double prevDistance = 0;
+        double deltaX;
+        double deltaY;
+        double heading;
+        double startHeading = restrictAngle(orientation.getOrientation(), targetLocation.getHeading(), mode);
+        Log.d("Start heading", startHeading + "");
+        double totalDistanceToTravel = distanceToTravel;
+        while(mode.opModeIsActive() && distanceToTravel > LOCATION_DISTANCE_TOLERANCE /*&& prevDistance - distanceToTravel < LOCATION_DISTANCE_TOLERANCE*4*/) {
+            prevDistance = distanceToTravel;
+            distanceToTravel = startLocation.distanceToLocation(targetLocation); // start location is updated from the robot's current location (myLocation)
+            Log.d("Distance to travel", "" + distanceToTravel);
+            deltaX = targetLocation.getX() - startLocation.getX();
+            deltaY = targetLocation.getY() - startLocation.getY();
+            heading = Math.toDegrees(Math.atan2(deltaY, deltaX)) - 90;
+            heading = 360 - heading;
+            heading = (heading /*- orientation.getOrientation()*/) % 360;
+            if (heading >= 360) heading -= 360;
+            if (heading < 0) heading += 360;
+            Log.d("Drive Heading", ""+heading);
+            double curOrientation = restrictAngle(orientation.getOrientation(), 180, mode);
+            Log.d("Robot Heading", ""+curOrientation);
+            double fracOfDistance = distanceToTravel / (totalDistanceToTravel);
+            if(fracOfDistance > 1) fracOfDistance = 1;
+            turnController.setSp(/*(1-fracOfDistance)*(targetLocation.getHeading()) + (fracOfDistance)*(startHeading)*/targetLocation.getHeading());
+            correctedDriveOnHeadingIMU(heading /*- curOrientation*/, desiredSpeed, 10, mode);
+        }
+        brake();
+        Log.d("Location: ", "REACHED!");
+//        driveToLocation(startLocation, targetLocation, desiredSpeed, 10000, mode);
+    }
+
+    // TODO test this one, not the others
+    private void driveToLocationTest(Location startLocation, Location targetLocation, double desiredSpeed, LinearOpMode mode){
         double distanceToTravel = startLocation.distanceToLocation(targetLocation);
         double prevDistance = 0;
         double deltaX;
@@ -1221,6 +1253,10 @@ public class UltimateNavigation extends Thread {
                 motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection - xCorrection;
 
             }
+            motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
+            motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+            motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+            motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
 
             double maxValue = motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR], minValue = motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR];
 
@@ -1231,11 +1267,11 @@ public class UltimateNavigation extends Thread {
 
             double toScaleBy = (Math.abs(maxValue) > Math.abs(minValue)) ? Math.abs(velocity / maxValue) : Math.abs(velocity / minValue);
             for (int i = 0; i < motorVelocities.length; i++) motorVelocities[i] *= toScaleBy;
-
-            motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
-            motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
-            motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
-            motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
+//
+//            motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
+//            motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+//            motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+//            motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
 
             applyMotorVelocities(motorVelocities);
         }

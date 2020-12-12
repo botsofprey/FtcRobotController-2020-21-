@@ -32,17 +32,17 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package Autonomous.OpModes.UltimateAuto;
 
-import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
+import Autonomous.ConfigVariables;
 import Autonomous.Location;
 import DriveEngine.Ultimate.UltimateNavigation;
 
-import static Autonomous.ConfigVariables.RING_DETECTION_POINT;
+import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT_CHECKPOINT;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
+import static Autonomous.ConfigVariables.WOBBLE_GOAL_PLACEMENT_OFFSET;
 
 /*
     Author: Ethan Fisher
@@ -54,7 +54,7 @@ import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 //@Disabled
 public class UltimateV1AutoRed extends LinearOpMode {
 
-    volatile boolean shouldRun = true;
+//    volatile boolean shouldRun = true;
 
     @Override
     public void runOpMode() {
@@ -74,69 +74,56 @@ public class UltimateV1AutoRed extends LinearOpMode {
         robot.getShooter().keepElevatorAtTop();
         robot.getShooter().shoot();
 
-        final long startTime = System.currentTimeMillis();
+        robot.getWobbleGrabber().grabWobbleGoal();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (shouldRun && opModeIsActive()) {
-                    try {
-                        robot.getShooter().update();
+//        robot.driveToLocationOnInitHeading(RING_DETECTION_POINT);
+        robot.driveToLocationOnInitHeading(ConfigVariables.RED_ZONE_ONE);
 
-                        if (!shouldNotPark(startTime)) {
-                            robot.park();
-                            robot.stop();
-                            shouldRun = true;
-                        }
-                    }
-                    catch(Exception e){
-                        Log.d("Thread Exception Found:", e.toString());
-                    }
-                }
-            }
-        }).start();
+        int numRings = robot.detectNumRings();
+        Location ringZone = robot.getZone(numRings);
+        telemetry.addData("Rings Found", numRings);
+        telemetry.update();
 
-         robot.getWobbleGrabber().grabWobbleGoal();
+        if (numRings != 0)
+            robot.driveToLocationOnInitHeading(ringZone);
+        if (numRings == 1)
+            robot.turnToHeading(0);
+        else
+            robot.turnToHeading(135);
+        robot.dropWobbleGoal();
 
-         robot.driveToLocationOnInitHeading(RING_DETECTION_POINT);
+        robot.driveToLeftWobbleGoalAndGrab();
+        robot.driveToLocationOnHeading(RED_WOBBLE_GOAL_LEFT_CHECKPOINT, 0);
 
-         int numRings = robot.detectNumRings();
-         telemetry.addData("Rings Found", numRings);
-         telemetry.update();
-//        if (numRings == 0)
-//            robot.driveToLocationOnInitHeading(ringZone);
+        robot.driveToLocationOnHeading(ringZone.addXY(WOBBLE_GOAL_PLACEMENT_OFFSET.getX(),
+                WOBBLE_GOAL_PLACEMENT_OFFSET.getY()), 0);
 
-        robot.driveToRingZone(numRings);
+        if (numRings == 1)
+            robot.turnToHeading(0);
+        else
+            robot.turnToHeading(135);
+        robot.dropWobbleGoal();
 
         // move behind shot line, rotate towards goal, and shoot
         robot.moveToShootLocation();
-//        robot.getShooter().raiseElevator();
+
+        robot.turnToZero();
         robot.getShooter().keepElevatorAtTop();
-//        robot.shootPowerShots();
         robot.shootThreeRings();
-//        if (numRings != 0)
-//            robot.grabStartingPileRings();
 
         // park on the line and stop
-        shouldRun = false;
         robot.park();
-        robot.stop();
-        robot.getShooter().stayAtTop = false;
-        robot.getShooter().elevatorServo.setPower(0);
+//        robot.getShooter().stayAtTop = false;
+//        robot.getShooter().elevatorServo.setPower(0);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive());
-    }
-    
-    public boolean shouldNotPark(long startTime) {
-        long curTimeMillis = System.currentTimeMillis() - startTime;
-        double curTimeSeconds = curTimeMillis / 1000.0;
-        return opModeIsActive() && curTimeSeconds < 28;
+        robot.stop();
     }
 
-    public boolean isInRange(double first, double second, double tolerance) {
-        double difference = first - second;
-        difference = Math.abs(difference);
-        return difference <= tolerance;
-    }
+//    public boolean isInRange(double first, double second, double tolerance) {
+//        double difference = first - second;
+//        difference = Math.abs(difference);
+//        return difference <= tolerance;
+//    }
 }

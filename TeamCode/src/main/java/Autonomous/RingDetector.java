@@ -48,4 +48,9 @@ public class RingDetector extends Thread {
         if (bottom.getDistance() < BOTTOM_RING_TOLERANCE) bottomDetected = true;
     }
 
+    public void kill() {
+        top.kill();
+        bottom.kill();
+    }
+
 }

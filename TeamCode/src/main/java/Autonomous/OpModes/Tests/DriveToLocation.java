@@ -27,50 +27,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package FreshmanTestingClasses;
+package Autonomous.OpModes.Tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name="bleh", group="Testers")
-@Disabled
-public class ButtonTesting extends LinearOpMode {
+import Autonomous.AutoAlliance;
+import Autonomous.Location;
+import Autonomous.OpModes.UltimateAuto.UltimateAutonomous;
 
-    // create objects and locally global variables here
-    DcMotor leftMotor, rightMotor;
+@Autonomous(name="Drive to Location Test", group="Testers")
+//@Disabled
+public class DriveToLocation extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        leftMotor = hardwareMap.dcMotor.get("leftMotor");
-        rightMotor = hardwareMap.dcMotor.get("rightMotor");
-        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        // initialize objects and variables here
-        // also create and initialize function local variables here
 
-        // add any other useful telemetry data or logging data here
+        final UltimateAutonomous robot = new UltimateAutonomous(AutoAlliance.RED, new Location(0, 0, 0), this);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        // nothing goes between the above and below lines
+
         waitForStart();
-        // should only be used for a time keeper or other small things, avoid using this space when possible
-        while (opModeIsActive()) {
 
-            /* main code goes here */
+        robot.driveToLocation(new Location(24, 24, 90));
+        robot.driveToLocation(new Location(-24, 24, -90));
+        robot.driveToLocation(new Location(0, 0, 0));
 
-
-            // telemetry and logging data goes here
-            telemetry.update();
-        }
-        // disable/kill/stop objects here
+        robot.stop();
     }
-
-    // misc functions here
 }

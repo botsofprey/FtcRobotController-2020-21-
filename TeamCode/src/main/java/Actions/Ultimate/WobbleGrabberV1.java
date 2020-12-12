@@ -73,12 +73,10 @@ public class WobbleGrabberV1 extends Thread {
     }
 
     public void setArmAngle(double angle) {
-        if (arm.getDegree() - angle > 0) {
+        if (arm.getDegree() - angle > 0)
             arm.setPositionDegrees(angle, ARM_POWER_UP);
-        }
-        else {
+        else
             arm.setPositionDegrees(angle, ARM_POWER_DOWN);
-        }
     }
 
     public void grabWobbleGoal() { claw.setPosition(CLAW_GRAB_ANGLE); }

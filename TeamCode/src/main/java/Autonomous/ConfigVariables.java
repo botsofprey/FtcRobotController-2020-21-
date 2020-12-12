@@ -59,9 +59,9 @@ public class ConfigVariables {
     public static final Location RED_FOUNDATION_STACK_LEFT = new Location(20+9+4, 37.5, 270);
     public static final Location BLUE_FOUNDATION_CENTER = new Location(-24-10-5, 49.5, 90);
 
-    public static final Location RED_ZONE_ONE = new Location(50, 8);
-    public static final Location RED_ZONE_TWO = new Location(50, 32);
-    public static final Location RED_ZONE_THREE = new Location(50, 60);
+    public static final Location RED_ZONE_ONE = new Location(47, 11);
+    public static final Location RED_ZONE_TWO = new Location(47, 35);
+    public static final Location RED_ZONE_THREE = new Location(47, 63);
     public static final Location ZONE_WAYPOINT = new Location(12, 60);
 
     public static final Location RING_DETECTION_POINT= new Location(52, -20, 180);
@@ -70,13 +70,15 @@ public class ConfigVariables {
 
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(42, 10);
-    public static final Location SHOOTING_LINE_POINT = new Location(44, 4, 0);
+    public static final Location SHOOTING_LINE_POINT = new Location(44, 4, 180);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
     public static final Location CENTER = new Location(0,0);
 
-    public static final Location RED_WOBBLE_GOAL_LEFT_CHECKPOINT = new Location(0, -60);
-    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(24, -60);
+    public static final Location RED_WOBBLE_GOAL_LEFT_CHECKPOINT = new Location(57, -55);
+    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(30, -54);
     public static final Location RED_WOBBLE_GOAL_RIGHT = new Location(56, -31);
+
+    public static final Location WOBBLE_GOAL_PLACEMENT_OFFSET = new Location(3, -3);
 
     public static final Location STARTING_ROBOT_LOCATION_LEFT = new Location(24, -60);
     public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(52, -60);
