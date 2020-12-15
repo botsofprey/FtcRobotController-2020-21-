@@ -181,10 +181,10 @@ public class UltimateV1 extends LinearOpMode {
         if (controller.aPressed())
             shooter.shoot();
 
-        if (controllerOne.bPressed())
+        if (controller.bPressed())
             shooter.keepElevatorAtTop();
 
-        if (controllerOne.xPressed())
+        if (controller.xPressed())
             shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
 
         if (controller.dpadUpPressed())
@@ -199,7 +199,7 @@ public class UltimateV1 extends LinearOpMode {
         if (controller.dpadRightPressed())
             robot.turnToShoot(ConfigVariables.POWER_SHOT_RIGHT, this); // set angle to right power shot
 
-        if (controllerOne.leftBumperPressed())
+        if (controller.leftBumperPressed())
             shooter.lowerElevator();
     }
 

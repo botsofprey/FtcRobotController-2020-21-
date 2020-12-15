@@ -30,6 +30,7 @@ public class WobbleGrabberV1 extends Thread {
     public static final double LIFTED_ANGLE = 130;
 
     public boolean wobbleGrabbed;
+    private boolean armIsUp;
 
     public WobbleGrabberV1(HardwareMap hardwareMap) {
         claw = hardwareMap.servo.get("wobbleGrabberClaw");
@@ -46,6 +47,7 @@ public class WobbleGrabberV1 extends Thread {
 //        colorSensor = hardwareMap.get(RevColorSensorV3.class, "redSensor");
 
         wobbleGrabbed = false;
+        armIsUp = true;
     }
 
     public void lowerArm() {
@@ -54,6 +56,15 @@ public class WobbleGrabberV1 extends Thread {
 
     public void liftArm() {
         arm.setPositionDegrees(LIFTED_ANGLE, ARM_POWER_UP);
+    }
+
+    public void changeArmState() {
+        if (armIsUp)
+            lowerArm();
+        else {
+            raiseArm();
+        }
+        armIsUp = !armIsUp;
     }
 
     public void raiseArm() {
