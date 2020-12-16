@@ -25,7 +25,7 @@ public class ShooterSystemV1 {
     // good
     public WheelMotor wheelMotor;
     private boolean wheelSpinning;
-    private static final int SHOOTER_ON_RPM = 4800;
+    private static final int SHOOTER_ON_RPM = 3500;
 
     // good
     public CRServo elevatorServo;

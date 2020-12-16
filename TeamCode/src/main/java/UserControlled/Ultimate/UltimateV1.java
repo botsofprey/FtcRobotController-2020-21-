@@ -86,6 +86,8 @@ public class UltimateV1 extends LinearOpMode {
 
     boolean eStop = false, slowMode = false;
 
+    int rpm = 0;
+
     @Override
     public void runOpMode() {
         // initialize objects and variables here
@@ -123,6 +125,7 @@ public class UltimateV1 extends LinearOpMode {
 
         // puts the pinball servo on the outside
         shooter.pinballServo.setPosition(ShooterSystemV1.PINBALL_REST);
+        shooter.keepElevatorAtTop();
 
         // should only be used for a time keeper or other small things, avoid using this space when possible
         while (opModeIsActive()) {
@@ -187,6 +190,9 @@ public class UltimateV1 extends LinearOpMode {
         if (controller.xPressed())
             shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
 
+        if (controller.yPressed())
+            shooter.turnOnShooterWheel();
+
         if (controller.dpadUpPressed())
             robot.turnToShoot(ConfigVariables.TOP_GOAL, this);  // set angle to aim at the top goal
 
@@ -198,9 +204,6 @@ public class UltimateV1 extends LinearOpMode {
 
         if (controller.dpadRightPressed())
             robot.turnToShoot(ConfigVariables.POWER_SHOT_RIGHT, this); // set angle to right power shot
-
-        if (controller.leftBumperPressed())
-            shooter.lowerElevator();
     }
 
     private void playerTwoFunctions(GamepadController controller) {
