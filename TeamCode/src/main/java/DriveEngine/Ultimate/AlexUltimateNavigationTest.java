@@ -21,7 +21,7 @@ import SensorHandlers.ImuHandler;
 /**
  * Created by Alex P on 12/15/2020.
  *
- * The base class for every opmode --- it sets up our drive system and contains all it's functions
+ * The base class for every opmode --- it sets up our drive system and contains all its functions
  */
 public class AlexUltimateNavigationTest {
 //-------------------- final variables go here --------------------
@@ -34,15 +34,19 @@ public class AlexUltimateNavigationTest {
     private static final boolean RESUMED = true;
 
 //-------------------- private variables and functions go here --------------------
-    HardwareMap hardwareMap;
-    LinearOpMode mode;
-    Location startingLocation;
+    private HardwareMap hardwareMap;
+    private LinearOpMode mode;
+    private Location startingLocation;
+    private long startingTime;
 
     private MotorController[] driveBaseMotors;
     private ImuHandler imu;
 
     private Location currentLocation;
     private Location[] waypoints;//stores the locations that the robot should be going to
+    private double[]currentInchesFromStart;
+    private double movementHeading;
+    private long currentTime;
     private boolean movement;
 
     private void initializeUsingConfigFile(String file) {
@@ -86,17 +90,58 @@ public class AlexUltimateNavigationTest {
         }
     }
 
+    private void calculateNewLocation(double dt) {//calculates current location
+        Location newLocation = new Location(0, 0, 0);
+        newLocation.setHeading(imu.getOrientationOffset());
+        double[] motorVelocities = new double[4];
+        double[] inchesFromStart = new double[4];
+        for (int i = 0; i < 4; i++) {
+            inchesFromStart[i] = driveBaseMotors[i].getInchesFromStart();
+        }
+        for (int i = 0; i < 4; i++) {
+            motorVelocities[i] = (inchesFromStart[i] - currentInchesFromStart[i]) / dt;
+        }
+        double frontRightMovementVector = (motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] + motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR]) * 0.5;
+        double frontLeftMovementVector = (motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] + motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR]) * 0.5;
+        double robotSpeed = Math.sqrt(frontLeftMovementVector * frontLeftMovementVector + frontRightMovementVector * frontRightMovementVector);
+        double distanceTraveled = robotSpeed * dt;
+        double slope = frontLeftMovementVector / frontRightMovementVector;
+        double angle = Math.atan(slope) + 0.25 * Math.PI;
+        double angleZero = Math.toRadians(movementHeading);
+        double angleOne = angle;
+        if (angleZero == angleOne) {
+            newLocation.setX(currentLocation.getX() + Math.cos(angleZero) * distanceTraveled);
+            newLocation.setY(currentLocation.getY() + Math.sin(angleZero) * distanceTraveled);
+        }
+        else {
+            double radius = distanceTraveled / (angleZero - angleOne);
+            newLocation.setX(currentLocation.getX() + radius * (-Math.sin(angleZero) - Math.cos(angleOne)));
+            newLocation.setY(currentLocation.getY() + radius * (Math.sin(angleZero) + Math.cos(angleOne)));
+        }
+        movementHeading = Math.toDegrees(angleOne);
+        currentInchesFromStart = inchesFromStart;
+        currentLocation = newLocation;
+    }
+
 //-------------------- public variables and functions go here --------------------
     public AlexUltimateNavigationTest(HardwareMap hw, LinearOpMode op, String configFile, Location startLocation) {
         hardwareMap = hw;
         mode = op;
         startingLocation = currentLocation = startLocation;
+        startingTime = currentTime = System.nanoTime();
         movement = PAUSED;
+        imu.setOrientationOffset(startLocation.getHeading());
+        for (int i = 0; i < 4; i++) {
+            currentInchesFromStart[i] = 0;
+        }
         initializeUsingConfigFile(configFile);
     }
 
     public void update() {//call this continuously to keep the robot moving correctly
-//todo make this function to correct movement and to calculate pathing
+        long newTime = System.nanoTime();
+        long dt = newTime - currentTime;
+        calculateNewLocation(dt);
+        //todo update movement
     }
 
     public Location getCurrentLocation() { return currentLocation; }

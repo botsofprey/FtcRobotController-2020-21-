@@ -23,7 +23,7 @@ import SensorHandlers.LIDARSensor;
  * Created by Jeremy on 8/23/2017.
  * Updated by Ethan Fisher on 10/29/2020
  *
- * The base class for every opmode --- it sets up our drive system and contains all it's funcitons
+ * The base class for every opmode --- it sets up our drive system and contains all its functions
  */
 public class UltimateNavigation extends Thread {
 

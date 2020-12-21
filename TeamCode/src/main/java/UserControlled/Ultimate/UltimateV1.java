@@ -31,6 +31,7 @@ package UserControlled.Ultimate;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import Actions.Ultimate.RingIntakeSystemV1;
 import Actions.Ultimate.ShooterSystemV1;
@@ -85,8 +86,6 @@ public class UltimateV1 extends LinearOpMode {
     WobbleGrabberV1 grabber;
 
     boolean eStop = false, slowMode = false;
-
-    int rpm = 0;
 
     @Override
     public void runOpMode() {
@@ -157,7 +156,8 @@ public class UltimateV1 extends LinearOpMode {
 
             if (eStop)
                 stopActions();
-
+            shooter.wheelMotor.updateShooterRPM();
+            telemetry.addData("RPM", shooter.wheelMotor.curRPM);
             // telemetry and logging data goes here
             telemetry.update();
         }
