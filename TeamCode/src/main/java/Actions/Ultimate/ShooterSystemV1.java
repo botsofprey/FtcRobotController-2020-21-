@@ -135,7 +135,7 @@ public class ShooterSystemV1 {
         if (!elevatorTopSwitch.isActivated() && !elevatorBottomSwitch.isActivated())
             elevatorPosition = MIDDLE;
 
-//        wheelMotor.updateShooterRPM();
+        wheelMotor.updateShooterRPM();
     }
 
     public double calculateRingVelocity(double xDistance, double yDistance) {

@@ -124,7 +124,6 @@ public class UltimateV1 extends LinearOpMode {
 
         // puts the pinball servo on the outside
         shooter.pinballServo.setPosition(ShooterSystemV1.PINBALL_REST);
-        shooter.keepElevatorAtTop();
 
         // should only be used for a time keeper or other small things, avoid using this space when possible
         while (opModeIsActive()) {
@@ -156,8 +155,7 @@ public class UltimateV1 extends LinearOpMode {
 
             if (eStop)
                 stopActions();
-            shooter.wheelMotor.updateShooterRPM();
-            telemetry.addData("RPM", shooter.wheelMotor.curRPM);
+
             // telemetry and logging data goes here
             telemetry.update();
         }
