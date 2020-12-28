@@ -1,15 +1,9 @@
 package Autonomous.OpModes.Tests;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import java.util.ArrayList;
-
 import Autonomous.VisionHelperUltimateGoal;
-import Autonomous.VuforiaHelper;
 
 /**
  * Created by root on 11/20/17.

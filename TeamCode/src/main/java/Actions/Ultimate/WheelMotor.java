@@ -12,16 +12,17 @@ public class WheelMotor {
 
     public DcMotor motor;
     private LinearOpMode mode;
-    public double curRPM;
-    public double targetRPM;
+    public volatile double curRPM;
+    public volatile double targetRPM;
     private long prevTicks;
     private long prevTime;
 
-    private static final int MAX_RPM = 6000;
+    private static final int MAX_RPM = 5000;
+    private static final int RPM_LIMIT = 3700;
     private static final double MINIMUM_TIME_DIFFERENCE = 100000000;// 1/10 of a second
     private static final long NANOS_PER_MINUTE = 60000000000L;
     private static final double TICKS_PER_ROTATION = 28;
-    private static final double ADJUSTMENT_RATE = 5;
+    private static final double ADJUSTMENT_RATE = 16;
 
     private PIDController rpmController;
 
@@ -45,14 +46,14 @@ public class WheelMotor {
         int currentTicks = motor.getCurrentPosition();
         long currentTime = System.nanoTime();
 
-        long tickDiff = currentTicks - prevTicks;
-        long timeDiff = currentTime - prevTime;
+        double tickDiff = currentTicks - prevTicks;
+        double timeDiff = currentTime - prevTime;
         if (timeDiff > MINIMUM_TIME_DIFFERENCE) {
-            curRPM = (tickDiff / (double) timeDiff) * (NANOS_PER_MINUTE / TICKS_PER_ROTATION);
+            curRPM = (tickDiff / timeDiff) * (NANOS_PER_MINUTE / TICKS_PER_ROTATION);
             prevTicks = currentTicks;
             prevTime = currentTime;
-            Log.d("RPM", "" + curRPM);
             adjustRPM();
+            Log.d("RPM", "" + curRPM);
         }
     }
 
@@ -63,10 +64,7 @@ public class WheelMotor {
 
         if (targetRPM == 0) newPower = 0;
 
-//        if (targetRPM == 0)
-//            motor.setPower(0);
-//        else
-            motor.setPower(newPower);
+        motor.setPower(newPower);
 
 //        double curRPM = (dTicks / (double) dt) * (NANOS_PER_MINUTE / TICKS_PER_ROTATION);
 //        double rpmCorrection = rpmController.calculatePID(curRPM);

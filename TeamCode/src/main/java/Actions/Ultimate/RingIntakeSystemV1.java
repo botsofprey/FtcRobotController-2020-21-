@@ -16,13 +16,13 @@ public class RingIntakeSystemV1 {
     public RingIntakeSystemV1(HardwareMap hardwareMap) {
         intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
         intakeOn = false;
-        intakeReversed = true;
+        intakeReversed = false;
     }
 
     public void toggleIntakePower() {
         // Turn intake motor on or off
         intakeOn = !intakeOn;
-        intakeMotor.setPower((intakeOn ? MOTOR_POWER : 0) * (intakeReversed ? -1 : MOTOR_POWER));
+        intakeMotor.setPower((intakeOn ? MOTOR_POWER : 0) * (intakeReversed ? -MOTOR_POWER : MOTOR_POWER));
     }
 
     public void toggleIntake() {
@@ -42,14 +42,6 @@ public class RingIntakeSystemV1 {
         else {
             intakeOn = true;
             intakeMotor.setPower(-(MOTOR_POWER));
-        }
-    }
-
-    public void toggleIntakeDirection() {
-        // Reverse direction of intake motor
-        if (intakeOn) {
-            intakeReversed = !intakeReversed;
-            intakeMotor.setPower(-intakeMotor.getPower());
         }
     }
 
