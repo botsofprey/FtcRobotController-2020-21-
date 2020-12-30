@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Basic: Linear OpMode", group="Testers")
+@TeleOp(name="BasicDrive", group="Testers")
 @Disabled
 public class BasicDrive extends LinearOpMode {
     // create objects and locally global variables here

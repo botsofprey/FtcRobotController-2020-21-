@@ -25,7 +25,7 @@ public class ShooterSystemV1 {
     // good
     public WheelMotor wheelMotor;
     private boolean wheelSpinning;
-    private static final int SHOOTER_ON_RPM = 4800;
+    private static final int SHOOTER_ON_RPM = 3700;
 
     // good
     public CRServo elevatorServo;
@@ -143,7 +143,16 @@ public class ShooterSystemV1 {
         if (temp0 < 0)
             return 0;
         double temp1 = Math.sqrt(-4.9 * xDistance * temp0);
-        return Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
+        double metersPerSecond = Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
+        return metersPerSecond * 39.3701;//meters per second * inches per meter = inches per second
+    }
+
+    public double calculateRPMForExitVelocity(double desiredExitVelocityInchesPerSecond) {
+        return desiredExitVelocityInchesPerSecond * 11.0639908;
+    }
+
+    public double calculateRPM(double xDistance, double yDistance) {
+        return calculateRPMForExitVelocity(calculateRingVelocity(xDistance, yDistance));
     }
 
     public void stop() { shouldRun = false; }

@@ -76,7 +76,8 @@ public class BasicAccelerationIntegrator implements BNO055IMU.AccelerationIntegr
     // Operations
     //------------------------------------------------------------------------------------------
 
-    @Override public void initialize(@NonNull BNO055IMU.Parameters parameters, @Nullable Position initialPosition, @Nullable Velocity initialVelocity)
+    @Override
+    public void initialize(@NonNull BNO055IMU.Parameters parameters, @Nullable Position initialPosition, @Nullable Velocity initialVelocity)
     {
         this.parameters = parameters;
         this.position = initialPosition != null ? initialPosition : this.position;
@@ -84,7 +85,8 @@ public class BasicAccelerationIntegrator implements BNO055IMU.AccelerationIntegr
         this.acceleration = null;
     }
 
-    @Override public void update(Acceleration linearAcceleration)
+    @Override
+    public void update(Acceleration linearAcceleration)
     {
         // We should always be given a timestamp here
         if (linearAcceleration.acquisitionTime != 0)

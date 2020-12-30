@@ -83,7 +83,7 @@ public class AnnieNavigation extends Thread {
     private double acceleration = 0;
     private HardwareMap hardwareMap;
 
-    public AnnieNavigation(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile, boolean ignoreInitialSensorLocation) throws Exception{
+    public AnnieNavigation(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile, boolean ignoreInitialSensorLocation) throws Exception {
         hardwareMap = hw;
         initializeUsingConfigFile(configFile);
         populateHashmaps();

@@ -23,7 +23,7 @@ import SensorHandlers.LIDARSensor;
  * Created by Jeremy on 8/23/2017.
  * Updated by Ethan Fisher on 10/29/2020
  *
- * The base class for every opmode --- it sets up our drive system and contains all it's funcitons
+ * The base class for every opmode --- it sets up our drive system and contains all its functions
  */
 public class UltimateNavigation extends Thread {
 
@@ -334,7 +334,7 @@ public class UltimateNavigation extends Thread {
         updateIMUTrackedDistance();
     }
 
-    private void safetySleep(long time){
+    private void safetySleep(long time) {
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < time && shouldRun);
     }
@@ -1181,7 +1181,7 @@ public class UltimateNavigation extends Thread {
         double distToHeading = targetLocation.getHeading() - startLocation.getHeading();
         distToHeading = restrictAngle(distToHeading, 0, mode);
         long startTime = System.currentTimeMillis();
-        while (mode.opModeIsActive() && (Math.abs(xDist) > locationTolerance || Math.abs(yDist) > locationTolerance || Math.abs(distToHeading) > HEADING_THRESHOLD)) {
+        while (mode.opModeIsActive() && ((Math.abs(xDist) > locationTolerance || Math.abs(yDist) > locationTolerance || Math.abs(distToHeading) > HEADING_THRESHOLD))) {
 
             xDist = targetLocation.getX() - startLocation.getX();
             yDist = targetLocation.getY() - startLocation.getY();

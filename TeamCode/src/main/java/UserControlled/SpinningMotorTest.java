@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name="Basic: Linear OpMode", group="Testers")
+@TeleOp(name="Spinning Motor Test", group="Testers")
 @Disabled
 public class SpinningMotorTest extends LinearOpMode {
     // create objects and locally global variables here
