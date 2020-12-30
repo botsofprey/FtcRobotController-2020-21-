@@ -1,5 +1,7 @@
 package Autonomous;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+
 /**
  * Created by root on 8/22/17.
  * A class for a location object
@@ -62,4 +64,11 @@ public class Location {
     }
 
     public String toString() { return "X: " + x + ", Y: " + y; }
+    
+    public Pose2d convertToPose2d() {
+        double newX = y;
+        double newY = -x;
+        double newHeading = Math.toRadians(-heading);
+        return new Pose2d(newX, newY, newHeading);
+    }
 }

@@ -16,7 +16,7 @@ public class UltimateSplineNavigation {
 
 	public RobotTrajectory robotTrajectory(Location location) {
 		RobotTrajectory trajectory = new RobotTrajectory();
-		trajectory.setTrajectory(drive.trajectoryBuilder(trajectory.convertLocation(location)));
+		trajectory.setTrajectory(drive.trajectoryBuilder(location.convertToPose2d()));
 		return trajectory;
 	}
 	
