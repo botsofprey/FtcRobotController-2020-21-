@@ -40,11 +40,4 @@ public class DetectRingsTest extends LinearOpMode {
         }
         ringFinder.kill();
     }
-
-
-
-
-
-
-
 }

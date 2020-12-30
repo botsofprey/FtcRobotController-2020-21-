@@ -64,7 +64,7 @@ public class GamepadControllerTest extends LinearOpMode {
         while (opModeIsActive()) {
             // main code goes here
 
-            controller.update(gamepad1);
+            controller.update();
 
             if (controller.aPressed()) timesPressed++;
             if (controller.aHeld()) timesHeld++;

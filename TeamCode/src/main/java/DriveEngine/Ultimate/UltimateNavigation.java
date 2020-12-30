@@ -324,14 +324,14 @@ public class UltimateNavigation extends Thread {
         startTime = System.nanoTime();
     }
 
-//    public void setLocation(Location loc) { myLocation = new Location(loc.getX(), loc.getY()); }
+    public void setLocation(Location loc) { myLocation = new Location(loc.getX(), loc.getY()); }
 
     private void updateData() {
 
         getRobotHeading();
         wheelVectors = getWheelVectors();
         updateLocation();
-        updateIMUTrackedDistance();
+//        updateIMUTrackedDistance();
     }
 
     private void safetySleep(long time){

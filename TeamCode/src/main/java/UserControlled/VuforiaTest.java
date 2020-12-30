@@ -63,7 +63,7 @@ public class VuforiaTest extends LinearOpMode {
             telemetry.addData("Tolerance", "" + ringDetector.tolerance);
             telemetry.addData("Num Rings", "" + ringDetector.getNumRingsFound(1));
 
-            controller.update(gamepad1);
+            controller.update();
 
             if (controller.aHeld()) ringDetector.targetR++;
             if (controller.bHeld()) ringDetector.targetR--;

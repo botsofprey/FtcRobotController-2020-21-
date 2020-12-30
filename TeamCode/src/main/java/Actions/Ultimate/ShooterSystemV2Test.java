@@ -3,23 +3,26 @@ package Actions.Ultimate;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.io.IOException;
 
+import Actions.ActionHandler;
 import Actions.HardwareWrappers.ServoHandler;
 import Autonomous.ConfigVariables;
 import MotorControllers.MotorController;
 import SensorHandlers.MagneticLimitSwitch;
 
 /**
- * Author: Ethan Fisher
- * Date: 10/21/2020
+ * Author: Jordan Martin
+ * Date: 12/19/2020
  *
  * Used for shooting rings
  */
-public class ShooterSystemV1Test {
+public class ShooterSystemV2Test implements ActionHandler {
 
     public ServoHandler aimServo;
     public static final double HIGHEST_POSITION = 0;
@@ -43,23 +46,30 @@ public class ShooterSystemV1Test {
     public volatile MagneticLimitSwitch elevatorBottomSwitch;
 
     // good
-    public Servo pinballServo;
+    public ServoHandler pinballServo;
     private double pinballAngle;
     public static final double PINBALL_TURNED = 1;
     public static final double PINBALL_REST = 0;
 
-    public ShooterSystemV1Test(HardwareMap hardwareMap, final LinearOpMode mode) {
+    public ShooterSystemV2Test(HardwareMap hardwareMap) {
         aimServo = new ServoHandler("aimServo", hardwareMap);
+        aimServo.setDirection(Servo.Direction.FORWARD);
+
         try {
             wheelMotor = new MotorController("wheelMotor", "MotorConfig/NoLoad40.json", hardwareMap);
+            wheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            wheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            wheelMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         } catch (IOException e) {
             e.printStackTrace();
         }
         elevatorServo = new ServoHandler("elevatorServo", hardwareMap);
+        elevatorServo.setDirection(Servo.Direction.FORWARD);
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
         elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));
 
-        pinballServo = hardwareMap.servo.get("pinballServo");
+        pinballServo = new ServoHandler("pinballServo", hardwareMap);
+        pinballServo.setDirection(Servo.Direction.FORWARD);
 
         wheelSpinning = false;
         elevatorPosition = BOTTOM;
@@ -67,18 +77,11 @@ public class ShooterSystemV1Test {
         stayAtTop = false;
     }
 
-    public void toggleWheelPower() {
-        wheelSpinning = !wheelSpinning;
-        wheelMotor.setInchesPerSecondVelocity(wheelSpinning ? SHOOTER_ON_SPEED : 0);
-    }
-
     public void turnOnShooterWheel() {
-        wheelSpinning = true;
         wheelMotor.setInchesPerSecondVelocity(SHOOTER_ON_SPEED);
     }
 
     public void turnOffShooterWheel() {
-        wheelSpinning = false;
         wheelMotor.brake();
     }
 
@@ -90,14 +93,6 @@ public class ShooterSystemV1Test {
             pinballAngle = PINBALL_TURNED;
 
         pinballServo.setPosition(pinballAngle);
-    }
-
-    public void raiseShooter() {
-        aimServo.setPosition(aimServo.getPosition() - ANGLE_INCREMENT);
-    }
-
-    public void lowerShooter() {
-        aimServo.setPosition(aimServo.getPosition() + ANGLE_INCREMENT);
     }
 
     public void setShooter(double angle) { aimServo.setPosition(angle); }
@@ -140,5 +135,25 @@ public class ShooterSystemV1Test {
             return 0;
         double temp1 = Math.sqrt(-4.9 * xDistance * temp0);
         return Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
+    }
+
+    @Override
+    public boolean doAction(String action, long maxTimeAllowed) {
+        return false;
+    }
+
+    @Override
+    public boolean stopAction(String action) {
+        return false;
+    }
+
+    @Override
+    public boolean startDoingAction(String action) {
+        return false;
+    }
+
+    @Override
+    public void kill() {
+        wheelMotor.killMotorController();
     }
 }

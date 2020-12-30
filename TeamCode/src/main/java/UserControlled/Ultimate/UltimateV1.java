@@ -144,8 +144,8 @@ public class UltimateV1 extends LinearOpMode {
                 updateEStop();
 
                 if (!eStop) {
-                    controllerOne.update(gamepad1);
-                    controllerTwo.update(gamepad2);
+                    controllerOne.update();
+                    controllerTwo.update();
 
                     playerOneFunctions(controllerOne);
                     playerTwoFunctions(controllerTwo);

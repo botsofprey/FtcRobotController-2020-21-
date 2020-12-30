@@ -61,7 +61,7 @@ public class SystemsTest extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()) {
-            controller.update(gamepad1);
+            controller.update();
 
             if (controller.dpadUpPressed())
                 aimServo.setPosition(aimServo.getPosition() - 0.05);
