@@ -14,7 +14,7 @@ import drive.SampleMecanumDrive;
 @Autonomous(group = "drive")
 public class SplineTest extends LinearOpMode {
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();

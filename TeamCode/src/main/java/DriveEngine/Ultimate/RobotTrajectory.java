@@ -23,6 +23,31 @@ public class RobotTrajectory {
 	}
 	
 	public void setTrajectory(TrajectoryBuilder builder) {
+		if (isBuilt) return;
 		trajectoryBuilder = builder;
-	}//todo finish this class
+	}
+	
+	public RobotTrajectory moveToLocation(Location endLocation) {
+		if (isBuilt) return this;
+		Pose2d endPose = convertLocation(endLocation);
+		trajectoryBuilder = trajectoryBuilder.lineToLinearHeading(endPose);
+		return this;
+	}
+	
+	public RobotTrajectory splineToLocation(Location endLocation, double endMovementHeading) {
+		if (isBuilt) return this;
+		Pose2d endPose = convertLocation(endLocation);
+		double endMovement = Math.toRadians(-endMovementHeading);
+		trajectoryBuilder = trajectoryBuilder.splineToLinearHeading(endPose, endMovement);
+		return this;
+	}
+	
+	public RobotTrajectory build() {
+		if (isBuilt) return this;
+		trajectory = trajectoryBuilder.build();
+		isBuilt = true;
+		return this;
+	}
+	
+	public Trajectory getTrajectory() { return trajectory; }
 }
