@@ -7,7 +7,7 @@ import drive.SampleMecanumDrive;
 
 public class UltimateSplineNavigation {
 	private HardwareMap hardwareMap;
-	private SampleMecanumDrive drive;
+	private SampleMecanumDrive drive;//todo create new class for x drive
 
 	public UltimateSplineNavigation(HardwareMap hw) {
 		hardwareMap = hw;
