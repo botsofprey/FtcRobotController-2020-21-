@@ -11,13 +11,6 @@ public class RobotTrajectory {
 	private TrajectoryBuilder trajectoryBuilder;
 	private Trajectory trajectory;
 	
-	public Pose2d convertLocation(Location location) {
-		double x = location.getY();
-		double y = -location.getX();
-		double heading = Math.toRadians(-location.getHeading());
-		return new Pose2d(x, y, heading);
-	}
-	
 	public RobotTrajectory() {
 		isBuilt = false;
 	}
@@ -29,14 +22,14 @@ public class RobotTrajectory {
 	
 	public RobotTrajectory moveToLocation(Location endLocation) {
 		if (isBuilt) return this;
-		Pose2d endPose = convertLocation(endLocation);
+		Pose2d endPose = endLocation.convertToPose2d();
 		trajectoryBuilder = trajectoryBuilder.lineToLinearHeading(endPose);
 		return this;
 	}
 	
 	public RobotTrajectory splineToLocation(Location endLocation, double endMovementHeading) {
 		if (isBuilt) return this;
-		Pose2d endPose = convertLocation(endLocation);
+		Pose2d endPose = endLocation.convertToPose2d();
 		double endMovement = Math.toRadians(-endMovementHeading);
 		trajectoryBuilder = trajectoryBuilder.splineToLinearHeading(endPose, endMovement);
 		return this;
