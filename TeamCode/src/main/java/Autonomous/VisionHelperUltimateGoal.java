@@ -114,6 +114,7 @@ public class VisionHelperUltimateGoal extends Thread {
 
     @Override
     public void run() {
+        if(findingRings) cycleRingDetection();
         while (running) {
             if (trackingLocation) updateRobotLocation();
 //                if (findingSkyStone) getStonesInView();
@@ -157,6 +158,18 @@ public class VisionHelperUltimateGoal extends Thread {
             if(r.getLabel().equals(LABEL_SINGLE_STACK)) numOfRings = 1;
             else if(r.getLabel().equals(LABEL_QUAD_STACK)) numOfRings = 4;
             else numOfRings = 0;
+        }
+    }
+
+    public void cycleRingDetection() {
+        long startTime = System.currentTimeMillis();
+        boolean ringFound = false;
+        while (System.currentTimeMillis() - startTime < 1500 && !ringFound) {
+            countRings();
+            if(numOfRings > 0) ringFound = true;
+        }
+        for(int i = 0; i < 25; i++) {
+            getRingsInView();
         }
     }
 

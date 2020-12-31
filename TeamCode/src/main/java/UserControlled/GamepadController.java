@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  */
 public class GamepadController {
 
+    private Gamepad gamepad;
+
     private static final double TRIGGER_THRESHOLD = 0.1;
 
     private boolean aPressed = false, aHeld = false, bPressed = false, bHeld = false,
@@ -23,9 +25,9 @@ public class GamepadController {
             dpadDownPressed = false, dpadDownHeld = false, dpadLeftPressed = false,
             dpadLeftHeld = false, startPressed = false, startHeld = false;
 
-    public GamepadController(Gamepad gamepad) { update(gamepad); }
+    public GamepadController(Gamepad gamepad) { this.gamepad = gamepad; update(); }
 
-    public void update(Gamepad gamepad) {
+    public void update() {
 
         // update a
         boolean prevAHeld = aHeld;

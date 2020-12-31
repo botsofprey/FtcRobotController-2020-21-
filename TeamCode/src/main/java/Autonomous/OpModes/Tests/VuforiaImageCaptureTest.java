@@ -19,7 +19,7 @@ import Autonomous.VuforiaHelper;
 /*
     An opmode to test saving images using vuforia
  */
-@Autonomous(name="Vuforia Capture Test", group="Testers")  // @Autonomous(...) is the other common choice
+@Autonomous(name="Capture Test", group="Testers")  // @Autonomous(...) is the other common choice
 @Disabled
 public class VuforiaImageCaptureTest extends LinearOpMode {
 
