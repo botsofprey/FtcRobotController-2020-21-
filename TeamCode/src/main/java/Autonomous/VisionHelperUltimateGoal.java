@@ -162,7 +162,13 @@ public class VisionHelperUltimateGoal extends Thread {
     }
 
     public void cycleRingDetection() {
-        for(int i = 0; i < 10; i++) {
+        long startTime = System.currentTimeMillis();
+        boolean ringFound = false;
+        while (System.currentTimeMillis() - startTime < 1500 && !ringFound) {
+            countRings();
+            if(numOfRings > 0) ringFound = true;
+        }
+        for(int i = 0; i < 25; i++) {
             getRingsInView();
         }
     }

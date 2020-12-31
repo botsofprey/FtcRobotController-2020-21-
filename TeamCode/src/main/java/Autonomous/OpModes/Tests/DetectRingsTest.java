@@ -21,17 +21,25 @@ public class DetectRingsTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         ringFinder = new VisionHelperUltimateGoal(VisionHelperUltimateGoal.WEBCAM, VisionHelperUltimateGoal.BOTH, hardwareMap);
-        ringFinder.startDetection();
+        ringFinder.startDetection(); // This starts tensor flow and runs a thread that looks for the rings
 
         telemetry.addData("Status","Initialized");
         telemetry.addData("Rings", ringFinder.numOfSeenRings());
         telemetry.update();
+
+        while(!opModeIsActive()){
+            telemetry.addData("Status","Initialized");
+            telemetry.addData("Rings", ringFinder.numOfSeenRings()); // this is how you can determine how many rings are seen
+            telemetry.update();
+        }
         waitForStart();
 
         while (opModeIsActive()) {
             telemetry.addData("Rings", ringFinder.numOfSeenRings());
             telemetry.update();
         }
-        ringFinder.kill();
+        //ringFinder.stopDetection(); // this is how you can stop the ring detection during an op mode
+
+        ringFinder.kill(); // always kill your objects at the end of an op mode, some objects will cause app crashes if they are not killed or stopped
     }
 }
