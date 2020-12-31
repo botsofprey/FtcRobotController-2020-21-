@@ -144,6 +144,9 @@ public class UltimateV2Better extends LinearOpMode {
         }
 
         // disable/kill/stop objects here
+        intake.kill();
+        shooter.kill();
+        grabber.kill();
         robot.stopNavigation();
 
     }
@@ -233,6 +236,8 @@ public class UltimateV2Better extends LinearOpMode {
         powerShotCenter();
         powerShotRight();
     }
+
+    // TODO: Modify the functions below to actually go to the correct positions and score power shots
 
     private void powerShotLeft() {
         shooter.turnOnShooterWheel();
