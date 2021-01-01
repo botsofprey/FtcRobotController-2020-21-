@@ -216,12 +216,12 @@ public class UltimateV1 extends LinearOpMode {
 
         if (controller.dpadDownPressed())
             grabber.decreaseAngle();
-
-        if (controller.bPressed())
-            intake.toggleIntake();
-
+    
         if (controller.aPressed())
-            intake.toggleOuttake();
+            intake.updateState(0);
+        
+        if (controller.bPressed())
+            intake.updateState(1);
 
         if (controller.startPressed())
             grabber.raiseToVertical();

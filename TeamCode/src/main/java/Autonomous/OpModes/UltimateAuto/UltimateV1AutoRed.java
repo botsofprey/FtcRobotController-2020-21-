@@ -75,6 +75,8 @@ public class UltimateV1AutoRed extends LinearOpMode {
         robot.getShooter().shoot();
 
         robot.getWobbleGrabber().grabWobbleGoal();
+        
+//        robot.dropDownIntake();
 
 //        robot.driveToLocationOnInitHeading(RING_DETECTION_POINT);
         robot.driveToLocationOnInitHeading(ConfigVariables.RED_ZONE_ONE);

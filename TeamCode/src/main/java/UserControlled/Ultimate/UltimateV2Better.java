@@ -39,6 +39,7 @@ import Actions.Ultimate.WobbleGrabberV2Test;
 import Autonomous.ConfigVariables;
 import Autonomous.Location;
 import DriveEngine.Ultimate.UltimateNavigation;
+import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
 
 /**
@@ -82,6 +83,8 @@ public class UltimateV2Better extends LinearOpMode {
     RingIntakeSystemV2Test intake;
     ShooterSystemV2Test shooter;
     WobbleGrabberV2Test grabber;
+    
+    GamepadController controllerOne, controllerTwo;
 
     boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, shooterOn = false, wobbleGrabbed = false, a2Pressed = false, b2Pressed = false, x2Pressed = false, y2Pressed = false;
 
@@ -107,6 +110,9 @@ public class UltimateV2Better extends LinearOpMode {
         // initialize joysticks
         leftStick = new JoystickHandler(gamepad1, JoystickHandler.LEFT_JOYSTICK);
         rightStick = new JoystickHandler(gamepad1, JoystickHandler.RIGHT_JOYSTICK);
+    
+        controllerOne = new GamepadController(gamepad1);//todo use these for taking inputs; they improve code readability and make it simpler
+        controllerTwo = new GamepadController(gamepad2);
 
         // add any other useful telemetry data or logging data here
         telemetry.addData("Status", "Initialized");
@@ -183,19 +189,11 @@ public class UltimateV2Better extends LinearOpMode {
     }
 
     private void playerTwoFunctions() {
-        if(gamepad2.a && !a2Pressed) {
-            a2Pressed = true;
-            intakeOn = !intakeOn;
-            outakeOn = false;
-        } else if(!gamepad2.a) {
-            a2Pressed = false;
-        } else if(gamepad2.b && !b2Pressed) {
-            b2Pressed = true;
-            outakeOn = !outakeOn;
-            intakeOn = false;
-        } else if(!gamepad2.b) {
-            b2Pressed = false;
-        }
+        if (controllerTwo.aPressed())
+            intake.updateState(0);
+        
+        else if (controllerTwo.bPressed())
+            intake.updateState(1);
 
         if(gamepad2.x && !x2Pressed) {
             x2Pressed = true;
@@ -221,9 +219,6 @@ public class UltimateV2Better extends LinearOpMode {
             grabber.setArmAngle(WobbleGrabberV2Test.INIT_ANGLE);
         }
 //        if(gamepad2.right_trigger > 0.1) intake.drop();
-        if(intakeOn) intake.intake();
-        else if(outakeOn) intake.spit();
-        else intake.pause();
         if(wobbleGrabbed) grabber.grabWobble();
         else if(!wobbleGrabbed) grabber.releaseWobble();
         if(shooterOn) shooter.turnOnShooterWheel();
@@ -265,7 +260,7 @@ public class UltimateV2Better extends LinearOpMode {
 
     private void stopActions() {
         robot.brake();
-        intake.pause();
+        intake.intakeOff();
         grabber.pause();
         shooter.turnOffShooterWheel();
     }

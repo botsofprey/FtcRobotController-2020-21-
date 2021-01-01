@@ -11,6 +11,7 @@ import Autonomous.Location;
 import Autonomous.RingDetector;
 import DriveEngine.Ultimate.UltimateNavigation;
 import SensorHandlers.LIDARSensor;
+import UserControlled.GamepadController;
 
 import static Autonomous.ConfigVariables.PARKING_LOCATION;
 import static Autonomous.ConfigVariables.POWER_SHOT_LEFT;
@@ -225,13 +226,13 @@ public class UltimateAutonomous {
 
     public void grabStartingPileRings() {
         turnToInitHeading();
-        intake.turnOn();
+        intake.intakeOn();
 
         driveDistance(20, UltimateNavigation.NORTH);
         mode.sleep(2000);
         robot.brake();
 
-        intake.turnOff();
+        intake.intakeOff();
         turnToInitHeading();
     }
 
@@ -268,6 +269,11 @@ public class UltimateAutonomous {
         location.setHeading(heading);
         driveToLocation(location);
     }
+    
+//    public void dropDownIntake() {todo use intake system v2 before uncommenting this
+//        intake.dropDown();
+//    }
+    
     public void driveToLocation(Location location) { robot.driveToLocationPID(redToBlue(location), MAX_SPEED, mode); }
     public void driveDistance(double distanceInInches, double heading) { robot.driveDistance(distanceInInches, heading, MAX_SPEED, mode); }
     public WobbleGrabberV1 getWobbleGrabber() { return wobbleGrabber; }
