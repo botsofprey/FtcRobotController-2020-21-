@@ -8,23 +8,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.io.IOException;
 
 import Actions.ActionHandler;
+import Actions.HardwareWrappers.ServoHandler;
 import MotorControllers.MotorController;
 
 public class RingIntakeSystemV2Test implements ActionHandler {
-    
-    private static final int MOTOR_POWER = 1;
-    
-    private static final int OFF = 0;
-    private static final int ON = 1;
-    private static final int REVERSE = 2;
-    
-    private static final double[] POWERS = { 0, MOTOR_POWER, -MOTOR_POWER };
-    private static final int[][] STATE_SWITCH = { { ON, REVERSE }, { OFF, REVERSE }, { ON, OFF } };
-    
-    private int state;
+
+    public static final int DEPLOY_ANGLE = 180;
+    public static final int INIT_ANGLE = 0;
 
     private MotorController intakeMotor;
-    private Servo intakeServo;
+    private ServoHandler intakeServo;
 
     public RingIntakeSystemV2Test(HardwareMap hardwareMap) {
         try {
@@ -33,43 +26,34 @@ public class RingIntakeSystemV2Test implements ActionHandler {
             intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             
-            intakeServo = hardwareMap.servo.get("intakeServo");
+            intakeServo = new ServoHandler("intakeServo", hardwareMap);
+            intakeServo.setDirection(Servo.Direction.FORWARD);
+            intakeServo.setServoRanges(0, 180);
+
+            intakeServo.setDegree(INIT_ANGLE);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        state = OFF;
     }
     
-    public void dropDown() {
-        intakeServo.setPosition(0);
-        intakeServo.setPosition(1);
+    public void drop() {
+        intakeServo.setDegree(DEPLOY_ANGLE);
     }
-    
-    private void updateRobot() {
-        intakeMotor.setMotorPower(POWERS[state]);//todo make led lights indicate state
+
+    public void storeIntakeServo() {
+        intakeServo.setDegree(INIT_ANGLE);
     }
-    
-    //tele-op function
-    public void updateState(int buttonPressed) {
-        state = STATE_SWITCH[state][buttonPressed];
-        updateRobot();
+
+    public void intake() {
+        intakeMotor.setMotorPower(1);
     }
-    
-    // the following are used in auto
-    public void intakeOn() {
-        state = ON;
-        updateRobot();
+
+    public void spit() {
+        intakeMotor.setMotorPower(-1);
     }
-    
-    public void IntakeReverse() {
-        state = REVERSE;
-        updateRobot();
-    }
-    
-    public void intakeOff() {
-        state = OFF;
-        updateRobot();
+
+    public void pauseIntake() {
+        intakeMotor.brake();
     }
 
     @Override
