@@ -17,7 +17,7 @@ public class WheelMotor {
     private long prevTicks;
     private long prevTime;
 
-    private static final int MAX_RPM = 5000;
+    private static final int MAX_RPM = 5400;
     private static final int RPM_LIMIT = 3700;
     private static final double MINIMUM_TIME_DIFFERENCE = 100000000;// 1/10 of a second
     private static final long NANOS_PER_MINUTE = 60000000000L;
@@ -34,12 +34,13 @@ public class WheelMotor {
         prevTime = System.nanoTime();
         prevTicks = motor.getCurrentPosition();
 
+        rpmController = new PIDController(1.4, 0, .2);
+
         this.mode = mode;
     }
 
     public void setRPM(int RPM) {
-        targetRPM = RPM;
-        motor.setPower(targetRPM / MAX_RPM);
+        rpmController.setSp(targetRPM = Math.min(RPM, RPM_LIMIT));
     }
 
     public void updateShooterRPM() {
@@ -58,13 +59,12 @@ public class WheelMotor {
     }
 
     private void adjustRPM() {
-        double rpmDif = targetRPM - curRPM;
-        double powerDif = rpmDif / (MAX_RPM * ADJUSTMENT_RATE);
-        double newPower = motor.getPower() + powerDif;
-
-        if (targetRPM == 0) newPower = 0;
-
-        motor.setPower(newPower);
+        double rpmCorrection = rpmController.calculatePID(curRPM);
+        if (targetRPM == 0) {
+            motor.setPower(0);
+            return;
+        }
+        motor.setPower(rpmCorrection / MAX_RPM + motor.getPower());
 
 //        double curRPM = (dTicks / (double) dt) * (NANOS_PER_MINUTE / TICKS_PER_ROTATION);
 //        double rpmCorrection = rpmController.calculatePID(curRPM);
