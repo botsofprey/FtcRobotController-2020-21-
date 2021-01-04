@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Autonomous.AutoAlliance;
 import Autonomous.RingCount;
 
+import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_LEFT;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
 /*
@@ -59,7 +60,7 @@ public class UltimateV2AutoRed extends LinearOpMode {
     public void runOpMode() {
 
         // initialize robot // TODO: check starting location
-        UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, STARTING_ROBOT_LOCATION_RIGHT, this);
+        UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, STARTING_ROBOT_LOCATION_LEFT, this);
 
         robot.init();
         telemetry.addData("Status", "Initialized");
@@ -75,22 +76,40 @@ public class UltimateV2AutoRed extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
         RingCount ringCount = robot.vision.getRingCount();
+        idle();
+        robot.vision.stopDetection(); // don't forget to disable ring detection when you are done
+        telemetry.addData("Rings", ringCount);
+        telemetry.update();
 
         // next we shoot the preloaded rings at the power shot targets
         robot.performPowerShots(this.getRuntime());
-
+//        sleep(2500); // for testing
+        telemetry.addData("deliver", "wobble");
+        telemetry.update();
         // following our power shots we deliver the wobble goal and obtain the second one
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
-
+//        sleep(2500); // for testing
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
+        telemetry.addData("intake", "rings");
+        telemetry.update();
         robot.intakeExtraRings(ringCount, this.getRuntime());
+//        sleep(2500); // for testing
+        telemetry.addData("grab", "second wobble");
+        telemetry.update();
         robot.obtainSecondWobbleGoal(this.getRuntime());
-
+//        sleep(2500); // for testing
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
+        telemetry.addData("shoot", "rings");
+        telemetry.update();
         robot.shootExtraRings(ringCount, this.getRuntime());
+//        sleep(2500); // for testing
+        telemetry.addData("deliver", "wobble");
+        telemetry.update();
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
-
+//        sleep(2500); // for testing
         // finally we park
+        telemetry.addData("robot", "park");
+        telemetry.update();
         robot.park();
 
         // run until the end of the match (driver presses STOP)

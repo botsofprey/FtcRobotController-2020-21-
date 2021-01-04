@@ -227,23 +227,23 @@ public class MotorController extends Thread {
 //            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            motor.setPower(0.6);
 //        }
-
-//        Log.d("Hold Position", "Start");
 //
-//        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        if (!takenStartValue) {
-//            startPos = motor.getCurrentPosition();
-//            takenStartValue = true;
+//        Log.d("Hold Position", "Start");
+
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if (!takenStartValue) {
+            startPos = motor.getCurrentPosition();
+            takenStartValue = true;
 //            Log.d("Hold Position", "Start value taken");
-//        }
-//        holdController.setSp(0);
-//        int distToPos = motor.getCurrentPosition() - startPos;
+        }
+        holdController.setSp(0);
+        int distToPos = motor.getCurrentPosition() - startPos;
 //        Log.d("Hold Position", "KP" + holdController.getP());
 //        Log.d("Hold Position", "Distance to position" + distToPos);
-//        double motorPower = holdController.calculatePID(distToPos);
+        double motorPower = holdController.calculatePID(distToPos);
 //        Log.d("Hold Position", "Motor Power" + motorPower);
-//        motor.setPower(motorPower);
-        motor.setPower(0);
+        motor.setPower(motorPower);
+//        motor.setPower(0);
     }
 
     public double getWheelDiameterInInches(){

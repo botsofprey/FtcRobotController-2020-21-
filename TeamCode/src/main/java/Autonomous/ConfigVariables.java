@@ -59,29 +59,29 @@ public class ConfigVariables {
     public static final Location RED_FOUNDATION_STACK_LEFT = new Location(20+9+4, 37.5, 270);
     public static final Location BLUE_FOUNDATION_CENTER = new Location(-24-10-5, 49.5, 90);
 
-    public static final Location RED_ZONE_ONE = new Location(47, 11);
-    public static final Location RED_ZONE_TWO = new Location(47, 35);
-    public static final Location RED_ZONE_THREE = new Location(47, 63);
+    public static final Location RED_ZONE_ONE = new Location(60, 6);
+    public static final Location RED_ZONE_TWO = new Location(36, 36);
+    public static final Location RED_ZONE_THREE = new Location(60, 60);
     public static final Location ZONE_WAYPOINT = new Location(12, 60);
 
     public static final Location RING_DETECTION_POINT= new Location(52, -20, 180);
     public static final Location RING_CHECKPOINT = new Location(52, -10);
-    public static final Location STARTING_RING_PILE = new Location(36, -24);
+    public static final Location STARTING_RING_PILE = new Location(36, -24, 180);
 
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(42, 10);
-    public static final Location SHOOTING_LINE_POINT = new Location(44, 4, 180);
+    public static final Location SHOOTING_LINE_POINT = new Location(36, -3, 0);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
     public static final Location CENTER = new Location(0,0);
 
     public static final Location RED_WOBBLE_GOAL_LEFT_CHECKPOINT = new Location(57, -55);
-    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(30, -54);
-    public static final Location RED_WOBBLE_GOAL_RIGHT = new Location(56, -31);
+    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(24, -48);
+    public static final Location RED_WOBBLE_GOAL_RIGHT = new Location(48, -48, 180);
 
     public static final Location WOBBLE_GOAL_PLACEMENT_OFFSET = new Location(3, -3);
 
-    public static final Location STARTING_ROBOT_LOCATION_LEFT = new Location(24, -60);
-    public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(52, -60);
+    public static final Location STARTING_ROBOT_LOCATION_LEFT = new Location(24, -63, 0); // 9 inches up from the back wall in the y direction
+    public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(52, -63, 0);
 
     // TODO find these locations
     public static final Location POWER_SHOT_LEFT = new Location(4, 72);
@@ -94,9 +94,9 @@ public class ConfigVariables {
 
     public static final double SHOOTER_ANGLE = 27;
   
-    public static final Location POWER_SHOT_LEFT_ON_LINE = new Location(4, 0);
-    public static final Location POWER_SHOT_MIDDLE_ON_LINE = new Location(12, 0);
-    public static final Location POWER_SHOT_RIGHT_ON_LINE = new Location(20, 0);
+    public static final Location POWER_SHOT_LEFT_ON_LINE = new Location(3.75, -3);
+    public static final Location POWER_SHOT_MIDDLE_ON_LINE = new Location(10.75, -3);
+    public static final Location POWER_SHOT_RIGHT_ON_LINE = new Location(18, -3);
 
     public static final Rectangle VALID_Y_SENSOR_READ_AREA_1_RED = new Rectangle(34, 48, 12, 48);
     public static final Rectangle VALID_Y_SENSOR_READ_AREA_2_RED = new Rectangle(34, -48, 12, 48);

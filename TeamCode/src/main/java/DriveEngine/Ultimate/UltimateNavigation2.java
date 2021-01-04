@@ -90,14 +90,14 @@ public class UltimateNavigation2 extends Thread {
         orientationOffset = robotOrientationOffset;
         orientation = new ImuHandler("imu", orientationOffset, hardwareMap);
         myLocation = new Location(startLocation.getX(),startLocation.getY(), robotOrientationOffset);
-        distanceSensors = new LIDARSensor[3];
-        distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
-        distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
-        distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
+//        distanceSensors = new LIDARSensor[3];
+//        distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
+//        distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
+//        distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
 //        distanceSensors[LEFT_SENSOR].getDistance(); We shouldn't need these because of initSensor in LIDARSensor class
 //        distanceSensors[BACK_SENSOR].getDistance();
 //        distanceSensors[RIGHT_SENSOR].getDistance();
-        if (!ignoreInitialSensorLocation) getInitialLocation();
+//        if (!ignoreInitialSensorLocation) getInitialLocation();
 
         for (int i = 0; i < wheelVectors.length; i++)
             wheelVectors[i] = new HeadingVector();
