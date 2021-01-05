@@ -59,6 +59,9 @@ import UserControlled.JoystickHandler;
  *      right trigger - shoot
  *      left trigger - slow mode
  *
+ *      right bumper - increase rpm by 100
+ *      left bumper - decrease rpm by 100
+ *
  * Player Two:
  *      joysticks - N/A
  *      a - toggle intake
@@ -186,6 +189,12 @@ public class UltimateV2Better extends LinearOpMode {
         } else if(gamepad1.y) {
             robot.setLocation(new Location(robot.getRobotLocation().getX(), 0));
         }
+        
+        if (controllerOne.leftBumperPressed())
+            shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
+        
+        if (controllerOne.rightBumperPressed())
+            shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
     }
 
     private void playerTwoFunctions() {

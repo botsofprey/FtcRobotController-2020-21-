@@ -29,9 +29,9 @@ public class ShooterSystemV2Test implements ActionHandler {
     final double ANGLE_INCREMENT = 0.05;
 
     // good
-    public MotorController wheelMotor;
+    public WheelMotor wheelMotor;
     private boolean wheelSpinning;
-    private static final int SHOOTER_ON_SPEED = 418; // inches per second
+    private static final int SHOOTER_ON_SPEED = 3700; // rotations per minute
 
     // good
     public ServoHandler elevatorServo;
@@ -53,14 +53,8 @@ public class ShooterSystemV2Test implements ActionHandler {
         aimServo = new ServoHandler("aimServo", hardwareMap);
         aimServo.setDirection(Servo.Direction.FORWARD);
 
-        try {
-            wheelMotor = new MotorController("wheelMotor", "MotorConfig/NoLoad40.json", hardwareMap);
-            wheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            wheelMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            wheelMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
+        
         elevatorServo = new ServoHandler("elevatorServo", hardwareMap);
         elevatorServo.setDirection(Servo.Direction.FORWARD);
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
@@ -76,19 +70,21 @@ public class ShooterSystemV2Test implements ActionHandler {
     }
 
     public void turnOnShooterWheel() {
-        wheelMotor.setInchesPerSecondVelocity(SHOOTER_ON_SPEED);
+        wheelMotor.setRPM(SHOOTER_ON_SPEED);
     }
 
     public void turnOffShooterWheel() {
-        wheelMotor.brake();
+        wheelMotor.setRPM(0);
     }
 
     // moves the pinball servo
     public void shoot() {
-        if (pinballAngle == PINBALL_TURNED)
-            pinballAngle = PINBALL_REST;
-        else
+        if (pinballAngle == PINBALL_REST) {
             pinballAngle = PINBALL_TURNED;
+        }
+        else {
+            pinballAngle = PINBALL_REST;
+        }
 
         pinballServo.setPosition(pinballAngle);
     }
@@ -125,6 +121,8 @@ public class ShooterSystemV2Test implements ActionHandler {
 
         if (!elevatorTopSwitch.isActivated() && !elevatorBottomSwitch.isActivated())
             elevatorPosition = MIDDLE;
+        
+        wheelMotor.updateShooterRPM();
     }
 
     public double calculateRingVelocity(double xDistance, double yDistance) {
@@ -151,7 +149,5 @@ public class ShooterSystemV2Test implements ActionHandler {
     }
 
     @Override
-    public void kill() {
-        wheelMotor.killMotorController();
-    }
+    public void kill() {}
 }

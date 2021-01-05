@@ -25,7 +25,18 @@ public class WheelMotor {
     private static final double ADJUSTMENT_RATE = 16;
 
     private PIDController rpmController;
-
+    
+    public WheelMotor(String name, HardwareMap hardwareMap) {
+        motor = hardwareMap.dcMotor.get(name);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        targetRPM = 0;
+        prevTime = System.nanoTime();
+        prevTicks = motor.getCurrentPosition();
+        
+        rpmController = new PIDController(1.4, 0, .2);
+    }
+    
     public WheelMotor(String name, HardwareMap hardwareMap, final LinearOpMode mode) {
         motor = hardwareMap.dcMotor.get(name);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -33,9 +44,9 @@ public class WheelMotor {
         targetRPM = 0;
         prevTime = System.nanoTime();
         prevTicks = motor.getCurrentPosition();
-
+        
         rpmController = new PIDController(1.4, 0, .2);
-
+        
         this.mode = mode;
     }
 
