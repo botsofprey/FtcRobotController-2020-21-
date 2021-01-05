@@ -16,6 +16,8 @@ public class GamepadController {
 
     private static final double TRIGGER_THRESHOLD = 0.1;
 
+    private Action OnAPressed;
+
     private boolean aPressed = false, aHeld = false, bPressed = false, bHeld = false,
             xPressed = false, xHeld = false, yPressed = false, yHeld = false,
             rightBumperPressed = false, rightBumperHeld = false, leftBumperPressed = false,
@@ -34,6 +36,8 @@ public class GamepadController {
         aHeld = gamepad.a;
         if (prevAHeld) aPressed = false;
         if (!prevAHeld && aHeld) aPressed = true;
+
+        if (aPressed && OnAPressed != null) OnAPressed.OnAction();
 
         // update b
         boolean prevBHeld = bHeld;
@@ -135,6 +139,9 @@ public class GamepadController {
     public boolean dpadLeftHeld() { return dpadLeftHeld; }
     public boolean startPressed() { return startPressed; }
     public boolean startHeld() { return startHeld; }
+
+    // TODO
+    public void SetOnAPressed(Action action) { OnAPressed = action; }
 
     private boolean isTriggerHeld(double trigger) {
         if (trigger > TRIGGER_THRESHOLD)
