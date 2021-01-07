@@ -58,7 +58,6 @@ import UserControlled.JoystickHandler;
  *      dpad up/down/left/right - auto power shots
  *      right trigger - shoot
  *      left trigger - slow mode
- *
  *      right bumper - increase rpm by 100
  *      left bumper - decrease rpm by 100
  *

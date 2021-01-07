@@ -11,7 +11,7 @@ import MotorControllers.PIDController;
 public class WheelMotor {
 
     public DcMotor motor;
-    private LinearOpMode mode;
+    private BlinkinLEDController ledController;
     public volatile double curRPM;
     public volatile double targetRPM;
     private long prevTicks;
@@ -22,7 +22,12 @@ public class WheelMotor {
     private static final double MINIMUM_TIME_DIFFERENCE = 100000000;// 1/10 of a second
     private static final long NANOS_PER_MINUTE = 60000000000L;
     private static final double TICKS_PER_ROTATION = 28;
-    private static final double ADJUSTMENT_RATE = 16;
+    
+    private static final int RPM_TOLERANCE = 150;
+    
+    private static final double KP = 1.4;
+    private static final double KI = 0;
+    private static final double KD = 0.2;
 
     private PIDController rpmController;
     
@@ -37,7 +42,7 @@ public class WheelMotor {
         rpmController = new PIDController(1.4, 0, .2);
     }
     
-    public WheelMotor(String name, HardwareMap hardwareMap, final LinearOpMode mode) {
+    public WheelMotor(String name, String ledControllerName, HardwareMap hardwareMap) {
         motor = hardwareMap.dcMotor.get(name);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -45,9 +50,9 @@ public class WheelMotor {
         prevTime = System.nanoTime();
         prevTicks = motor.getCurrentPosition();
         
-        rpmController = new PIDController(1.4, 0, .2);
+        ledController = new BlinkinLEDController(ledControllerName, hardwareMap);
         
-        this.mode = mode;
+        rpmController = new PIDController(KP, KI, KD);
     }
 
     public void setRPM(int RPM) {
@@ -66,6 +71,12 @@ public class WheelMotor {
             prevTime = currentTime;
             adjustRPM();
             Log.d("RPM", "" + curRPM);
+            if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
+                ledController.setOutput(BlinkinLEDController.GREEN);
+            }
+            else {
+                ledController.setOutput(BlinkinLEDController.RED);
+            }
         }
     }
 

@@ -26,6 +26,8 @@ public class ShooterSystemV1 {
     public WheelMotor wheelMotor;
     private boolean wheelSpinning;
     private static final int SHOOTER_ON_RPM = 3700;
+    private static final int HIGH_GOAL_RPM = 0;
+    private static final int POWER_SHOT_RPM = 0;
 
     // good
     public CRServo elevatorServo;
@@ -47,7 +49,7 @@ public class ShooterSystemV1 {
 
     public ShooterSystemV1(HardwareMap hardwareMap, final LinearOpMode mode) {
         aimServo = hardwareMap.servo.get("aimServo");
-        wheelMotor = new WheelMotor("wheelMotor", hardwareMap, mode);
+        wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
         elevatorServo = hardwareMap.crservo.get("elevatorServo");
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
         elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));

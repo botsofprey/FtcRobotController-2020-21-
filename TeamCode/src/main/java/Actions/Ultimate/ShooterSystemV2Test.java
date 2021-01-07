@@ -32,6 +32,8 @@ public class ShooterSystemV2Test implements ActionHandler {
     public WheelMotor wheelMotor;
     private boolean wheelSpinning;
     private static final int SHOOTER_ON_SPEED = 3700; // rotations per minute
+    private static final int HIGH_GOAL_SPEED = 0;
+    private static final int POWER_SHOT_SPEED = 0;
 
     // good
     public ServoHandler elevatorServo;
@@ -90,6 +92,14 @@ public class ShooterSystemV2Test implements ActionHandler {
     }
 
     public void setShooter(double angle) { aimServo.setPosition(angle); }
+    
+    public void aimAtPowerShot() {
+        wheelMotor.setRPM(POWER_SHOT_SPEED);
+    }
+    
+    public void aimAtHighGoal() {
+        wheelMotor.setRPM(HIGH_GOAL_SPEED);
+    }
 
     public void raiseElevator() {
         if (elevatorPosition != TOP)
