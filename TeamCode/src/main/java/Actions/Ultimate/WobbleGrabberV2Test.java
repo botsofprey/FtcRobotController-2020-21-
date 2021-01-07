@@ -51,19 +51,24 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public void grabWobble() {
         claw.setPosition(CLAW_GRAB_ANGLE);
+        wobbleGrabbed = true;
     }
 
     public void releaseWobble() {
         claw.setPosition(CLAW_RELEASE_ANGLE);
+        wobbleGrabbed = false;
+    }
+    
+    public void toggleWobbleGrabbed() {
+        if (wobbleGrabbed)
+            releaseWobble();
+        else
+            grabWobble();
     }
 
     public void setArmAngle(double angle) {
         arm.setPositionDegrees(angle);
         arm.setMotorPower(ARM_POWER_UP);
-    }
-
-    public void grabWobbleGoal() {
-        claw.setPosition(CLAW_GRAB_ANGLE);
     }
 
     public void pause() {

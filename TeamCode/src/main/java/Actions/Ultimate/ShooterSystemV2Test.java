@@ -78,6 +78,13 @@ public class ShooterSystemV2Test implements ActionHandler {
     public void turnOffShooterWheel() {
         wheelMotor.setRPM(0);
     }
+    
+    public void toggleShooterWheel() {
+        if (wheelMotor.targetRPM == 0)
+            wheelMotor.setRPM(SHOOTER_ON_SPEED);
+        else
+            wheelMotor.setRPM(0);
+    }
 
     // moves the pinball servo
     public void shoot() {
