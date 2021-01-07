@@ -39,7 +39,7 @@ import Autonomous.ConfigVariables;
 import Autonomous.Location;
 import DriveEngine.Ultimate.UltimateNavigation;
 
-@TeleOp(name="Gamepad Controller Test", group="Testers")
+@TeleOp(name="Shoot Power Shots Test", group="Testers")
 //@Disabled
 public class ShootPowershotsTest extends LinearOpMode {
     // create objects and locally global variables here
@@ -122,7 +122,7 @@ public class ShootPowershotsTest extends LinearOpMode {
         robot.turnToLocation(powerShotLocation, this);
 
         // check if the shooter motor is already on or not
-        if (shooter.wheelMotor.motor.getPower() == 0) {
+        if (shooter.wheelMotor.motor.getMotorPower() == 0) {
             shooter.turnOnShooterWheel();
             sleep(1000);
         }

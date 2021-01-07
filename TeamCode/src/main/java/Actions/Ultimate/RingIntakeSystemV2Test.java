@@ -1,5 +1,6 @@
 package Actions.Ultimate;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,26 +20,39 @@ public class RingIntakeSystemV2Test implements ActionHandler {
     private static final int REVERSE = 2;
     
     private static final double[] POWERS = { 0, MOTOR_POWER, -MOTOR_POWER };
-    private static final int[][] STATE_SWITCH = { { ON, REVERSE }, { OFF, REVERSE }, { ON, OFF } };
+    private static final int[][] STATE_SWITCH = {
+            { ON, REVERSE },
+            { OFF, REVERSE },
+            { ON, OFF }
+    };
+    private static final RevBlinkinLedDriver.BlinkinPattern[] COLORS = {
+            RevBlinkinLedDriver.BlinkinPattern.WHITE,
+            RevBlinkinLedDriver.BlinkinPattern.GREEN,
+            RevBlinkinLedDriver.BlinkinPattern.RED
+    };
     
     private int state;
 
     private MotorController intakeMotor;
     private Servo intakeServo;
+    private RevBlinkinLedDriver ledController;
 
-    public RingIntakeSystemV2Test(HardwareMap hardwareMap) {
+    public RingIntakeSystemV2Test(String ledControllerName, HardwareMap hardwareMap) {
         try {
             intakeMotor = new MotorController("intakeMotor", "MotorConfig/NoLoad40.json", hardwareMap);
             intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            
+
             intakeServo = hardwareMap.servo.get("intakeServo");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         state = OFF;
+
+        ledController = hardwareMap.get(RevBlinkinLedDriver.class, ledControllerName);
+        ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
     }
     
     public void dropDown() {
@@ -47,7 +61,8 @@ public class RingIntakeSystemV2Test implements ActionHandler {
     }
     
     private void updateRobot() {
-        intakeMotor.setMotorPower(POWERS[state]);//todo make led lights indicate state
+        intakeMotor.setMotorPower(POWERS[state]);
+        ledController.setPattern(COLORS[state]);
     }
     
     //tele-op function

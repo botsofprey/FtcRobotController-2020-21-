@@ -105,7 +105,7 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 		
 		// initialize systems
-		intake = new RingIntakeSystemV2Test(hardwareMap);
+		intake = new RingIntakeSystemV2Test("", hardwareMap);
 		shooter = new ShooterSystemV2Test(hardwareMap);
 		grabber = new WobbleGrabberV2Test(hardwareMap);
 		
