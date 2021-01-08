@@ -66,8 +66,8 @@ public class GamepadControllerTest extends LinearOpMode {
 
             controller.update();
 
-            if (controller.aPressed()) timesPressed++;
-            if (controller.aHeld()) timesHeld++;
+            if (controller.aPressed) timesPressed++;
+            if (controller.aHeld) timesHeld++;
 
             telemetry.addData("Times Pressed", timesPressed);
             telemetry.addData("Times Held", timesHeld);

@@ -59,7 +59,8 @@ public class LiftHeightTest extends LinearOpMode {
                 sss.liftStones();
             } else if(gamepad1.b) {
                 sss.lowerStones();
-            } else sss.pauseStoneLift();
+            } else
+                sss.pauseStoneLift();
 
             if(gamepad1.x) {
                 sss.grabStoneCenter();
