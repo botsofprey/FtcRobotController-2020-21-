@@ -40,6 +40,8 @@ public class WheelMotor {
         prevTicks = motor.getCurrentPosition();
         
         rpmController = new PIDController(1.4, 0, .2);
+        
+        ledController = null;
     }
     
     public WheelMotor(String name, String ledControllerName, HardwareMap hardwareMap) {
@@ -71,11 +73,12 @@ public class WheelMotor {
             prevTime = currentTime;
             adjustRPM();
             Log.d("RPM", "" + curRPM);
-            if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
-                ledController.setOutput(BlinkinLEDController.GREEN);
-            }
-            else {
-                ledController.setOutput(BlinkinLEDController.RED);
+            if (ledController != null) {
+                if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
+                    ledController.setOutput(BlinkinLEDController.GREEN);
+                } else {
+                    ledController.setOutput(BlinkinLEDController.RED);
+                }
             }
         }
     }

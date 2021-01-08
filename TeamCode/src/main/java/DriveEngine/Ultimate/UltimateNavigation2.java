@@ -27,7 +27,7 @@ import SensorHandlers.LIDARSensor;
  */
 
 /*
-    The base class for every opmode --- it sets up our drive system and contains all it's funcitons
+    The base class for every opmode --- it sets up our drive system and contains all it's functions
  */
 public class UltimateNavigation2 extends Thread {
 
