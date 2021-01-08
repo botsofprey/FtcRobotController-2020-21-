@@ -47,7 +47,7 @@ public class UltimateV2Autonomous {
 
         wobbleGrabber = new WobbleGrabberV2Test(mode.hardwareMap);
         shooter = new ShooterSystemV2Test(mode.hardwareMap);
-        intake = new RingIntakeSystemV2Test(mode.hardwareMap);
+        intake = new RingIntakeSystemV2Test("", mode.hardwareMap);
 
         startLocation = redToBlue(startLocation);
         try {

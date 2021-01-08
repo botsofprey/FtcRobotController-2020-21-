@@ -2,16 +2,18 @@ package Actions.Ultimate;
 
 import android.util.Log;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PWMOutput;
 
+import MotorControllers.MotorController;
 import MotorControllers.PIDController;
 
 public class WheelMotor {
 
-    public DcMotor motor;
-    private BlinkinLEDController ledController;
+    public MotorController motor;
     public volatile double curRPM;
     public volatile double targetRPM;
     private long prevTicks;
@@ -30,27 +32,28 @@ public class WheelMotor {
     private static final double KD = 0.2;
 
     private PIDController rpmController;
+
+    private RevBlinkinLedDriver ledController;
     
     public WheelMotor(String name, HardwareMap hardwareMap) {
-        motor = hardwareMap.dcMotor.get(name);
+        motor = new MotorController(name, hardwareMap);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         targetRPM = 0;
         prevTime = System.nanoTime();
-        prevTicks = motor.getCurrentPosition();
+        prevTicks = motor.getCurrentTick();
         
         rpmController = new PIDController(1.4, 0, .2);
     }
     
     public WheelMotor(String name, String ledControllerName, HardwareMap hardwareMap) {
-        motor = hardwareMap.dcMotor.get(name);
+        motor = new MotorController(name, hardwareMap);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         targetRPM = 0;
         prevTime = System.nanoTime();
-        prevTicks = motor.getCurrentPosition();
-        
-        ledController = new BlinkinLEDController(ledControllerName, hardwareMap);
+        prevTicks = motor.getCurrentTick();
+        ledController = hardwareMap.get(RevBlinkinLedDriver.class, ledControllerName);
         
         rpmController = new PIDController(KP, KI, KD);
     }
@@ -60,7 +63,7 @@ public class WheelMotor {
     }
 
     public void updateShooterRPM() {
-        int currentTicks = motor.getCurrentPosition();
+        long currentTicks = motor.getCurrentTick();
         long currentTime = System.nanoTime();
 
         double tickDiff = currentTicks - prevTicks;
@@ -72,10 +75,10 @@ public class WheelMotor {
             adjustRPM();
             Log.d("RPM", "" + curRPM);
             if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
-                ledController.setOutput(BlinkinLEDController.GREEN);
+                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
             }
             else {
-                ledController.setOutput(BlinkinLEDController.RED);
+                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
             }
         }
     }
@@ -83,10 +86,10 @@ public class WheelMotor {
     private void adjustRPM() {
         double rpmCorrection = rpmController.calculatePID(curRPM);
         if (targetRPM == 0) {
-            motor.setPower(0);
+            motor.setMotorPower(0);
             return;
         }
-        motor.setPower(rpmCorrection / MAX_RPM + motor.getPower());
+        motor.setMotorPower(rpmCorrection / MAX_RPM + motor.getMotorPower());
 
 //        double curRPM = (dTicks / (double) dt) * (NANOS_PER_MINUTE / TICKS_PER_ROTATION);
 //        double rpmCorrection = rpmController.calculatePID(curRPM);
