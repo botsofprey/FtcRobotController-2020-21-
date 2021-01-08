@@ -29,14 +29,20 @@
 
 package UserControlled.Ultimate;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.PWMOutput;
+import com.qualcomm.robotcore.hardware.PWMOutputController;
+import com.qualcomm.robotcore.hardware.PwmControl;
+import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
 import Actions.Ultimate.RingIntakeSystemV1;
 import Actions.Ultimate.ShooterSystemV1;
 import Actions.Ultimate.WobbleGrabberV1;
 import Autonomous.ConfigVariables;
 import Autonomous.Location;
+import Autonomous.OpModes.Tests.BlinkinLEDTest;
 import DriveEngine.Ultimate.UltimateNavigation;
 import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
@@ -134,7 +140,7 @@ public class UltimateV1 extends LinearOpMode {
             if (!eStop) {
 
                 // start button controls slow mode
-                if (controllerOne.startPressed())
+                if (controllerOne.startPressed)
                     slowMode = !slowMode;
 
                 updateEStop();
@@ -165,7 +171,7 @@ public class UltimateV1 extends LinearOpMode {
 
     // misc functions here
     private void updateEStop() {
-        if ((controllerOne.dpadDownHeld() && gamepad1.back) || (controllerTwo.dpadDownHeld() && gamepad2.back))
+        if ((controllerOne.dpadDownHeld && gamepad1.back) || (controllerTwo.dpadDownHeld && gamepad2.back))
             eStop = !eStop;
     }
 
@@ -178,58 +184,58 @@ public class UltimateV1 extends LinearOpMode {
 
     private void playerOneFunctions(GamepadController controller) {
 
-        if (controller.aPressed())
+        if (controller.aPressed)
             shooter.shoot();
 
-        if (controller.bPressed())
+        if (controller.bPressed)
             shooter.keepElevatorAtTop();
 
-        if (controller.xPressed())
+        if (controller.xPressed)
             shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
 
-        if (controller.yPressed())
+        if (controller.yPressed)
             shooter.turnOnShooterWheel();
 
-        if (controller.dpadUpPressed())
+        if (controller.dpadUpPressed)
             robot.turnToShoot(ConfigVariables.TOP_GOAL, this);  // set angle to aim at the top goal
 
-        if (controller.dpadDownPressed())
+        if (controller.dpadDownPressed)
             robot.turnToShoot(ConfigVariables.POWER_SHOT_MIDDLE, this); // set angle to center power shot
 
-        if (controller.dpadLeftPressed())
+        if (controller.dpadLeftPressed)
             robot.turnToShoot(ConfigVariables.POWER_SHOT_LEFT, this); // set angle to left power shot
 
-        if (controller.dpadRightPressed())
+        if (controller.dpadRightPressed)
             robot.turnToShoot(ConfigVariables.POWER_SHOT_RIGHT, this); // set angle to right power shot
     }
 
     private void playerTwoFunctions(GamepadController controller) {
 
-        if (controller.xPressed())
+        if (controller.xPressed)
             shooter.toggleWheelPower();
 
-        if (controller.yPressed())
+        if (controller.yPressed)
             grabber.grabOrReleaseWobbleGoal();
 
-        if (controller.dpadUpPressed())
+        if (controller.dpadUpPressed)
             grabber.increaseAngle();
 
-        if (controller.dpadDownPressed())
+        if (controller.dpadDownPressed)
             grabber.decreaseAngle();
     
-        if (controller.aPressed())
+        if (controller.aPressed)
             intake.updateState(0);
         
-        if (controller.bPressed())
+        if (controller.bPressed)
             intake.updateState(1);
 
-        if (controller.startPressed())
+        if (controller.startPressed)
             grabber.raiseToVertical();
 
-        if (controller.rightBumperPressed())
+        if (controller.rightBumperPressed)
             shooter.keepElevatorAtTop();
 
-        if (controller.leftBumperPressed())
+        if (controller.leftBumperPressed)
             shooter.lowerElevator();
     }
 

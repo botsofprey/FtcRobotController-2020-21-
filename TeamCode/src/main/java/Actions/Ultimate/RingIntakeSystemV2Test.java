@@ -19,7 +19,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
     private static final int REVERSE = 2;
     
     private static final double[] POWERS = { 0, MOTOR_POWER, -MOTOR_POWER };
-    private static final int[][] STATE_SWITCH = { { ON, REVERSE }, { OFF, REVERSE }, { ON, OFF } };
+    private static final int[][] STATE_SWITCH =   { { ON, REVERSE }, { OFF, REVERSE }, { ON, OFF } };
     
     private int state;
 
@@ -62,7 +62,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
         updateRobot();
     }
     
-    public void IntakeReverse() {
+    public void intakeReverse() {
         state = REVERSE;
         updateRobot();
     }

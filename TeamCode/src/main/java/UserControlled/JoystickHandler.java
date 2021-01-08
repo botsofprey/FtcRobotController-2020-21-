@@ -53,11 +53,11 @@ public class JoystickHandler {
     }
 
     private void updateValues(){
-        if(joystick == LEFT_JOYSTICK){
+        if (joystick == LEFT_JOYSTICK){
             xValue = pad.left_stick_x;
             yValue = -(pad.left_stick_y);
         }
-        else{
+        else {
             xValue = pad.right_stick_x;
             yValue = -(pad.right_stick_y);
         }

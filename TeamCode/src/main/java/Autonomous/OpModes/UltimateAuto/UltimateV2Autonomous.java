@@ -11,8 +11,14 @@ import Autonomous.RingCount;
 import Autonomous.VisionHelperUltimateGoal;
 import DriveEngine.Ultimate.UltimateNavigation2;
 
+import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
+import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.PARKING_LOCATION;
 import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_RIGHT;
+import static Autonomous.ConfigVariables.RED_ZONE_ONE;
+import static Autonomous.ConfigVariables.RED_ZONE_THREE;
+import static Autonomous.ConfigVariables.RED_ZONE_TWO;
+import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.SHOOTING_LINE_POINT;
 import static Autonomous.ConfigVariables.STARTING_RING_PILE;
 
@@ -79,6 +85,7 @@ public class UltimateV2Autonomous {
 
     // AUTONOMOUS FUNCTIONS HERE
     protected void init() {
+        wobbleGrabber.setClawGrabAngle();
         // set initial servo positions
     }
 
@@ -87,21 +94,35 @@ public class UltimateV2Autonomous {
     protected void performPowerShots(double runtime) {
         if(30 - runtime > 5) { // if the time remaining is more than the required action time, perform it
             robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
+
             // perform shots
+            shooter.setPowerShotSpeed(); // spin up motor to expected power shot rpm
+            robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, mode); // turn to heading for first power shot and shoot
+            indexShooter();
+
+            robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, mode); // turn to heading for second power shot and shoot
+            indexShooter();
+
+            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, mode); // turn to heading for third power shot and shoot
+            indexShooter();
         }
     }
 
     // drives to the correct wobble goal delivery zone from the current robot location
     protected void deliverWobbleGoal(RingCount ringCount, double runtime) {
         if(30 - runtime > 5) {
+            Location targetLocation = RED_ZONE_ONE;
             switch (ringCount) {
                 case NO_RINGS:
-                    break;
+                    break; // if no rings, zone one
                 case SINGLE_STACK:
+                    targetLocation = RED_ZONE_TWO; // if one ring, zone two
                     break;
                 case QUAD_STACK:
+                    targetLocation = RED_ZONE_THREE; // if four rings, zone three
                     break;
             }
+            robot.driveToLocationPID(targetLocation, MED_SPEED, mode);
         }
     }
 
@@ -109,7 +130,7 @@ public class UltimateV2Autonomous {
     protected void intakeExtraRings(RingCount ringCount, double runtime) {
         if(30 - runtime > 5 && ringCount != RingCount.NO_RINGS) {
             robot.turnToHeading(UltimateNavigation2.SOUTH, 5, mode);
-            // turn on intake
+            intake.intakeOn();
             robot.driveDistanceToLocation(STARTING_RING_PILE, MED_SPEED, mode);
             // do a funky intake thingy here
         }
@@ -120,8 +141,7 @@ public class UltimateV2Autonomous {
         if(30 - runtime > 5) {
             robot.turnToHeading(UltimateNavigation2.SOUTH, mode);
             robot.driveDistanceToLocation(RED_WOBBLE_GOAL_RIGHT, MED_SPEED, mode);
-            // grab wobble goal
-            // lift wobble goal
+            wobbleGrabber.grabOrReleaseWobble();
         }
     }
 
@@ -130,13 +150,35 @@ public class UltimateV2Autonomous {
         if(30 - runtime > 5 && ringCount != RingCount.NO_RINGS) {
             robot.turnToHeading(UltimateNavigation2.NORTH, 1, mode);
             robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
+
             // shoot rings
+            shooter.setHighGoalSpeed(); // spin up motor to proper high goal rpm
+            if(ringCount == RingCount.SINGLE_STACK){ // if there is only one extra ring, only index once
+                indexShooter();
+            }
+            else { // otherwise (there are four rings), index three times
+                for(int i = 0; i < 3; i++){
+                    indexShooter();
+                }
+            }
         }
     }
+
+    protected void indexShooter(){
+        shooter.togglePinball();
+        mode.sleep(100);
+        shooter.togglePinball();
+    }
+
 
     // parks the robot over the launch line
     protected void park() {
         // turn everything off
+        wobbleGrabber.pause();
+        shooter.turnOffShooterWheel();
+        intake.intakeOff();
+
+        // drive to parking line
         robot.driveDistanceToLocation(PARKING_LOCATION, MAX_SPEED, mode);
     }
 }

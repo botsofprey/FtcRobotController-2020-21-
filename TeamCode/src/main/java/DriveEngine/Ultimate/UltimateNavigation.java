@@ -107,22 +107,19 @@ public class UltimateNavigation extends Thread {
 
         robotMovementVector = new HeadingVector();
         startTime = System.nanoTime();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < driveMotors.length; i++) {
-                    Log.d("Inch from start", i + ": " + driveMotors[i].getInchesFromStart());
+        new Thread(() -> {
+            for (int i = 0; i < driveMotors.length; i++) {
+                Log.d("Inch from start", i + ": " + driveMotors[i].getInchesFromStart());
+            }
+            while (shouldRun) {
+                try {
+                    updateData();
                 }
-                while (shouldRun) {
-                    try {
-                        updateData();
-                    }
-                    catch (Exception e) {
-                        shouldRun = false;
-                        throw new RuntimeException(e);
-                    }
-                    safetySleep(threadDelayMillis);
+                catch (Exception e) {
+                    shouldRun = false;
+                    throw new RuntimeException(e);
                 }
+                safetySleep(threadDelayMillis);
             }
         }).start();
     }
@@ -328,7 +325,7 @@ public class UltimateNavigation extends Thread {
 
     private void updateData() {
 
-        getRobotHeading();
+        myLocation.setHeading(getRobotHeading());
         wheelVectors = getWheelVectors();
         updateLocation();
 //        updateIMUTrackedDistance();
