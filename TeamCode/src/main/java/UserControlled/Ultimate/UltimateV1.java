@@ -155,6 +155,8 @@ public class UltimateV1 extends LinearOpMode {
 
                     playerOneFunctions(controllerOne);
                     playerTwoFunctions(controllerTwo);
+
+                    shooter.update();
                 }
             }
 
@@ -188,13 +190,15 @@ public class UltimateV1 extends LinearOpMode {
             shooter.shoot();
 
         if (controller.bPressed)
-            shooter.keepElevatorAtTop();
+            intake.updateState(0);
+//            shooter.keepElevatorAtTop();
 
         if (controller.xPressed)
-            shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
+            intake.updateState(1);
+//            shooter.setShooter(ShooterSystemV1.HIGHEST_POSITION);
 
         if (controller.yPressed)
-            shooter.turnOnShooterWheel();
+            shooter.toggleWheelPower();
 
         if (controller.dpadUpPressed)
             robot.turnToShoot(ConfigVariables.TOP_GOAL, this);  // set angle to aim at the top goal
@@ -207,6 +211,12 @@ public class UltimateV1 extends LinearOpMode {
 
         if (controller.dpadRightPressed)
             robot.turnToShoot(ConfigVariables.POWER_SHOT_RIGHT, this); // set angle to right power shot
+
+        if (controller.leftBumperPressed)
+            shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
+
+        if (controller.rightBumperPressed)
+            shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
     }
 
     private void playerTwoFunctions(GamepadController controller) {
