@@ -105,7 +105,7 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 		
 		// initialize systems
-		intake = new RingIntakeSystemV2Test("", hardwareMap);
+		intake = new RingIntakeSystemV2Test(hardwareMap);
 		shooter = new ShooterSystemV2Test(hardwareMap);
 		grabber = new WobbleGrabberV2Test(hardwareMap);
 		
@@ -167,12 +167,12 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	// misc functions here
 	private void updateEStop() {
-		if ((controllerOne.dpadDownHeld() && controllerOne.startHeld()) || (controllerTwo.dpadDownHeld() && controllerTwo.startHeld()))
+		if ((controllerOne.dpadDownHeld && controllerOne.startHeld) || (controllerTwo.dpadDownHeld && controllerTwo.startHeld))
 			eStop = !eStop;
 	}
 	
 	private void controlDrive() {
-		if(controllerOne.leftTriggerHeld()) slowMode = true;
+		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
 		double drivePower = slowMode ? leftStick.magnitude() / 3 : leftStick.magnitude();
 		double turnPower = slowMode ? rightStick.x() / 4 : rightStick.x();
@@ -181,47 +181,47 @@ public class UltimateV2Better extends LinearOpMode {
 	}
 	
 	private void playerOneFunctions(GamepadController controller) {
-		if(controller.dpadUpPressed()) powerShots();
-		else if(controller.dpadLeftPressed()) powerShotLeft();
-		else if(controller.dpadDownPressed()) powerShotCenter();
-		else if(controller.dpadRightPressed()) powerShotRight();
+		if(controller.dpadUpPressed) powerShots();
+		else if(controller.dpadLeftPressed) powerShotLeft();
+		else if(controller.dpadDownPressed) powerShotCenter();
+		else if(controller.dpadRightPressed) powerShotRight();
 		
-		if(controller.rightTriggerPressed()) shooter.shoot();
+		if(controller.rightTriggerPressed) shooter.togglePinball();
 		
 		// TODO: update this to be actually correct, need to determine which wall to be against and what the x and y values would be
-		if(controller.xPressed())
+		if(controller.xPressed)
 			robot.setLocation(new Location(0, robot.getRobotLocation().getY()));
 		
-		if(controller.yPressed())
+		if(controller.yPressed)
 			robot.setLocation(new Location(robot.getRobotLocation().getX(), 0));
 		
-		if (controller.leftBumperPressed())
+		if (controller.leftBumperPressed)
 			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
 		
-		if (controller.rightBumperPressed())
+		if (controller.rightBumperPressed)
 			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
-		if (controller.aPressed())
+		if (controller.aPressed)
 			intake.updateState(0);
 		
-		else if (controller.bPressed())
+		else if (controller.bPressed)
 			intake.updateState(1);
 		
-		if (controller.xPressed())
+		if (controller.xPressed)
 			shooter.toggleShooterWheel();
 		
-		if(controller.yPressed())
+		if(controller.yPressed)
 			grabber.toggleWobbleGrabbed();
 		
-		if(controller.dpadUpPressed())
+		if(controller.dpadUpPressed)
 			grabber.setArmAngle(WobbleGrabberV2Test.GAINS_ANGLE);
-		else if(controller.dpadRightPressed())
+		else if(controller.dpadRightPressed)
 			grabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
-		else if(controller.dpadDownPressed())
+		else if(controller.dpadDownPressed)
 			grabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
-		else if(controller.dpadLeftPressed())
+		else if(controller.dpadLeftPressed)
 			grabber.setArmAngle(WobbleGrabberV2Test.INIT_ANGLE);
 		
 //        if(controller.rightTriggerPressed()) intake.drop();
@@ -236,27 +236,27 @@ public class UltimateV2Better extends LinearOpMode {
 	// TODO: Modify the functions below to actually go to the correct positions and score power shots
 	
 	private void powerShotLeft() {
-		shooter.aimAtPowerShot();
+		shooter.setPowerShotSpeed();
 		robot.driveToLocation(ConfigVariables.POWER_SHOT_LEFT_ON_LINE, 25, this);
-		shooter.shoot();
+		shooter.togglePinball();
 		sleep(10);
-		shooter.shoot();
+		shooter.togglePinball();
 	}
 	
 	private void powerShotCenter() {
-		shooter.aimAtPowerShot();
+		shooter.setPowerShotSpeed();
 		robot.driveToLocation(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
-		shooter.shoot();
+		shooter.togglePinball();
 		sleep(10);
-		shooter.shoot();
+		shooter.togglePinball();
 	}
 	
 	private void powerShotRight() {
-		shooter.aimAtPowerShot();
+		shooter.setPowerShotSpeed();
 		robot.driveToLocation(ConfigVariables.POWER_SHOT_RIGHT_ON_LINE, 25, this);
-		shooter.shoot();
+		shooter.togglePinball();
 		sleep(10);
-		shooter.shoot();
+		shooter.togglePinball();
 	}
 	
 	private void stopActions() {

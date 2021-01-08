@@ -25,6 +25,8 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public static final double CLAW_GRAB_ANGLE = 0.0;
     public static final double CLAW_RELEASE_ANGLE = .9;
+
+    // TODO TEST FOR ACTUAL ANGLES
     public static final double ANGLE_INCREMENT = 25;
     public static final double GAINS_ANGLE = 0;
     public static final double LIFT_ANGLE = 0;
@@ -49,7 +51,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
         wobbleGrabbed = false;
     }
 
-    public void grabWobble() {
+    public void setClawGrabAngle() {
         claw.setPosition(CLAW_GRAB_ANGLE);
         wobbleGrabbed = true;
     }
@@ -60,16 +62,33 @@ public class WobbleGrabberV2Test implements ActionHandler {
     }
     
     public void toggleWobbleGrabbed() {
-        if (wobbleGrabbed)
+        if (wobbleGrabbed) {
             releaseWobble();
-        else
-            grabWobble();
+        }
+        else {
+            setClawGrabAngle();
+        }
     }
 
     public void setArmAngle(double angle) {
-        arm.setPositionDegrees(angle);
-        arm.setMotorPower(ARM_POWER_UP);
+        if(arm.getDegree() < angle) {
+            arm.setPositionDegrees(angle);
+            arm.setMotorPower(ARM_POWER_UP);
+        }
+        else if(arm.getDegree() > angle) {
+            arm.setPositionDegrees(angle);
+            arm.setMotorPower(ARM_POWER_DOWN);
+        }
     }
+
+    public void grabOrReleaseWobble(){
+        setArmAngle(GRAB_AND_DROP_ANGLE); // Lower and wait for wobble arm
+        while(armIsBusy());
+        toggleWobbleGrabbed(); // Open / close grabber claw
+        setArmAngle(LIFT_ANGLE); // Lift and wait for wobble arm
+        while(armIsBusy());
+    }
+
 
     public void pause() {
         arm.brake();

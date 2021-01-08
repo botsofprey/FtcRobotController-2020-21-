@@ -73,6 +73,7 @@ public class UltimateNavigation2 extends Thread {
     public static final int LEFT_SENSOR = 0, BACK_SENSOR = 1, RIGHT_SENSOR = 2, DRIVE_BASE = 3, FRONT_SENSOR = 4;
     private HashMap<Integer, int[]>[] updateLocationInformation = new HashMap[4]; // structure: {direction, {xSensor, ySensor}}
     public static final int Q1 = 0, Q2 = 1, Q3 = 2, Q4 = 3, NORTH = 0, SOUTH = 180, EAST = 90, WEST = 270;
+    public static final double HEADING_TOLERANCE = 2.5;
 
     private final double HEADING_THRESHOLD = 2;
     private final double WHEEL_BASE_RADIUS = 20;
@@ -213,10 +214,15 @@ public class UltimateNavigation2 extends Thread {
         else if(myLocation.getX() < 0 && myLocation.getY() < 0) quadrant = Q3;
         else if(myLocation.getX() >= 0 && myLocation.getY() < 0) quadrant = Q4;
         int dir = -1;
-        if(simpleHeading < 2.5 && simpleHeading > -2.5) dir = NORTH;
-        else if(simpleHeading < 92.5 && simpleHeading > 87.5) dir = EAST; // REVIEW: suggest to define HEADING_TOLERANCE = 1 and use abs(simpleHeading - 90) < HEADING_TOLERANCE
-        else if(simpleHeading < 182.5 && simpleHeading > 177.5) dir = SOUTH;
-        else if(simpleHeading < 272.5 && simpleHeading > 267.5) dir = WEST;
+        if(Math.abs(simpleHeading - NORTH) < HEADING_TOLERANCE) dir = NORTH;
+        else if(Math.abs(simpleHeading - EAST) < HEADING_TOLERANCE) dir = EAST;
+        else if (Math.abs(simpleHeading - SOUTH) < HEADING_TOLERANCE) dir = SOUTH;
+        else if (Math.abs(simpleHeading - WEST) < HEADING_TOLERANCE) dir = WEST;
+
+//        if(simpleHeading < 2.5 && simpleHeading > -2.5) dir = NORTH;
+//        else if(simpleHeading < 92.5 && simpleHeading > 87.5) dir = EAST; // REVIEW: suggest to define HEADING_TOLERANCE = 1 and use abs(simpleHeading - 90) < HEADING_TOLERANCE
+//        else if(simpleHeading < 182.5 && simpleHeading > 177.5) dir = SOUTH;
+//        else if(simpleHeading < 272.5 && simpleHeading > 267.5) dir = WEST;
         else {
             // if not lined up to a square direction, then just use wheel odometry to track position
             shouldTranslateX = true;

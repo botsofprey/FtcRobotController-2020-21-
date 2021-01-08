@@ -21,29 +21,16 @@ import SensorHandlers.MagneticLimitSwitch;
  * Used for shooting rings
  */
 public class ShooterSystemV2Test implements ActionHandler {
-
-    public ServoHandler aimServo;
-    public static final double HIGHEST_POSITION = 0;
-    public static final double POWER_SHOT_POSITION = 0.45;
-    public static final double LOWERED_POSITION = 1;
-    final double ANGLE_INCREMENT = 0.05;
-
     // good
     public WheelMotor wheelMotor;
     private boolean wheelSpinning;
+
+    // TODO TEST FOR ACTUAL RPMS
     private static final int SHOOTER_ON_SPEED = 3700; // rotations per minute
+    private static final int SHOOTER_OFF_SPEED = 0;
     private static final int HIGH_GOAL_SPEED = 0;
     private static final int POWER_SHOT_SPEED = 0;
 
-    // good
-    public ServoHandler elevatorServo;
-    public static final int TOP = 2;
-    public static final int MIDDLE = 1;
-    public static final int BOTTOM = 0;
-    public int elevatorPosition;
-    public boolean stayAtTop;
-    public volatile MagneticLimitSwitch elevatorTopSwitch;
-    public volatile MagneticLimitSwitch elevatorBottomSwitch;
 
     // good
     public ServoHandler pinballServo;
@@ -52,23 +39,13 @@ public class ShooterSystemV2Test implements ActionHandler {
     public static final double PINBALL_REST = 0;
 
     public ShooterSystemV2Test(HardwareMap hardwareMap) {
-        aimServo = new ServoHandler("aimServo", hardwareMap);
-        aimServo.setDirection(Servo.Direction.FORWARD);
-
         wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
-        
-        elevatorServo = new ServoHandler("elevatorServo", hardwareMap);
-        elevatorServo.setDirection(Servo.Direction.FORWARD);
-        elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
-        elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));
 
         pinballServo = new ServoHandler("pinballServo", hardwareMap);
         pinballServo.setDirection(Servo.Direction.FORWARD);
 
         wheelSpinning = false;
-        elevatorPosition = BOTTOM;
         pinballAngle = PINBALL_REST;
-        stayAtTop = false;
     }
 
     public void turnOnShooterWheel() {
@@ -76,18 +53,18 @@ public class ShooterSystemV2Test implements ActionHandler {
     }
 
     public void turnOffShooterWheel() {
-        wheelMotor.setRPM(0);
+        wheelMotor.setRPM(SHOOTER_OFF_SPEED);
     }
     
     public void toggleShooterWheel() {
         if (wheelMotor.targetRPM == 0)
             wheelMotor.setRPM(SHOOTER_ON_SPEED);
         else
-            wheelMotor.setRPM(0);
+            wheelMotor.setRPM(SHOOTER_OFF_SPEED);
     }
 
     // moves the pinball servo
-    public void shoot() {
+    public void togglePinball() {
         if (pinballAngle == PINBALL_REST) {
             pinballAngle = PINBALL_TURNED;
         }
@@ -97,50 +74,16 @@ public class ShooterSystemV2Test implements ActionHandler {
 
         pinballServo.setPosition(pinballAngle);
     }
-
-    public void setShooter(double angle) { aimServo.setPosition(angle); }
     
-    public void aimAtPowerShot() {
+    public void setPowerShotSpeed() {
         wheelMotor.setRPM(POWER_SHOT_SPEED);
     }
     
-    public void aimAtHighGoal() {
+    public void setHighGoalSpeed() {
         wheelMotor.setRPM(HIGH_GOAL_SPEED);
     }
 
-    public void raiseElevator() {
-        if (elevatorPosition != TOP)
-            elevatorServo.setPosition(0);
-    }
-
-    public void lowerElevator() {
-        stayAtTop = false;
-        if (elevatorPosition != BOTTOM)
-            elevatorServo.setPosition(1);
-    }
-
-    public void keepElevatorAtTop() {
-        stayAtTop = true;
-        raiseElevator();
-    }
-
-    public void stopElevator() { elevatorServo.setPosition(0.5); }
-
-    public void update() {
-        if (elevatorTopSwitch.isActivated() && elevatorPosition != TOP) {
-            elevatorPosition = TOP;
-            elevatorServo.setPosition(0.5);
-        } else if (elevatorBottomSwitch.isActivated() && !stayAtTop) { //watch out for the zero case because then the robot will think its at the bottom when its at the top
-            elevatorPosition = BOTTOM;
-            elevatorServo.setPosition(0.5);
-        } else if (!elevatorTopSwitch.isActivated() && stayAtTop)
-            elevatorServo.setPosition(0);
-
-        if (!elevatorTopSwitch.isActivated() && !elevatorBottomSwitch.isActivated())
-            elevatorPosition = MIDDLE;
-        
-        wheelMotor.updateShooterRPM();
-    }
+    public void update() { wheelMotor.updateShooterRPM(); }
 
     public double calculateRingVelocity(double xDistance, double yDistance) {
         double temp0 = yDistance - xDistance * Math.tan(ConfigVariables.SHOOTER_ANGLE);
