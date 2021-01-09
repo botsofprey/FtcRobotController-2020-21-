@@ -1,5 +1,6 @@
 package Actions.Ultimate;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -49,7 +50,7 @@ public class ShooterSystemV1 {
 
     public ShooterSystemV1(HardwareMap hardwareMap, final LinearOpMode mode) {
         aimServo = hardwareMap.servo.get("aimServo");
-        wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
+        wheelMotor = new WheelMotor("wheelMotor", "LEDController", hardwareMap);
         elevatorServo = hardwareMap.crservo.get("elevatorServo");
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
         elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));
@@ -124,7 +125,7 @@ public class ShooterSystemV1 {
 
     public void stopElevator() { elevatorServo.setPower(0); }
 
-    private void update() {
+    public void update() {
         if (elevatorTopSwitch.isActivated() && elevatorPosition != TOP) {
             elevatorPosition = TOP;
             elevatorServo.setPower(-0.02);

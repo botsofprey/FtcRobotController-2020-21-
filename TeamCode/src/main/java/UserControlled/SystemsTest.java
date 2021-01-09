@@ -63,9 +63,9 @@ public class SystemsTest extends LinearOpMode {
         while(opModeIsActive()) {
             controller.update();
 
-            if (controller.dpadUpPressed())
+            if (controller.dpadUpPressed)
                 aimServo.setPosition(aimServo.getPosition() - 0.05);
-            if (controller.dpadDownPressed())
+            if (controller.dpadDownPressed)
                 aimServo.setPosition(aimServo.getPosition() + 0.05);
 
             telemetry.addData("Servo Angle", aimServo.getPosition());

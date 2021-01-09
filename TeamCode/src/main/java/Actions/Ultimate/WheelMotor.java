@@ -53,7 +53,7 @@ public class WheelMotor {
         targetRPM = 0;
         prevTime = System.nanoTime();
         prevTicks = motor.getCurrentTick();
-        ledController = hardwareMap.get(RevBlinkinLedDriver.class, ledControllerName);
+//        ledController = hardwareMap.get(RevBlinkinLedDriver.class, ledControllerName);
         
         rpmController = new PIDController(KP, KI, KD);
     }
@@ -74,12 +74,12 @@ public class WheelMotor {
             prevTime = currentTime;
             adjustRPM();
             Log.d("RPM", "" + curRPM);
-            if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
-                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            }
-            else {
-                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-            }
+//            if (Math.abs(curRPM - targetRPM) < RPM_TOLERANCE) {
+//                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+//            }
+//            else {
+//                ledController.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
+//            }
         }
     }
 
