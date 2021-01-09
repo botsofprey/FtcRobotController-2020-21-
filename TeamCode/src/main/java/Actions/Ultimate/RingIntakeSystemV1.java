@@ -1,5 +1,6 @@
 package Actions.Ultimate;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,18 +16,32 @@ public class RingIntakeSystemV1 {
     private static final int REVERSE = 2;
     
     private static final double[] POWERS = { 0, MOTOR_POWER, -MOTOR_POWER };
-    private static final int[][] STATE_SWITCH = { { ON, REVERSE }, { OFF, REVERSE }, { ON, OFF } };
+    private static final int[][] STATE_SWITCH = {
+            { ON, REVERSE },
+            { OFF, REVERSE },
+            { ON, OFF }
+    };
+    private static final RevBlinkinLedDriver.BlinkinPattern[] COLORS = {
+            RevBlinkinLedDriver.BlinkinPattern.WHITE,
+            RevBlinkinLedDriver.BlinkinPattern.GREEN,
+            RevBlinkinLedDriver.BlinkinPattern.RED
+    };
     
     private DcMotor intakeMotor;
     private int state;
 
+    private RevBlinkinLedDriver driver;
+
     public RingIntakeSystemV1(HardwareMap hardwareMap) {
         intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
         state = OFF;
+
+        driver = hardwareMap.get(RevBlinkinLedDriver.class, "LEDController");
     }
-    
+
     private void updateRobot() {
         intakeMotor.setPower(POWERS[state]);//todo make led lights indicate state
+        driver.setPattern(COLORS[state]);
     }
 
     //tele-op function

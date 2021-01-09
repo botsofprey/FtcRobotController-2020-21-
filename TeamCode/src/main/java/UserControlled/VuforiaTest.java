@@ -65,14 +65,14 @@ public class VuforiaTest extends LinearOpMode {
 
             controller.update();
 
-            if (controller.aHeld()) ringDetector.targetR++;
-            if (controller.bHeld()) ringDetector.targetR--;
-            if (controller.dpadUpHeld()) ringDetector.targetG++;
-            if (controller.dpadDownHeld()) ringDetector.targetG--;
-            if (controller.leftBumperHeld()) ringDetector.targetB++;
-            if (controller.rightBumperHeld()) ringDetector.targetB--;
-            if (controller.xHeld()) ringDetector.tolerance++;
-            if (controller.yHeld()) ringDetector.tolerance--;
+            if (controller.aHeld) ringDetector.targetR++;
+            if (controller.bHeld) ringDetector.targetR--;
+            if (controller.dpadUpHeld) ringDetector.targetG++;
+            if (controller.dpadDownHeld) ringDetector.targetG--;
+            if (controller.leftBumperHeld) ringDetector.targetB++;
+            if (controller.rightBumperHeld) ringDetector.targetB--;
+            if (controller.xHeld) ringDetector.tolerance++;
+            if (controller.yHeld) ringDetector.tolerance--;
 
             telemetry.update();
         }
