@@ -31,7 +31,6 @@ public class ShooterSystemV2Test implements ActionHandler {
     private static final int HIGH_GOAL_SPEED = 0;
     private static final int POWER_SHOT_SPEED = 0;
 
-
     // good
     public ServoHandler pinballServo;
     private double pinballAngle;

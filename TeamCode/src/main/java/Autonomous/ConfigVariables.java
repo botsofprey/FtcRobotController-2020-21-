@@ -70,7 +70,7 @@ public class ConfigVariables {
 
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(42, 10);
-    public static final Location SHOOTING_LINE_POINT = new Location(44, 4, 180);
+    public static final Location SHOOTING_LINE_POINT = new Location(24, 0, 180);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
     public static final Location CENTER = new Location(0,0);
 
@@ -84,12 +84,13 @@ public class ConfigVariables {
     public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(52, -60);
 
     // TODO find these locations
-    public static final Location POWER_SHOT_LEFT = new Location(24, 0, -17);
-    public static final Location POWER_SHOT_MIDDLE = new Location(24, 0, -10);
-    public static final Location POWER_SHOT_RIGHT = new Location(24, 0, -7);
     public static final int LEFT_POWER_SHOT_HEADING = -17;
     public static final int MIDDLE_POWER_SHOT_HEADING = -10;
     public static final int RIGHT_POWER_SHOT_HEADING = -7;
+    public static final Location POWER_SHOT_LEFT = new Location(24, 0, LEFT_POWER_SHOT_HEADING);
+    public static final Location POWER_SHOT_MIDDLE = new Location(24, 0, MIDDLE_POWER_SHOT_HEADING);
+    public static final Location POWER_SHOT_RIGHT = new Location(24, 0, RIGHT_POWER_SHOT_HEADING);
+
 
     public static final double POWER_SHOT_HEIGHT_CM = 77;
 

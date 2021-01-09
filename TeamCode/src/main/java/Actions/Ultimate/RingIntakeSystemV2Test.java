@@ -47,7 +47,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
     }
     
     private void updateRobot() {
-        intakeMotor.setMotorPower(POWERS[state]);//todo make led lights indicate state
+        intakeMotor.setMotorPower(POWERS[state]); // todo make led lights indicate state
     }
     
     //tele-op function
