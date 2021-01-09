@@ -40,7 +40,7 @@ public class RingIntakeSystemV1 {
     }
 
     private void updateRobot() {
-        intakeMotor.setPower(POWERS[state]);//todo make led lights indicate state
+        intakeMotor.setPower(POWERS[state]);
         driver.setPattern(COLORS[state]);
     }
 
