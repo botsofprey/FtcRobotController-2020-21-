@@ -1,10 +1,17 @@
 package Actions.Ultimate;
 
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.io.IOException;
 
@@ -37,6 +44,13 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 	private Servo intakeServo;
 	private RevBlinkinLedDriver driver;
 	
+	private RevColorSensorV3 ringDetector;
+	private boolean ringSensed;
+	private static final double RING_DETECTION_THRESHOLD = 0;//todo find these
+	private static final double NO_RING_THRESHOLD = 0;
+	
+	public int numRingsTakenIn;
+	
 	public RingIntakeSystemV2Test(HardwareMap hardwareMap) {
 		try {
 			intakeMotor = new MotorController("intakeMotor", "MotorConfig/NoLoad40.json", hardwareMap);
@@ -50,6 +64,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 		}
 		
 		state = OFF;
+		ringSensed = false;
 		
 		driver = hardwareMap.get(RevBlinkinLedDriver.class, "intakeLEDs");
 	}
@@ -59,31 +74,42 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 		intakeServo.setPosition(1);
 	}
 	
-	private void updateRobot() {
+	public void update() {//call this function repeatedly
 		intakeMotor.setMotorPower(POWERS[state]);
 		driver.setPattern(COLORS[state]);
+		detectRingsInIntake();
+	}
+	
+	private void detectRingsInIntake() {
+		double distanceToRing = ringDetector.getDistance(DistanceUnit.INCH);
+		if (ringSensed && distanceToRing > NO_RING_THRESHOLD) {
+			ringSensed = false;
+		} else if (!ringSensed && distanceToRing < RING_DETECTION_THRESHOLD) {
+			ringSensed = true;
+			if (state == REVERSE) {
+				numRingsTakenIn--;
+			} else {
+				numRingsTakenIn++;
+			}
+		}
 	}
 	
 	//tele-op function
-	public void updateState(int buttonPressed) {
+	public void updateState(int buttonPressed) {//intake on = 0; intake reverse = 1
 		state = STATE_SWITCH[state][buttonPressed];
-		updateRobot();
 	}
 	
 	// the following are used in auto
 	public void intakeOn() {
 		state = ON;
-		updateRobot();
 	}
 	
 	public void intakeReverse() {
 		state = REVERSE;
-		updateRobot();
 	}
 	
 	public void intakeOff() {
 		state = OFF;
-		updateRobot();
 	}
 	
 	@Override
