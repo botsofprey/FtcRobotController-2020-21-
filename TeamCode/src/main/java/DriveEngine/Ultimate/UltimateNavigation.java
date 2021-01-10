@@ -1027,9 +1027,7 @@ public class UltimateNavigation extends Thread {
     public void turnToLocation(Location target, LinearOpMode mode) {
         double dx = target.getX() - myLocation.getX();
         double dy = target.getY() - myLocation.getY();
-        double angle = -90 - Math.toDegrees(Math.atan(-dy / Math.abs(dx)));
-        if (dx > 0)
-            angle *= -1;
+        double angle = Math.atan2(dx, dy);
         turnToHeading(angle, mode);
 //        mode.telemetry.addData("Angle to turn", angle + "");
     }

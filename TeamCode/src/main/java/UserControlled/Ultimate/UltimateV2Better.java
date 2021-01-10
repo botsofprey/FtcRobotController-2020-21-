@@ -182,9 +182,18 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void playerOneFunctions(GamepadController controller) {
 		if(controller.dpadUpPressed) powerShots();
-		else if(controller.dpadLeftPressed) powerShotLeft();
-		else if(controller.dpadDownPressed) powerShotCenter();
-		else if(controller.dpadRightPressed) powerShotRight();
+		else if(controller.dpadLeftPressed) {
+			robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
+			powerShotLeft();
+		}
+		else if(controller.dpadDownPressed) {
+			robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
+			powerShotCenter();
+		}
+		else if(controller.dpadRightPressed) {
+			robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
+			powerShotRight();
+		}
 		
 		if(controller.rightTriggerPressed) shooter.togglePinball();
 		
@@ -228,6 +237,7 @@ public class UltimateV2Better extends LinearOpMode {
 	}
 	
 	private void powerShots() {
+		robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
 		powerShotLeft();
 		powerShotCenter();
 		powerShotRight();
@@ -237,7 +247,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotLeft() {
 		shooter.setPowerShotSpeed();
-		robot.driveToLocation(ConfigVariables.POWER_SHOT_LEFT_ON_LINE, 25, this);
+		robot.turnToLocation(ConfigVariables.POWER_SHOT_LEFT, this);
 		shooter.togglePinball();
 		sleep(10);
 		shooter.togglePinball();
@@ -245,7 +255,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotCenter() {
 		shooter.setPowerShotSpeed();
-		robot.driveToLocation(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
+		robot.turnToLocation(ConfigVariables.POWER_SHOT_MIDDLE, this);
 		shooter.togglePinball();
 		sleep(10);
 		shooter.togglePinball();
@@ -253,7 +263,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotRight() {
 		shooter.setPowerShotSpeed();
-		robot.driveToLocation(ConfigVariables.POWER_SHOT_RIGHT_ON_LINE, 25, this);
+		robot.turnToLocation(ConfigVariables.POWER_SHOT_RIGHT, this);
 		shooter.togglePinball();
 		sleep(10);
 		shooter.togglePinball();
