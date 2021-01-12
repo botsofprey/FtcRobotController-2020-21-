@@ -10,7 +10,7 @@ public class Location {
 
     private double x;
     private double y;
-    private double heading;
+    private double heading = Double.MIN_VALUE;
 
     public Location(double x, double y) {
         this.x = x;

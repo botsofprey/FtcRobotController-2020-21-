@@ -1136,6 +1136,8 @@ public class UltimateNavigation2 extends Thread {
     }
 
     public void driveToLocationPID(Location startLocation, Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode) {
+        if(targetLocation.getHeading() == Double.MIN_VALUE) targetLocation.setHeading(startLocation.getHeading()); // this should help to avoid having heading issues
+
         xPositionController.setSp(0);
         yPositionController.setSp(0);
         turnController.setSp(0);

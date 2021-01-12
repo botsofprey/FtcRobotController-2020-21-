@@ -70,7 +70,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 	}
 	
 	public void turnOffShooterWheel() {
-		wheelMotor.setRPM(SHOOTER_OFF_SPEED);
+		wheelMotor.setRPM(SHOOTER_OFF_SPEED); // use brake instead?
 	}
 	
 	public void toggleShooterWheel() {

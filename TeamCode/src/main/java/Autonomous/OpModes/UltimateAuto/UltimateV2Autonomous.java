@@ -14,6 +14,7 @@ import DriveEngine.Ultimate.UltimateNavigation2;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.PARKING_LOCATION;
+import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT;
 import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_RIGHT;
 import static Autonomous.ConfigVariables.RED_ZONE_ONE;
 import static Autonomous.ConfigVariables.RED_ZONE_THREE;
@@ -92,7 +93,7 @@ public class UltimateV2Autonomous {
     // drives from current location to where power shots must be performed
     // performs power shots from right to left
     protected void performPowerShots(double runtime) {
-        if(30 - runtime > 5) { // if the time remaining is more than the required action time, perform it
+        if(30 - runtime > 3) { // if the time remaining is more than the required action time, perform it
             robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
             // perform shots
@@ -110,7 +111,7 @@ public class UltimateV2Autonomous {
 
     // drives to the correct wobble goal delivery zone from the current robot location
     protected void deliverWobbleGoal(RingCount ringCount, double runtime) {
-        if(30 - runtime > 5) {
+        if(30 - runtime > 10) {
             Location targetLocation = RED_ZONE_ONE;
             switch (ringCount) {
                 case NO_RINGS:
@@ -129,18 +130,18 @@ public class UltimateV2Autonomous {
     // reorients and drives to intake the extra rings but only if there are extra rings
     protected void intakeExtraRings(RingCount ringCount, double runtime) {
         if(30 - runtime > 5 && ringCount != RingCount.NO_RINGS) {
-            robot.turnToHeading(UltimateNavigation2.SOUTH, 5, mode);
+            robot.turnToHeading(UltimateNavigation2.EAST, 5, mode);
             intake.intakeOn();
-            robot.driveDistanceToLocation(STARTING_RING_PILE, MED_SPEED, mode);
+            robot.driveDistanceToLocation(STARTING_RING_PILE, MED_SPEED, mode); // consider using drive to location PID -- is thought to be more accurate?
             // do a funky intake thingy here
         }
     }
 
     // drives to the second wobble goal and grabs it
     protected void obtainSecondWobbleGoal(double runtime) {
-        if(30 - runtime > 5) {
-            robot.turnToHeading(UltimateNavigation2.SOUTH, mode);
-            robot.driveDistanceToLocation(RED_WOBBLE_GOAL_RIGHT, MED_SPEED, mode);
+        if(30 - runtime > 10) {
+            robot.turnToHeading(UltimateNavigation2.EAST, mode);
+            robot.driveDistanceToLocation(RED_WOBBLE_GOAL_LEFT, MED_SPEED, mode);
             wobbleGrabber.grabOrReleaseWobble();
         }
     }

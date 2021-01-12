@@ -75,6 +75,9 @@ public class UltimateV2AutoRed extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
         RingCount ringCount = robot.vision.getRingCount();
+        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
+        telemetry.update();
+        robot.vision.stopDetection(); // stop using the camera after we have taken our count, if you don't it may underperform
         // following our power shots we deliver the wobble goal and obtain the second one
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
 
@@ -86,8 +89,10 @@ public class UltimateV2AutoRed extends LinearOpMode {
         robot.obtainSecondWobbleGoal(this.getRuntime());
 
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
-        robot.shootExtraRings(ringCount, this.getRuntime());
+
+        // TODO: may need a separate condition or function for delivering the second wobble goal
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
+        robot.shootExtraRings(ringCount, this.getRuntime());
 
         // finally we park
         robot.park();

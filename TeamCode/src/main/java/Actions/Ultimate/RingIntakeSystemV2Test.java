@@ -41,7 +41,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 	private int state;
 	
 	private MotorController intakeMotor;
-	private Servo intakeServo;
+	private Servo intakeServo; // use a servo handler here instead
 	private RevBlinkinLedDriver driver;
 	
 	private RevColorSensorV3 ringDetector;
