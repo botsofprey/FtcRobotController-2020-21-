@@ -78,38 +78,38 @@ public class UltimateV2AutoRed extends LinearOpMode {
         RingCount ringCount = robot.vision.getRingCount();
         idle();
         robot.vision.stopDetection(); // don't forget to disable ring detection when you are done
-        telemetry.addData("Rings", ringCount);
-        telemetry.update();
+//        telemetry.addData("Rings", ringCount);
+//        telemetry.update();
 
         // next we shoot the preloaded rings at the power shot targets
         robot.performPowerShots(this.getRuntime());
 //        sleep(2500); // for testing
-        telemetry.addData("deliver", "wobble");
-        telemetry.update();
+//        telemetry.addData("deliver", "wobble");
+//        telemetry.update();
         // following our power shots we deliver the wobble goal and obtain the second one
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
 //        sleep(2500); // for testing
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
-        telemetry.addData("intake", "rings");
-        telemetry.update();
+//        telemetry.addData("intake", "rings");
+//        telemetry.update();
         robot.intakeExtraRings(ringCount, this.getRuntime());
 //        sleep(2500); // for testing
-        telemetry.addData("grab", "second wobble");
-        telemetry.update();
+//        telemetry.addData("grab", "second wobble");
+//        telemetry.update();
         robot.obtainSecondWobbleGoal(this.getRuntime());
 //        sleep(2500); // for testing
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
-        telemetry.addData("shoot", "rings");
-        telemetry.update();
+//        telemetry.addData("shoot", "rings");
+//        telemetry.update();
         robot.shootExtraRings(ringCount, this.getRuntime());
 //        sleep(2500); // for testing
-        telemetry.addData("deliver", "wobble");
-        telemetry.update();
+//        telemetry.addData("deliver", "wobble");
+//        telemetry.update();
         robot.deliverWobbleGoal(ringCount, this.getRuntime());
 //        sleep(2500); // for testing
         // finally we park
-        telemetry.addData("robot", "park");
-        telemetry.update();
+//        telemetry.addData("robot", "park");
+//        telemetry.update();
         robot.park();
 
         // run until the end of the match (driver presses STOP)

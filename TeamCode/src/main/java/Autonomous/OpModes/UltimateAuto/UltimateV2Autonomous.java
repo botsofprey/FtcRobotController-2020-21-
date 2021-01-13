@@ -25,7 +25,6 @@ import static Autonomous.ConfigVariables.SHOOTING_LINE_POINT;
 import static Autonomous.ConfigVariables.STARTING_RING_PILE;
 
 /**
- * Author: Ethan Fisher
  * Date: 10/29/2020
  *
  * Autonomous for Ultimate Goal

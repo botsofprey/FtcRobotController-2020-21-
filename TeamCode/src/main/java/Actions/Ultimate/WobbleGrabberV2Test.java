@@ -25,7 +25,6 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public static final double CLAW_GRAB_ANGLE = 0.0;
     public static final double CLAW_RELEASE_ANGLE = .9;
-    public static final double ANGLE_INCREMENT = 25;
     public static final double GAINS_ANGLE = 0;
     public static final double LIFT_ANGLE = 0;
     public static final double GRAB_AND_DROP_ANGLE = 0;

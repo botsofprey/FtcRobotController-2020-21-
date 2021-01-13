@@ -28,7 +28,6 @@ public class GamepadController {
     public GamepadController(Gamepad gamepad) { this.gamepad = gamepad; update(); }
 
     public void update() {
-
         // update a
         boolean prevAHeld = aHeld;
         aHeld = gamepad.a;
