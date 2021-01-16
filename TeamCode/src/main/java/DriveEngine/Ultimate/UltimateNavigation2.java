@@ -64,7 +64,7 @@ public class UltimateNavigation2 extends Thread {
     public ImuHandler orientation;
     private double orientationOffset = 0;
 
-    private volatile boolean shouldRun = true, loggingData = true, usingSensors = true;
+    private volatile boolean shouldRun = true, loggingData = true, usingSensors = false;
     private volatile long startTime = System.nanoTime();
     private volatile HeadingVector IMUTravelVector = new HeadingVector();
 
@@ -84,7 +84,7 @@ public class UltimateNavigation2 extends Thread {
     private double acceleration = 0;
     private HardwareMap hardwareMap;
 
-    public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile, boolean ignoreInitialSensorLocation) throws Exception {
+    public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile, boolean ignoreInitialSensorLocation) throws RuntimeException {
         hardwareMap = hw;
         initializeUsingConfigFile(configFile);
         populateHashmaps();
@@ -92,13 +92,13 @@ public class UltimateNavigation2 extends Thread {
         orientation = new ImuHandler("imu", orientationOffset, hardwareMap);
         myLocation = new Location(startLocation.getX(),startLocation.getY(), robotOrientationOffset);
         distanceSensors = new LIDARSensor[3];
-        distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
-        distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
-        distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
+//        distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
+//        distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
+//        distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
 //        distanceSensors[LEFT_SENSOR].getDistance(); We shouldn't need these because of initSensor in LIDARSensor class
 //        distanceSensors[BACK_SENSOR].getDistance();
 //        distanceSensors[RIGHT_SENSOR].getDistance();
-        if (!ignoreInitialSensorLocation) getInitialLocation();
+//        if (!ignoreInitialSensorLocation) getInitialLocation();
 
         for (int i = 0; i < wheelVectors.length; i++)
             wheelVectors[i] = new HeadingVector();
@@ -128,8 +128,12 @@ public class UltimateNavigation2 extends Thread {
         }).start();
     }
 
-    public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile) throws Exception {
+    public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile) throws RuntimeException {
         this(hw, startLocation, robotOrientationOffset, configFile, false);
+    }
+
+    public UltimateNavigation2(HardwareMap hw, Location startLocation, String configFileLoc) throws RuntimeException {
+        this(hw, startLocation, startLocation.getHeading(), configFileLoc);
     }
 
     private void getInitialLocation() {
@@ -329,7 +333,7 @@ public class UltimateNavigation2 extends Thread {
         updateHeading();
         wheelVectors = getWheelVectors();
         updateLocation();
-        updateIMUTrackedDistance();
+//        updateIMUTrackedDistance();
     }
 
     private void safetySleep(long time){

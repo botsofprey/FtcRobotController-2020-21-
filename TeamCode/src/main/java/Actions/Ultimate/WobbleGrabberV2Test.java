@@ -28,9 +28,9 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     // TODO TEST FOR ACTUAL ANGLES
     public static final double ANGLE_INCREMENT = 25;
-    public static final double GAINS_ANGLE = 0;
-    public static final double LIFT_ANGLE = 0;
-    public static final double GRAB_AND_DROP_ANGLE = 0;
+    public static final double WALL_ANGLE = -50;
+    public static final double LIFT_ANGLE = -100;
+    public static final double GRAB_AND_DROP_ANGLE = -125;
     public static final double INIT_ANGLE = 0;
 
     public boolean wobbleGrabbed;
@@ -44,6 +44,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setDirection(DcMotorSimple.Direction.FORWARD);
             arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            arm.setDefaultTicksPerDegree();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,12 +54,10 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public void setClawGrabAngle() {
         claw.setPosition(CLAW_GRAB_ANGLE);
-        wobbleGrabbed = true;
     }
 
     public void releaseWobble() {
         claw.setPosition(CLAW_RELEASE_ANGLE);
-        wobbleGrabbed = false;
     }
     
     public void toggleWobbleGrabbed() {
@@ -68,6 +67,16 @@ public class WobbleGrabberV2Test implements ActionHandler {
         else {
             setClawGrabAngle();
         }
+    }
+
+    public void incrementAngle(){
+        arm.setPositionDegrees(arm.getDegree() + ANGLE_INCREMENT);
+        arm.setMotorPower(ARM_POWER_UP);
+    }
+
+    public void decrementAngle(){
+        arm.setPositionDegrees(arm.getDegree() - ANGLE_INCREMENT);
+        arm.setMotorPower(ARM_POWER_UP);
     }
 
     public void setArmAngle(double angle) {

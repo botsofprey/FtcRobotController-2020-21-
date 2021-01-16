@@ -81,6 +81,10 @@ public class MotorController extends Thread {
 
     public MotorController(String motorName, HardwareMap hardwareMap) { motor = hardwareMap.dcMotor.get(motorName); }
 
+    public void setDefaultTicksPerDegree() {
+        ticksPerDegree = ticksPerRevolution/360.0;
+    }
+
     public DcMotor.RunMode getMotorRunMode() { return motor.getMode(); }
 
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior b) { motor.setZeroPowerBehavior(b); }

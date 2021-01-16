@@ -37,10 +37,10 @@ public class ShooterSystemV2Test implements ActionHandler {
 	
 	
 	// good
-	public ServoHandler pinballServo;
-	private double pinballAngle;
-	public static final double PINBALL_TURNED = 1;
-	public static final double PINBALL_REST = 0;
+	public ServoHandler indexServo;
+	private double indexAngle;
+	public static final double INDEX_LEFT = -1;
+	public static final double INDEX_RIGHT = 1;
 	
 	
 	private RevBlinkinLedDriver ringCount;
@@ -56,11 +56,11 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public ShooterSystemV2Test(HardwareMap hardwareMap) {
 		wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
 		
-		pinballServo = new ServoHandler("pinballServo", hardwareMap);
-		pinballServo.setDirection(Servo.Direction.FORWARD);
+		indexServo = new ServoHandler("indexServo", hardwareMap);
+		indexServo.setDirection(Servo.Direction.FORWARD);
 		
 		wheelSpinning = false;
-		pinballAngle = PINBALL_REST;
+		indexAngle = INDEX_LEFT;
 		
 		ringDetector = hardwareMap.get(DistanceSensor.class, "ringDetector");
 	}
@@ -81,15 +81,11 @@ public class ShooterSystemV2Test implements ActionHandler {
 	}
 	
 	// moves the pinball servo
-	public void togglePinball() {
-		if (pinballAngle == PINBALL_REST) {
-			pinballAngle = PINBALL_TURNED;
-		}
-		else {
-			pinballAngle = PINBALL_REST;
-		}
-		
-		pinballServo.setPosition(pinballAngle);
+	public void setIndexLeft(){
+		indexServo.setPosition(INDEX_LEFT);
+	}
+	public void setIndexRight(){
+		indexServo.setPosition(INDEX_RIGHT);
 	}
 	
 	public void setPowerShotSpeed() {
@@ -103,7 +99,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public void update() {
 		wheelMotor.updateShooterRPM();
 		
-		updateRingLEDs();
+//		updateRingLEDs();
 	}
 	
 	public double calculateRingVelocity(double xDistance, double yDistance) {
@@ -114,11 +110,11 @@ public class ShooterSystemV2Test implements ActionHandler {
 		return Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
 	}
 	
-	private void updateRingLEDs() {
-		double stackHeight = RING_DETECTOR_HEIGHT - ringDetector.getDistance(DistanceUnit.INCH);
-		int numRings = (int)Math.round(stackHeight / .75);
-		ringCount.setPattern(COLORS[numRings]);
-	}
+//	private void updateRingLEDs() {
+//		double stackHeight = RING_DETECTOR_HEIGHT - ringDetector.getDistance(DistanceUnit.INCH);
+//		int numRings = (int)Math.round(stackHeight / .75);
+//		ringCount.setPattern(COLORS[numRings]);
+//	}
 	
 	@Override
 	public boolean doAction(String action, long maxTimeAllowed) {

@@ -166,9 +166,9 @@ public class UltimateV2Autonomous {
     }
 
     protected void indexShooter(){
-        shooter.togglePinball();
-        mode.sleep(100);
-        shooter.togglePinball();
+        shooter.setIndexLeft();
+        mode.sleep(50);
+        shooter.setIndexRight();
     }
 
 
