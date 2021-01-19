@@ -87,6 +87,8 @@ public class UltimateV2Autonomous {
     // AUTONOMOUS FUNCTIONS HERE
     protected void init() {
         wobbleGrabber.setClawGrabAngle();
+        shooter.setIndexLeft();
+        intake.intakeServoIn();
         // set initial servo positions
     }
 
@@ -97,7 +99,7 @@ public class UltimateV2Autonomous {
             robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
             // perform shots
-            shooter.setPowerShotSpeed(); // spin up motor to expected power shot rpm
+            shooter.setPowerShotPower(); // spin up motor to expected power shot rpm
             robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, mode); // turn to heading for first power shot and shoot
             indexShooter();
 
@@ -134,6 +136,12 @@ public class UltimateV2Autonomous {
             intake.intakeOn();
             robot.driveDistanceToLocation(STARTING_RING_PILE, MED_SPEED, mode); // consider using drive to location PID -- is thought to be more accurate?
             // do a funky intake thingy here
+            if(ringCount == ringCount.SINGLE_STACK) {
+                robot.driveDistance(12, robot.getOrientation(), MED_SPEED, mode);
+            }
+            else {
+                funkyIntakeThingy();
+            }
         }
     }
 
@@ -142,7 +150,15 @@ public class UltimateV2Autonomous {
         if(30 - runtime > 10) {
             robot.turnToHeading(UltimateNavigation2.EAST, mode);
             robot.driveDistanceToLocation(RED_WOBBLE_GOAL_LEFT, MED_SPEED, mode);
-            wobbleGrabber.grabOrReleaseWobble();
+            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
+            wobbleGrabber.releaseWobble();
+            robot.driveOnHeading(robot.getOrientation(), LOW_SPEED);
+            while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
+            robot.brake();
+            wobbleGrabber.setClawGrabAngle();
+            mode.sleep(50);
+            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
+
         }
     }
 
@@ -153,7 +169,7 @@ public class UltimateV2Autonomous {
             robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
             // shoot rings
-            shooter.setHighGoalSpeed(); // spin up motor to proper high goal rpm
+            shooter.setHighGoalPower(); // spin up motor to proper high goal rpm
             if(ringCount == RingCount.SINGLE_STACK){ // if there is only one extra ring, only index once
                 indexShooter();
             }
@@ -171,12 +187,22 @@ public class UltimateV2Autonomous {
         shooter.setIndexRight();
     }
 
+    protected void funkyIntakeThingy(){ // TODO figure out how to intake 3/4 rings in starting stack
+
+    }
+
+    protected void dropIntake() {
+        intake.intakeServoOut();
+        mode.sleep(50);
+        intake.intakeServoIn();
+    }
+
 
     // parks the robot over the launch line
     protected void park() {
         // turn everything off
         wobbleGrabber.pause();
-        shooter.turnOffShooterWheel();
+        shooter.pauseShooter();
         intake.intakeOff();
 
         // drive to parking line

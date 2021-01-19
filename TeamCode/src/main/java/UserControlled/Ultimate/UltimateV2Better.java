@@ -56,8 +56,8 @@ import UserControlled.JoystickHandler;
  *      start - N/A
  *      a - N/A
  *      b - N/A
- *      x - N/A
- *      y - N/A
+ *      x - reset robot x position against left wall
+ *      y - reset robot y position against back wall
  *      dpad up/down/left/right - auto power shots
  *      right trigger - shoot
  *      left trigger - slow mode
@@ -71,16 +71,14 @@ import UserControlled.JoystickHandler;
  *      x - toggle shooter
  *      y - toggle wobble grabber
  *      dpad up/down/left/right - wobble grabber positions
- *      right trigger - drop intake
+ *      right trigger - toggle intake servo
  *      left trigger - N/A
  */
 
 @TeleOp(name="Ultimate V2", group="Competition")
 //@Disabled
 public class UltimateV2Better extends LinearOpMode {
-	
-	// TODO add speed values and angles when using the wobble grabber
-	
+
 	// create objects and locally global variables here
 	UltimateNavigation2 robot;
 	JoystickHandler leftStick, rightStick;
@@ -92,7 +90,8 @@ public class UltimateV2Better extends LinearOpMode {
 	GamepadController controllerOne, controllerTwo;
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
-			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false;
+			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
+			dpadD2pressed = false, toggleIncrement = false, dpadU2pressed = false, toggleDecrement = false;
 	
 	@Override
 	public void runOpMode() {
@@ -113,12 +112,14 @@ public class UltimateV2Better extends LinearOpMode {
 		intake = new RingIntakeSystemV2Test(hardwareMap);
 		shooter = new ShooterSystemV2Test(hardwareMap);
 		grabber = new WobbleGrabberV2Test(hardwareMap);
-		
+
+		/** ideally we can use these gamepads for inputs, however the logic is flawed within the
+		    gamepad class which causes multiple button presses to be necessary for any kind of response */
+
 		// initialize joysticks
 		leftStick = new JoystickHandler(gamepad1, JoystickHandler.LEFT_JOYSTICK);
 		rightStick = new JoystickHandler(gamepad1, JoystickHandler.RIGHT_JOYSTICK);
-		
-		controllerOne = new GamepadController(gamepad1);//todo use these for taking inputs; they improve code readability and make it simpler
+		controllerOne = new GamepadController(gamepad1);
 		controllerTwo = new GamepadController(gamepad2);
 		
 		// add any other useful telemetry data or logging data here
@@ -131,7 +132,7 @@ public class UltimateV2Better extends LinearOpMode {
 		
 		// puts the pinball servo on the outside
 		shooter.indexServo.setPosition(ShooterSystemV2Test.INDEX_LEFT);
-		shooter.update();
+//		shooter.update();
 		
 		// should only be used for a time keeper or other small things, avoid using this space when possible
 		while (opModeIsActive()) {
@@ -152,7 +153,7 @@ public class UltimateV2Better extends LinearOpMode {
 					playerOneFunctions(controllerOne);
 					playerTwoFunctions(controllerTwo);
 				}
-				telemetry.addData("Wobble angle:", grabber.arm.getDegree());
+				telemetry.addData("Wheel Power:", shooter.betterWheelMotorMaybe.getMotorPower());
 				telemetry.update();
 
 				updateEStop();
@@ -202,13 +203,14 @@ public class UltimateV2Better extends LinearOpMode {
 			powerShotRight();
 		}
 
+
 		// Indexer toggle
 		if(gamepad1.right_trigger > 0.1 && !rt1Pressed){
-			rightTriggerPressed = true;
+			rt1Pressed = true;
 			toggleIndex = !toggleIndex;
 		}
 		else if(!(gamepad1.right_trigger > 0.1)){
-			rt1Pressed = !rt1Pressed;
+			rt1Pressed = false;
 		}
 		if(toggleIndex){
 			shooter.setIndexLeft();
@@ -218,68 +220,95 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 
 		// TODO: update this to be actually correct, need to determine which wall to be against and what the x and y values would be
-		if(controller.xPressed)
-			robot.setLocation(new Location(0, robot.getRobotLocation().getY()));
+		if(gamepad1.x)
+			robot.setLocation(new Location(-23.5, robot.getRobotLocation().getY()));
 		
-		if(controller.yPressed)
-			robot.setLocation(new Location(robot.getRobotLocation().getX(), 0));
+		if(gamepad1.y)
+			robot.setLocation(new Location(robot.getRobotLocation().getX(), -70.5));
 		
-		if (controller.leftBumperPressed)
-			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
-		
-		if (controller.rightBumperPressed)
-			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
+//		if (gamepad1.left_bumper)
+//			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
+//
+//		if (gamepad1.right_bumper)
+//			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
-		if (gamepad2.a){
-			intake.updateState(0);
+		if(gamepad2.a && !a2Pressed) {
+			a2Pressed = true;
+			intakeOn = !intakeOn;
+			outakeOn = false;
+		} else if(!gamepad2.a) {
+			a2Pressed = false;
 		}
-		
-		if (gamepad2.b) {
-			intake.updateState(1);
+
+		if(gamepad2.b && !b2Pressed) {
+			b2Pressed = true;
+			outakeOn = !outakeOn;
+			intakeOn = false;
+		} else if(!gamepad2.b) {
+			b2Pressed = false;
 		}
-		
+
+		if(intakeOn) intake.intake();
+		else if(outakeOn) intake.spit();
+		else intake.pauseIntake();
+
 		// Shooter wheel toggle
-		if(gamepad2.x && !x2Pressed){
+		if (gamepad2.x && !x2Pressed) {
 			x2Pressed = true;
 			toggleShooterWheel = !toggleShooterWheel;
-		}
-		else if(!gamepad2.x){
+		} else if (!gamepad2.x) {
 			x2Pressed = !x2Pressed;
 		}
-		if(toggleShooterWheel){
-			shooter.turnOnShooterWheel();
-		}
-		else{
-			shooter.turnOffShooterWheel();
+		if (toggleShooterWheel) {
+			shooter.spinUp();
+		} else {
+			shooter.pauseShooter();
 		}
 
 		// Wobble grab toggle
-		if(gamepad2.y && !y2Pressed) {
+		if (gamepad2.y && !y2Pressed) {
 			y2Pressed = true;
 			toggleWobbleGrabbed = !toggleWobbleGrabbed;
-		}
-		else if(!gamepad2.y){
+		} else if (!gamepad2.y) {
 			y2Pressed = false;
 		}
-		if(toggleWobbleGrabbed){
+		if (toggleWobbleGrabbed) {
 			grabber.setClawGrabAngle();
-		}
-		else{
+		} else {
 			grabber.releaseWobble();
 		}
 
-		if(gamepad2.dpad_up)
+		if (gamepad2.dpad_up)
 			grabber.setArmAngle(WobbleGrabberV2Test.WALL_ANGLE);
-		else if(gamepad2.dpad_right)
+		else if (gamepad2.dpad_right)
 			grabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
-		else if(gamepad2.dpad_down)
+		else if (gamepad2.dpad_down)
 			grabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
-		else if(gamepad2.dpad_left)
+		else if (gamepad2.dpad_left)
 			grabber.setArmAngle(WobbleGrabberV2Test.INIT_ANGLE);
-		
-//        if(controller.rightTriggerPressed()) intake.drop();
+
+		// Intake servo toggle
+		if (gamepad2.right_trigger > 0.1 && !rt2Pressed) {
+			rt2Pressed = true;
+			toggleIntakeServo = !toggleIntakeServo;
+		} else if (!(gamepad2.right_trigger > 0.1)) {
+			rt2Pressed = false;
+		}
+		if (toggleIntakeServo) {
+			intake.intakeServoOut();
+		} else {
+			intake.intakeServoIn();
+		}
+
+		if (gamepad2.right_bumper) {
+			shooter.setHighGoalPower();
+		}
+
+		if(gamepad2.left_bumper) {
+			shooter.setPowerShotPower();
+		}
 	}
 	
 	private void powerShots() {
@@ -319,10 +348,11 @@ public class UltimateV2Better extends LinearOpMode {
 		robot.brake();
 		intake.intakeOff();
 		grabber.pause();
-		shooter.turnOffShooterWheel();
+//		shooter.turnOffShooterWheel();
+		shooter.pauseShooter();
 	}
 	
 	private void updateMiscFunctions() {
-		shooter.update();
+//		shooter.update();
 	}
 }

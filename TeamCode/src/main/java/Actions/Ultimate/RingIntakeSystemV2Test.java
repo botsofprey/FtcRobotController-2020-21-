@@ -53,7 +53,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 	
 	public RingIntakeSystemV2Test(HardwareMap hardwareMap) {
 		try {
-			intakeMotor = new MotorController("intakeMotor", "MotorConfig/NoLoad40.json", hardwareMap);
+			intakeMotor = new MotorController("intakeMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 			intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 			intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -68,11 +68,7 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 		
 		driver = hardwareMap.get(RevBlinkinLedDriver.class, "intakeLEDs");
 	}
-	
-	public void dropDown() {
-		intakeServo.setPosition(0);
-		intakeServo.setPosition(1);
-	}
+
 	
 	public void update() {//call this function repeatedly
 		intakeMotor.setMotorPower(POWERS[state]);
@@ -111,6 +107,22 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 	public void intakeOff() {
 		state = OFF;
 	}
+
+	public void intake() {
+		intakeMotor.setMotorPower(1);
+	}
+
+	public void spit() {
+		intakeMotor.setMotorPower(-1);
+	}
+
+	public void pauseIntake() {
+		intakeMotor.brake();
+	}
+
+	public void intakeServoOut() { intakeServo.setPosition(0); }
+
+	public void intakeServoIn() { intakeServo.setPosition(1); }
 	
 	@Override
 	public boolean doAction(String action, long maxTimeAllowed) {

@@ -32,11 +32,13 @@ package UserControlled.Annie;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 import Actions.Annie.MiscellaneousActionsV2;
 import Actions.Annie.StoneStackingSystemV3;
 import Autonomous.Location;
 import DriveEngine.HolonomicDriveSystemTesting;
+import SensorHandlers.MagneticLimitSwitch;
 import SensorHandlers.SensorPackage;
 import SensorHandlers.UltrasonicIRSensor;
 import UserControlled.JoystickHandler;
@@ -65,7 +67,7 @@ public class AnnieV2 extends LinearOpMode {
         sss = new StoneStackingSystemV3(hardwareMap);
         otherActions = new MiscellaneousActionsV2(hardwareMap);
 
-        sensors = new SensorPackage(/*new MagneticLimitSwitch(hardwareMap.get(DigitalChannel.class, "liftReset"), "liftReset"),*/
+        sensors = new SensorPackage(new MagneticLimitSwitch(hardwareMap.get(DigitalChannel.class, "liftReset"), "liftReset"),
                 new UltrasonicIRSensor(hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front"), "front"));
 
         leftStick = new JoystickHandler(gamepad1, JoystickHandler.LEFT_JOYSTICK);

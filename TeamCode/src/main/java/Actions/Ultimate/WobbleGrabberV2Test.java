@@ -1,13 +1,18 @@
 package Actions.Ultimate;
 
+import android.text.method.Touch;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import Actions.ActionHandler;
 import Actions.HardwareWrappers.ServoHandler;
 import MotorControllers.MotorController;
+import SensorHandlers.LimitSwitch;
 
 /**
  * Author: Ethan Fisher
@@ -19,14 +24,14 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public ServoHandler claw;
     public MotorController arm;
+    public LimitSwitch sensor;
 
     private static final double ARM_POWER_DOWN = -.2;
     private static final double ARM_POWER_UP = .25;
 
-    public static final double CLAW_GRAB_ANGLE = 0.0;
-    public static final double CLAW_RELEASE_ANGLE = .9;
+    public static final double CLAW_GRAB_ANGLE = -1;
+    public static final double CLAW_RELEASE_ANGLE = 1;
 
-    // TODO TEST FOR ACTUAL ANGLES
     public static final double ANGLE_INCREMENT = 25;
     public static final double WALL_ANGLE = -50;
     public static final double LIFT_ANGLE = -100;
@@ -38,6 +43,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
     public WobbleGrabberV2Test(HardwareMap hardwareMap) {
         claw = new ServoHandler("wobbleGrabberClaw", hardwareMap);
         claw.setDirection(Servo.Direction.FORWARD);
+        sensor = new LimitSwitch(hardwareMap.touchSensor.get("wobbleGrabberSensor"), "wobbleGrabberSensor");
 
         try {
             arm = new MotorController("wobbleGrabberArm", "ActionConfig/WobbleArmConfig.json", hardwareMap);
@@ -59,15 +65,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
     public void releaseWobble() {
         claw.setPosition(CLAW_RELEASE_ANGLE);
     }
-    
-    public void toggleWobbleGrabbed() {
-        if (wobbleGrabbed) {
-            releaseWobble();
-        }
-        else {
-            setClawGrabAngle();
-        }
-    }
+
 
     public void incrementAngle(){
         arm.setPositionDegrees(arm.getDegree() + ANGLE_INCREMENT);
@@ -88,14 +86,6 @@ public class WobbleGrabberV2Test implements ActionHandler {
             arm.setPositionDegrees(angle);
             arm.setMotorPower(ARM_POWER_DOWN);
         }
-    }
-
-    public void grabOrReleaseWobble(){
-        setArmAngle(GRAB_AND_DROP_ANGLE); // Lower and wait for wobble arm
-        while(armIsBusy());
-        toggleWobbleGrabbed(); // Open / close grabber claw
-        setArmAngle(LIFT_ANGLE); // Lift and wait for wobble arm
-        while(armIsBusy());
     }
 
 
