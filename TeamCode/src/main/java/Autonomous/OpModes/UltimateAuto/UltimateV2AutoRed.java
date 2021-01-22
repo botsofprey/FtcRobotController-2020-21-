@@ -83,7 +83,7 @@ public class UltimateV2AutoRed extends LinearOpMode {
         robot.dropIntake();
 
         // next we deliver the first wobble goal to the zone
-        robot.deliverWobbleGoal(ringCount, this.getRuntime());
+        robot.deliverWobbleGoal(ringCount, this.getRuntime(), 1);
 
         // following the delivery we shoot the preloaded rings at the power shot targets
         robot.performPowerShots(this.getRuntime());
@@ -95,7 +95,7 @@ public class UltimateV2AutoRed extends LinearOpMode {
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
 
         // TODO: may need a separate condition or function for delivering the second wobble goal
-        robot.deliverWobbleGoal(ringCount, this.getRuntime());
+        robot.deliverWobbleGoal(ringCount, this.getRuntime(), 2);
         robot.shootExtraRings(ringCount, this.getRuntime());
 
         // finally we park

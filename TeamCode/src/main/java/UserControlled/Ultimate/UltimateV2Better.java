@@ -88,6 +88,11 @@ public class UltimateV2Better extends LinearOpMode {
 	WobbleGrabberV2Test grabber;
 	
 	GamepadController controllerOne, controllerTwo;
+
+	protected static final double MAX_SPEED = 50;
+	protected static final double MED_SPEED = 25;
+	protected static final double LOW_SPEED = 15;
+	protected static final double MIN_SPEED = 5;
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
 			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
@@ -129,10 +134,7 @@ public class UltimateV2Better extends LinearOpMode {
 		// nothing goes between the above and below lines
 		
 		waitForStart();
-		
-		// puts the pinball servo on the outside
-		shooter.indexServo.setPosition(ShooterSystemV2Test.INDEX_LEFT);
-//		shooter.update();
+
 		
 		// should only be used for a time keeper or other small things, avoid using this space when possible
 		while (opModeIsActive()) {
@@ -154,6 +156,8 @@ public class UltimateV2Better extends LinearOpMode {
 					playerTwoFunctions(controllerTwo);
 				}
 				telemetry.addData("Wheel Power:", shooter.betterWheelMotorMaybe.getMotorPower());
+				telemetry.addData("Robot Heading:", robot.getOrientation());
+				telemetry.addData("Wobble Angle:", grabber.arm.getDegree());
 				telemetry.update();
 
 				updateEStop();
@@ -312,36 +316,45 @@ public class UltimateV2Better extends LinearOpMode {
 	}
 	
 	private void powerShots() {
-//		robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
-//		powerShotLeft();
-//		powerShotCenter();
-//		powerShotRight();
+		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LOCATION_NO_HEADING, MED_SPEED, this);
+		powerShotLeft();
+		powerShotCenter();
+		powerShotRight();
 	}
 	
 	// TODO: Modify the functions below to actually go to the correct positions and score power shots
 	
 	private void powerShotLeft() {
-//		shooter.setPowerShotSpeed();
-//		robot.turnToLocation(ConfigVariables.POWER_SHOT_LEFT, this);
-//		shooter.togglePinball();
-//		sleep(10);
-//		shooter.togglePinball();
+		shooter.setPowerShotPower();
+		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LEFT, MED_SPEED,this);
+		if(shooter.indexServo.getPosition() == 1) {
+			shooter.setIndexLeft();
+		}
+		else {
+			shooter.setIndexRight();
+		}
 	}
 	
 	private void powerShotCenter() {
-//		shooter.setPowerShotSpeed();
-//		robot.turnToLocation(ConfigVariables.POWER_SHOT_MIDDLE, this);
-//		shooter.togglePinball();
-//		sleep(10);
-//		shooter.togglePinball();
+		shooter.setPowerShotPower();
+		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_MIDDLE, MED_SPEED,this);
+		if(shooter.indexServo.getPosition() == 1){
+			shooter.setIndexLeft();
+		}
+		else {
+			shooter.setIndexRight();
+		}
 	}
 	
 	private void powerShotRight() {
-//		shooter.setPowerShotSpeed();
-//		robot.turnToLocation(ConfigVariables.POWER_SHOT_RIGHT, this);
-//		shooter.togglePinball();
-//		sleep(10);
-//		shooter.togglePinball();
+		shooter.setPowerShotPower();
+		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_RIGHT, MED_SPEED,this);
+		if(shooter.indexServo.getPosition() == 1) {
+			shooter.setIndexLeft();
+		}
+		else {
+			shooter.setIndexRight();
+		}
 	}
 	
 	private void stopActions() {

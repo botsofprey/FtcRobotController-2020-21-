@@ -42,6 +42,7 @@ public class UltimateV2Autonomous {
 
     protected VisionHelperUltimateGoal vision;
 
+    protected static final int WOBBLE_OFFSET = 4;
     protected static final double MAX_SPEED = 50;
     protected static final double MED_SPEED = 25;
     protected static final double LOW_SPEED = 15;
@@ -112,7 +113,7 @@ public class UltimateV2Autonomous {
     }
 
     // drives to the correct wobble goal delivery zone from the current robot location
-    protected void deliverWobbleGoal(RingCount ringCount, double runtime) {
+    protected void deliverWobbleGoal(RingCount ringCount, double runtime, int wobbleNum) {
         if(30 - runtime > 10) {
             Location targetLocation = RED_ZONE_ONE;
             switch (ringCount) {
@@ -125,7 +126,13 @@ public class UltimateV2Autonomous {
                     targetLocation = RED_ZONE_THREE; // if four rings, zone three
                     break;
             }
-            robot.driveToLocationPID(targetLocation, MED_SPEED, mode);
+            if(wobbleNum == 1) {
+                robot.driveToLocationPID(targetLocation, MED_SPEED, mode);
+            }
+            else { // Place second wobble goal slightly off from the location of the first to avoid collision
+                Location offsetTarget = new Location(targetLocation.getX() - WOBBLE_OFFSET, targetLocation.getY() - WOBBLE_OFFSET);
+                robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
+            }
         }
     }
 
@@ -150,14 +157,14 @@ public class UltimateV2Autonomous {
         if(30 - runtime > 10) {
             robot.turnToHeading(UltimateNavigation2.EAST, mode);
             robot.driveDistanceToLocation(RED_WOBBLE_GOAL_LEFT, MED_SPEED, mode);
-            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
-            wobbleGrabber.releaseWobble();
-            robot.driveOnHeading(robot.getOrientation(), LOW_SPEED);
+            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE); // Bring arm down to grab angle
+            wobbleGrabber.releaseWobble(); // Open claw
+            robot.driveOnHeading(robot.getOrientation(), LOW_SPEED); // Drive forwards, slowly
             while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
-            robot.brake();
-            wobbleGrabber.setClawGrabAngle();
+            robot.brake(); // Once sensor is pressed, stop
+            wobbleGrabber.setClawGrabAngle(); // Close claw
             mode.sleep(50);
-            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
+            wobbleGrabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE); // Lift arm back up
 
         }
     }
@@ -185,6 +192,7 @@ public class UltimateV2Autonomous {
         shooter.setIndexLeft();
         mode.sleep(50);
         shooter.setIndexRight();
+        mode.sleep(50);
     }
 
     protected void funkyIntakeThingy(){ // TODO figure out how to intake 3/4 rings in starting stack

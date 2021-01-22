@@ -30,7 +30,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 	private boolean wheelSpinning;
 	public MotorController betterWheelMotorMaybe;
 	
-	// TODO TEST FOR ACTUAL RPMS
+	// TODO fix PID controller in rpm class
 	private static final int SHOOTER_ON_SPEED = 5000; // rotations per minute
 	private static final int SHOOTER_OFF_SPEED = 0;
 	private static final int HIGH_GOAL_SPEED = 0;
@@ -40,8 +40,8 @@ public class ShooterSystemV2Test implements ActionHandler {
 	// TODO USE THESE POWERS
 	private double power = 0;
 	private static final double SHOOTER_OFF_POWER = 0;
-	private static final double HIGH_GOAL_POWER = 0.7;
-	private static final double POWER_SHOT_POWER = 0.55;
+	private static final double HIGH_GOAL_POWER = 0.69;
+	private static final double POWER_SHOT_POWER = 0.6;
 	
 	
 	// good
