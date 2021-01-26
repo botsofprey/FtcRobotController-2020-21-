@@ -155,9 +155,10 @@ public class UltimateV2Better extends LinearOpMode {
 					playerOneFunctions(controllerOne);
 					playerTwoFunctions(controllerTwo);
 				}
-				telemetry.addData("Wheel Power:", shooter.betterWheelMotorMaybe.getMotorPower());
-				telemetry.addData("Robot Heading:", robot.getOrientation());
-				telemetry.addData("Wobble Angle:", grabber.arm.getDegree());
+				telemetry.addData("Wheel Power", shooter.betterWheelMotorMaybe.getMotorPower());
+				telemetry.addData("Wheel Speed (ticks/sec)", shooter.betterWheelMotorMaybe.getCurrentTicksPerSecond());
+				telemetry.addData("Robot Heading", robot.getOrientation());
+				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
 				telemetry.update();
 
 				updateEStop();
@@ -186,8 +187,8 @@ public class UltimateV2Better extends LinearOpMode {
 	private void controlDrive() {
 		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
-		double drivePower = slowMode ? leftStick.magnitude() / 3 : leftStick.magnitude();
-		double turnPower = slowMode ? rightStick.x() / 4 : rightStick.x();
+		double drivePower = slowMode ? leftStick.magnitude() / 3.0 : leftStick.magnitude();
+		double turnPower = slowMode ? rightStick.x() / 4.0 : rightStick.x() / 2.0;
 		if (!eStop)
 			robot.driveOnHeadingWithTurning(leftStick.angle(), drivePower, turnPower);
 	}
@@ -263,7 +264,7 @@ public class UltimateV2Better extends LinearOpMode {
 			x2Pressed = true;
 			toggleShooterWheel = !toggleShooterWheel;
 		} else if (!gamepad2.x) {
-			x2Pressed = !x2Pressed;
+			x2Pressed = false;
 		}
 		if (toggleShooterWheel) {
 			shooter.spinUp();

@@ -38,11 +38,10 @@ public class ShooterSystemV2Test implements ActionHandler {
 
 
 	// TODO USE THESE POWERS
-	private double power = 0;
 	private static final double SHOOTER_OFF_POWER = 0;
-	private static final double HIGH_GOAL_POWER = 0.69;
-	private static final double POWER_SHOT_POWER = 0.6;
-	
+	public static final double HIGH_GOAL_POWER = 0.66;
+	public static final double POWER_SHOT_POWER = 0.6;
+	private double power = HIGH_GOAL_POWER;
 	
 	// good
 	public ServoHandler indexServo;
@@ -51,15 +50,15 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public static final double INDEX_RIGHT = 1;
 
 
-	private RevBlinkinLedDriver ringCount;
-	private DistanceSensor ringDetector;
-	private static final double RING_DETECTOR_HEIGHT = 0;//todo find this value
-	private static final RevBlinkinLedDriver.BlinkinPattern[] COLORS = {
-			RevBlinkinLedDriver.BlinkinPattern.BLACK,
-			RevBlinkinLedDriver.BlinkinPattern.DARK_GRAY,
-			RevBlinkinLedDriver.BlinkinPattern.GRAY,
-			RevBlinkinLedDriver.BlinkinPattern.WHITE
-	};
+//	private RevBlinkinLedDriver ringCount;
+//	private DistanceSensor ringDetector;
+//	private static final double RING_DETECTOR_HEIGHT = 0;//todo find this value
+//	private static final RevBlinkinLedDriver.BlinkinPattern[] COLORS = {
+//			RevBlinkinLedDriver.BlinkinPattern.BLACK,
+//			RevBlinkinLedDriver.BlinkinPattern.DARK_GRAY,
+//			RevBlinkinLedDriver.BlinkinPattern.GRAY,
+//			RevBlinkinLedDriver.BlinkinPattern.WHITE
+//	};
 	
 	public ShooterSystemV2Test(HardwareMap hardwareMap) {
 //		wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
