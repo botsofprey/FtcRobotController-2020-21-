@@ -142,7 +142,7 @@ public class ImuHandler extends Thread {
     }
 
     /*
-        returns the orientation of the robot, 0 to 359 degrees
+        returns the orientation of the robot based on how much it has spun around, 1.5 spins clockwise from 0 = 540, 1.5 spins ccw from 0 = -540
      */
     public double getOrientation(){
         double angle = -(angles.firstAngle + 360 * turnCount); // Z angle is the robot's orientation angle
