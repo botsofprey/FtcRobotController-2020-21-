@@ -242,4 +242,15 @@ public class UltimateV2Autonomous {
         robot.driveToLocationPID(new Location(-48, 24, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
     }
+
+    public void driveInSquare2() {
+        robot.driveDistanceToLocation(new Location(48, -24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(0, -24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(0, 24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(48, 24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+    }
 }
