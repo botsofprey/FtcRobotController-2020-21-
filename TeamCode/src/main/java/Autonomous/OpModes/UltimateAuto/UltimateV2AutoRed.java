@@ -72,6 +72,7 @@ public class UltimateV2AutoRed extends LinearOpMode {
             telemetry.addData("# of rings", robot.vision.numOfSeenRings());
             telemetry.update();
         }
+
         waitForStart();
 
         // first determine the number of rings to assist in the wobble goal position

@@ -123,28 +123,21 @@ public class UltimateV2Autonomous {
     // drives to the correct wobble goal delivery zone from the current robot location
     protected void deliverWobbleGoal(LinearOpMode mode, RingCount ringCount, double runtime, int wobbleNum) {
         if(mode.opModeIsActive()) {
-                Location targetLocation = RED_ZONE_ONE;
-                switch (ringCount) {
-                    case NO_RINGS:
-                        break; // if no rings, zone one
-                    case SINGLE_STACK:
-                        targetLocation = RED_ZONE_TWO; // if one ring, zone two
-                        break;
-                    case QUAD_STACK:
-                        targetLocation = RED_ZONE_THREE; // if four rings, zone three
-                        break;
-                }
-                if(wobbleNum == 1) {
-                    robot.driveToLocationPID(targetLocation, HIGH_SPEED, mode);
-                }
-                else { // Place second wobble goal slightly off from the location of the first to avoid collision
-                    Location offsetTarget = new Location(targetLocation.getX() + WOBBLE_OFFSET, targetLocation.getY() - WOBBLE_OFFSET);
-                    robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
-                }
-                wobbleGrabber.releaseWobble();
-                wobbleGrabber.setInitAngle();
+            Location targetLocation = RED_ZONE_ONE;
+            if (ringCount == RingCount.SINGLE_STACK)
+                targetLocation = RED_ZONE_TWO;
+            else if (ringCount == RingCount.QUAD_STACK)
+                targetLocation = RED_ZONE_THREE;
+            if(wobbleNum == 1) {
+                robot.driveToLocationPID(targetLocation, HIGH_SPEED, mode);
             }
-
+            else { // Place second wobble goal slightly off from the location of the first to avoid collision
+                Location offsetTarget = new Location(targetLocation.getX() + WOBBLE_OFFSET, targetLocation.getY() - WOBBLE_OFFSET);
+                robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
+            }
+            wobbleGrabber.releaseWobble();
+            wobbleGrabber.setInitAngle();
+        }
     }
 
     // reorients and drives to intake the extra rings but only if there are extra rings

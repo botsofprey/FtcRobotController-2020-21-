@@ -629,7 +629,6 @@ public class UltimateNavigation2 extends Thread {
                     deltaInches[i] = Math.abs(motorPositionsInches[i] - startPositionsInches[i]);
 //                    mode.telemetry.addData("Delta: ", motorPositionsInches[i] - startPositionsInches[i]);
                 }
-                mode.telemetry.update();
                 for (double i : deltaInches) {
                     averagePosition += i;
                 }
@@ -637,6 +636,8 @@ public class UltimateNavigation2 extends Thread {
                 distanceTraveled = averagePosition / Math.sin(Math.toRadians(45.0));
             }
             Log.d("Distance Travelled", "" + distanceTraveled);
+            mode.telemetry.addData("Distance Travelled", "" + distanceTraveled);
+            mode.telemetry.update();
         }
         brake();
         Log.d("Location", getRobotLocation().toString());
