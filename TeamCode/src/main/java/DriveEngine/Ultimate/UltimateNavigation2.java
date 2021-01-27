@@ -64,7 +64,7 @@ public class UltimateNavigation2 extends Thread {
     public ImuHandler orientation;
     private double orientationOffset = 0;
 
-    private volatile boolean shouldRun = true, loggingData = true, usingSensors = false;
+    private volatile boolean shouldRun = true, loggingData = true, usingSensors = true;
     private volatile long startTime = System.nanoTime();
     private volatile HeadingVector IMUTravelVector = new HeadingVector();
 
@@ -222,20 +222,21 @@ public class UltimateNavigation2 extends Thread {
         else if(Math.abs(simpleHeading - EAST) < HEADING_TOLERANCE) dir = EAST;
         else if (Math.abs(simpleHeading - SOUTH) < HEADING_TOLERANCE) dir = SOUTH;
         else if (Math.abs(simpleHeading - WEST) < HEADING_TOLERANCE) dir = WEST;
+        else {
+            // if not lined up to a square direction, then just use wheel encoders to track position
+            shouldTranslateX = true;
+            shouldTranslateY = true;
+        }
 
 //        if(simpleHeading < 2.5 && simpleHeading > -2.5) dir = NORTH;
 //        else if(simpleHeading < 92.5 && simpleHeading > 87.5) dir = EAST; // REVIEW: suggest to define HEADING_TOLERANCE = 1 and use abs(simpleHeading - 90) < HEADING_TOLERANCE
 //        else if(simpleHeading < 182.5 && simpleHeading > 177.5) dir = SOUTH;
 //        else if(simpleHeading < 272.5 && simpleHeading > 267.5) dir = WEST;
-        else {
-            // if not lined up to a square direction, then just use wheel odometry to track position
-            shouldTranslateX = true;
-            shouldTranslateY = true;
-        }
+
 
         // wheel location tracking
         HeadingVector travelVector = wheelVectors[0].addVectors(wheelVectors);
-        travelVector = new HeadingVector(travelVector.x() / 2, travelVector.y() / 2);
+        travelVector = new HeadingVector(travelVector.x() / 2.0, travelVector.y() / 2.0);
         double headingOfRobot = travelVector.getHeading();
         double magnitudeOfRobot = travelVector.getMagnitude();
         double actualHeading = (headingOfRobot + robotHeading) % 360;

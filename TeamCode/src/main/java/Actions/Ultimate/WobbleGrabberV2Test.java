@@ -22,7 +22,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
     public MotorController arm;
     public LimitSwitch sensor;
 
-    private static final double ARM_POWER = .25;
+    private static final double ARM_POWER = .35;
 
     public static final double CLAW_GRAB_POSITION = 1;
     public static final double CLAW_RELEASE_POSITION = -1;

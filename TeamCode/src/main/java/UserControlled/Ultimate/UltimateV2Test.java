@@ -78,7 +78,7 @@ import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
  *      left trigger - N/A
  */
 
-@TeleOp(name="Ultimate V2", group="Competition")
+@TeleOp(name="Ultimate V2 Test", group="Competition")
 //@Disabled
 public class UltimateV2Test extends LinearOpMode {
 

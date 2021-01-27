@@ -50,7 +50,7 @@ public class ShooterSystemV1 {
 
     public ShooterSystemV1(HardwareMap hardwareMap, final LinearOpMode mode) {
         aimServo = hardwareMap.servo.get("aimServo");
-        wheelMotor = new WheelMotor("wheelMotor", "LEDController", hardwareMap);
+//        wheelMotor = new WheelMotor("wheelMotor", "LEDController", hardwareMap);
         elevatorServo = hardwareMap.crservo.get("elevatorServo");
         elevatorTopSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorTopSwitch"));
         elevatorBottomSwitch = new MagneticLimitSwitch(hardwareMap.digitalChannel.get("elevatorBottomSwitch"));

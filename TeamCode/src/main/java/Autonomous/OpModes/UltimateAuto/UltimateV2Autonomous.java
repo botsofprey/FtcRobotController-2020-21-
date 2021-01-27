@@ -101,9 +101,8 @@ public class UltimateV2Autonomous {
     // performs power shots from right to left
     protected void performPowerShots(LinearOpMode mode, double runtime) {
         if(mode.opModeIsActive()) { // if the time remaining is more than the required action time, perform it
-            wobbleGrabber.setLiftAngle();
             shooter.spinUp();
-            robot.driveToLocationPID(POWER_SHOT_POINT, LOW_SPEED, mode);
+            robot.driveToLocationPID(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
             // perform shots
             shooter.setPowerShotPower(); // spin up motor to expected power shot rpm
@@ -129,6 +128,8 @@ public class UltimateV2Autonomous {
             else if (ringCount == RingCount.QUAD_STACK)
                 targetLocation = RED_ZONE_THREE;
             if(wobbleNum == 1) {
+                robot.driveDistance(targetLocation.getY()/2, UltimateNavigation2.NORTH, HIGH_SPEED, mode);
+                wobbleGrabber.setLiftAngle();
                 robot.driveToLocationPID(targetLocation, HIGH_SPEED, mode);
             }
             else { // Place second wobble goal slightly off from the location of the first to avoid collision
@@ -146,7 +147,7 @@ public class UltimateV2Autonomous {
             mode.telemetry.addData("made it inside ring function", "");
             mode.telemetry.update();
             intake.intake();
-            robot.driveToLocationPID(new Location(robot.getRobotLocation().getX(), RING_STACK_START_POINT.getY(), UltimateNavigation2.NORTH), MED_SPEED, mode);
+            robot.driveDistanceToLocation(RING_STACK_START_POINT, MED_SPEED, mode);
             robot.turnToHeading(UltimateNavigation2.EAST, mode);
             if(ringCount == ringCount.SINGLE_STACK) {
                 robot.driveToLocationPID(QUAD_STACK_END_POINT, HIGH_SPEED, mode);
@@ -184,7 +185,7 @@ public class UltimateV2Autonomous {
             mode.telemetry.addData("made it inside extra rings function", "");
             mode.telemetry.update();
                 robot.turnToHeading(UltimateNavigation2.NORTH, 1, mode);
-                robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
+                robot.driveToLocationPID(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
                 // shoot rings
                 shooter.setHighGoalPower(); // spin up motor to proper high goal rpm
@@ -203,14 +204,14 @@ public class UltimateV2Autonomous {
         shooter.setIndexLeft();
         mode.sleep(SLEEP_TIME);
         shooter.setIndexRight();
-        mode.sleep(SLEEP_TIME);
+        mode.sleep(SLEEP_TIME/2);
     }
 
 
     protected void dropIntakeAndWobble(LinearOpMode mode) {
         if(mode.opModeIsActive()){
             intake.intakeServoOut();
-            wobbleGrabber.setLiftAngle();
+            wobbleGrabber.setWallAngle();
         }
     }
 
@@ -233,24 +234,26 @@ public class UltimateV2Autonomous {
     }
 
     public void driveInSquare() {
-        robot.driveToLocationPID(new Location(-48, -24, 0), HIGH_SPEED, mode);
+        robot.driveToLocationPID(new Location(48, -24, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
         robot.driveToLocationPID(new Location(0, -24, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
         robot.driveToLocationPID(new Location(0, 24, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
-        robot.driveToLocationPID(new Location(-48, 24, 0), HIGH_SPEED, mode);
+        robot.driveToLocationPID(new Location(48, 24, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
     }
 
-    public void driveInSquare2() {
-        robot.driveDistanceToLocation(new Location(48, -24, 0), HIGH_SPEED, mode);
+    public void driveToCorners() {
+        robot.driveDistanceToLocation(new Location(-20, -61.6, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
-        robot.driveDistanceToLocation(new Location(0, -24, 0), HIGH_SPEED, mode);
+        robot.driveDistanceToLocation(new Location(48.8, -61.6, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
-        robot.driveDistanceToLocation(new Location(0, 24, 0), HIGH_SPEED, mode);
+        robot.driveDistanceToLocation(new Location(48.8, 61.6, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
-        robot.driveDistanceToLocation(new Location(48, 24, 0), HIGH_SPEED, mode);
+        robot.driveDistanceToLocation(new Location(-20, 61.6, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(-20, -61.6, 0), HIGH_SPEED, mode);
         if (!mode.opModeIsActive()) return;
     }
 }

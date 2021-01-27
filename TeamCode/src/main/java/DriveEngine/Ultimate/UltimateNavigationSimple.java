@@ -148,8 +148,10 @@ public class UltimateNavigationSimple {
      */
     public void turnToHeading(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
         percentOfMaxTurnRate = Math.abs(percentOfMaxTurnRate) * Math.signum(heading - normalizeAngle(orientation.getOrientation()));
+        Log.d("Turn Percent", "" + (percentOfMaxTurnRate*100));
         while(mode.opModeIsActive() && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
             turn(percentOfMaxTurnRate);
+            Log.d("Turn To Heading", "Current Heading: " + orientation.getOrientation());
         }
         brake();
     }
