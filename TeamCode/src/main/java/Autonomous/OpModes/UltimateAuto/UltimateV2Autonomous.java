@@ -146,14 +146,14 @@ public class UltimateV2Autonomous {
             mode.telemetry.addData("made it inside ring function", "");
             mode.telemetry.update();
             intake.intake();
-            robot.driveToLocationPID(RING_STACK_START_POINT, MED_SPEED, mode);
+            robot.driveToLocationPID(new Location(robot.getRobotLocation().getX(), RING_STACK_START_POINT.getY(), UltimateNavigation2.NORTH), MED_SPEED, mode);
             robot.turnToHeading(UltimateNavigation2.EAST, mode);
             if(ringCount == ringCount.SINGLE_STACK) {
-                robot.driveDistance(12, UltimateNavigation2.NORTH, LOW_SPEED, mode);
+                robot.driveToLocationPID(QUAD_STACK_END_POINT, HIGH_SPEED, mode);
             }
             else {
-//                   robot.driveToLocationPID(QUAD_STACK_END_POINT, LOW_SPEED, mode);
-                robot.driveDistance(24, UltimateNavigation2.NORTH, LOW_SPEED, mode);
+                robot.driveToLocationPID(QUAD_STACK_END_POINT, LOW_SPEED, mode);
+//                robot.driveDistance(24, UltimateNavigation2.NORTH, LOW_SPEED, mode);
             }
         }
     }
