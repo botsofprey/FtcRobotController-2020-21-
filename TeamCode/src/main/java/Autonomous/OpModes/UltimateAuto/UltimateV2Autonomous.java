@@ -146,7 +146,7 @@ public class UltimateV2Autonomous {
             mode.telemetry.addData("made it inside ring function", "");
             mode.telemetry.update();
             intake.intake();
-            robot.driveDistance(POWER_SHOT_POINT.getY() - RING_STACK_START_POINT.getY(), UltimateNavigation2.SOUTH, MED_SPEED, mode);
+            robot.driveToLocationPID(RING_STACK_START_POINT, MED_SPEED, mode);
             robot.turnToHeading(UltimateNavigation2.EAST, mode);
             if(ringCount == ringCount.SINGLE_STACK) {
                 robot.driveDistance(12, UltimateNavigation2.NORTH, LOW_SPEED, mode);
