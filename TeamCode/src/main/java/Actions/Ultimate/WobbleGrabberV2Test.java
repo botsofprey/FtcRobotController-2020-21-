@@ -29,7 +29,7 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public static final double ANGLE_INCREMENT = 25;
     public static final double WALL_ANGLE = -53;
-    public static final double LIFT_ANGLE = -93;
+    public static final double LIFT_ANGLE = -90;
     public static final double GRAB_AND_DROP_ANGLE = -110;
     public static final double INIT_ANGLE = 0;
 
@@ -76,14 +76,18 @@ public class WobbleGrabberV2Test implements ActionHandler {
         setArmAngle(GRAB_AND_DROP_ANGLE);
     }
 
-    public void setLiftAngle(){ setArmAngle(LIFT_ANGLE); }
+    public void setLiftAngle(){
+        setArmAngle(LIFT_ANGLE);
+    }
 
 
     public void setWallAngle(){
         setArmAngle(WALL_ANGLE);
     }
 
-
+    public void setInitAngle(){
+        setArmAngle(INIT_ANGLE);
+    }
 
     public void pause() {
         arm.brake();

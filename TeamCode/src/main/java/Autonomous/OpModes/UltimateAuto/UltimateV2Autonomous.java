@@ -14,6 +14,7 @@ import DriveEngine.Ultimate.UltimateNavigation2;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.PARKING_LOCATION;
+import static Autonomous.ConfigVariables.POWER_SHOT_POINT;
 import static Autonomous.ConfigVariables.QUAD_STACK_END_POINT;
 import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT;
 import static Autonomous.ConfigVariables.RED_ZONE_ONE;
@@ -44,10 +45,12 @@ public class UltimateV2Autonomous {
 
     protected static final int WOBBLE_OFFSET = 4;
     protected static final double MAX_SPEED = 50;
+    protected static final double HIGH_SPEED = 35;
     protected static final double MED_SPEED = 25;
     protected static final double LOW_SPEED = 15;
     protected static final double MIN_SPEED = 5;
-    protected static final long SLEEP_TIME = 100;
+    protected static final long SLEEP_TIME = 500;
+    protected static final long EMERGENCY_PARK_TIME = 0;
 
     public UltimateV2Autonomous(AutoAlliance alliance, Location startLocation, final LinearOpMode mode) {
 
@@ -97,26 +100,29 @@ public class UltimateV2Autonomous {
     // drives from current location to where power shots must be performed
     // performs power shots from right to left
     protected void performPowerShots(LinearOpMode mode, double runtime) {
-        if(mode.opModeIsActive() && 30 - runtime > 10) { // if the time remaining is more than the required action time, perform it
-                shooter.spinUp();
-                robot.driveDistanceToLocation(SHOOTING_LINE_POINT, LOW_SPEED, mode);
+        if(mode.opModeIsActive()) { // if the time remaining is more than the required action time, perform it
+            wobbleGrabber.setLiftAngle();
+            shooter.spinUp();
+            robot.driveDistanceToLocation(POWER_SHOT_POINT, LOW_SPEED, mode);
 
-                // perform shots
-                shooter.setPowerShotPower(); // spin up motor to expected power shot rpm
-                robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, mode); // turn to heading for first power shot and shoot
-                indexShooter();
+            // perform shots
+            shooter.setPowerShotPower(); // spin up motor to expected power shot rpm
+            robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, mode); // turn to heading for first power shot and shoot
+            indexShooter();
 
-                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, mode); // turn to heading for second power shot and shoot
-                indexShooter();
+            robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, mode); // turn to heading for second power shot and shoot
+            indexShooter();
 
-                robot.turnToHeading(LEFT_POWER_SHOT_HEADING, mode); // turn to heading for third power shot and shoot
-                indexShooter();
+            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, mode); // turn to heading for third power shot and shoot
+            indexShooter();
+
+            shooter.pauseShooter();
         }
     }
 
     // drives to the correct wobble goal delivery zone from the current robot location
     protected void deliverWobbleGoal(LinearOpMode mode, RingCount ringCount, double runtime, int wobbleNum) {
-        if(mode.opModeIsActive() && 30 - runtime > 10) {
+        if(mode.opModeIsActive()) {
                 Location targetLocation = RED_ZONE_ONE;
                 switch (ringCount) {
                     case NO_RINGS:
@@ -129,47 +135,49 @@ public class UltimateV2Autonomous {
                         break;
                 }
                 if(wobbleNum == 1) {
-                    robot.driveToLocationPID(targetLocation, MED_SPEED, mode);
+                    robot.driveToLocationPID(targetLocation, HIGH_SPEED, mode);
                 }
                 else { // Place second wobble goal slightly off from the location of the first to avoid collision
-                    Location offsetTarget = new Location(targetLocation.getX() - WOBBLE_OFFSET, targetLocation.getY() - WOBBLE_OFFSET);
+                    Location offsetTarget = new Location(targetLocation.getX() + WOBBLE_OFFSET, targetLocation.getY() - WOBBLE_OFFSET);
                     robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
                 }
-
-                wobbleGrabber.setGrabAndDropAngle();
                 wobbleGrabber.releaseWobble();
-                mode.sleep(SLEEP_TIME);
-                wobbleGrabber.setLiftAngle();
+                wobbleGrabber.setInitAngle();
             }
 
     }
 
     // reorients and drives to intake the extra rings but only if there are extra rings
     protected void intakeExtraRings(LinearOpMode mode, RingCount ringCount, double runtime) {
-        if(mode.opModeIsActive() && 30 - runtime > 10 && ringCount != RingCount.NO_RINGS) {
-                robot.turnToHeading(UltimateNavigation2.EAST, 5, mode);
-                intake.intakeOn();
-                robot.driveToLocationPID(RING_STACK_START_POINT, MED_SPEED, mode); // consider using drive to location PID -- is thought to be more accurate?
-                // do a funky intake thingy here
-                if(ringCount == ringCount.SINGLE_STACK) {
-                    robot.driveDistance(12, robot.getOrientation(), MED_SPEED, mode);
-                }
-                else {
-                    robot.driveToLocationPID(QUAD_STACK_END_POINT, LOW_SPEED, mode);
-                }
+        if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
+            mode.telemetry.addData("made it inside ring function", "");
+            mode.telemetry.update();
+            intake.intake();
+            robot.driveDistance(POWER_SHOT_POINT.getY() - RING_STACK_START_POINT.getY(), UltimateNavigation2.SOUTH, MED_SPEED, mode);
+            robot.turnToHeading(UltimateNavigation2.EAST, mode);
+            if(ringCount == ringCount.SINGLE_STACK) {
+                robot.driveDistance(12, UltimateNavigation2.NORTH, LOW_SPEED, mode);
+            }
+            else {
+//                   robot.driveToLocationPID(QUAD_STACK_END_POINT, LOW_SPEED, mode);
+                robot.driveDistance(24, UltimateNavigation2.NORTH, LOW_SPEED, mode);
             }
         }
+    }
 
     // drives to the second wobble goal and grabs it
     protected void obtainSecondWobbleGoal(LinearOpMode mode, double runtime) {
-        if(mode.opModeIsActive() && 30 - runtime > 10) {
-            robot.turnToHeading(UltimateNavigation2.EAST, mode);
-            robot.driveToLocationPID(RED_WOBBLE_GOAL_LEFT, MED_SPEED, mode);
+        if(mode.opModeIsActive()) {
+            mode.telemetry.addData("made it inside secondWobbleGoal function", "");
+            mode.telemetry.update();
+            robot.turnToHeading(UltimateNavigation2.SOUTH, mode);
+            moveToSecondWobble();
             wobbleGrabber.setGrabAndDropAngle(); // Bring arm down to grab angle
             wobbleGrabber.releaseWobble(); // Open claw
-            robot.driveOnHeading(robot.getOrientation(), LOW_SPEED); // Drive forwards, slowly
-            while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
-            robot.brake(); // Once sensor is pressed, stop
+            mode.sleep(SLEEP_TIME);
+//            robot.driveOnHeading(UltimateNavigation2.NORTH, LOW_SPEED); // Drive forwards, slowly
+//            while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
+//            robot.brake(); // Once sensor is pressed, stop
             wobbleGrabber.setClawGrabAngle(); // Close claw
             mode.sleep(SLEEP_TIME);
             wobbleGrabber.setLiftAngle(); // Lift arm back up
@@ -179,7 +187,9 @@ public class UltimateV2Autonomous {
 
     // drives to the correct position to shoot the extra rings then shoots them if there are extra rings
     protected void shootExtraRings(LinearOpMode mode, RingCount ringCount, double runtime) {
-        if(mode.opModeIsActive() && 30 - runtime > 5 && ringCount != RingCount.NO_RINGS) {
+        if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
+            mode.telemetry.addData("made it inside extra rings function", "");
+            mode.telemetry.update();
                 robot.turnToHeading(UltimateNavigation2.NORTH, 1, mode);
                 robot.driveDistanceToLocation(SHOOTING_LINE_POINT, MED_SPEED, mode);
 
@@ -203,19 +213,19 @@ public class UltimateV2Autonomous {
         mode.sleep(SLEEP_TIME);
     }
 
-    protected void funkyIntakeThingy(){
-        // TODO figure out how to intake 3/4 rings in starting stack
-
-    }
 
     protected void dropIntakeAndWobble(LinearOpMode mode) {
         if(mode.opModeIsActive()){
             intake.intakeServoOut();
-            mode.sleep(SLEEP_TIME);
-            intake.intakeServoIn();
             wobbleGrabber.setLiftAngle();
         }
     }
+
+    protected void moveToSecondWobble(){
+        robot.driveDistance(RED_WOBBLE_GOAL_LEFT.getX() - robot.getRobotLocation().getX(), UltimateNavigation2.EAST, LOW_SPEED, mode);
+        robot.driveDistance(RED_WOBBLE_GOAL_LEFT.getY() - robot.getRobotLocation().getY(), UltimateNavigation2.NORTH, LOW_SPEED, mode);
+    }
+
 
 
     // parks the robot over the launch line
@@ -227,7 +237,7 @@ public class UltimateV2Autonomous {
             intake.intakeOff();
 
             // drive to parking line
-            robot.driveDistanceToLocation(PARKING_LOCATION, MAX_SPEED, mode);
+            robot.driveDistance(PARKING_LOCATION.getY() - robot.getRobotLocation().getY(), UltimateNavigation2.NORTH, MED_SPEED, mode);
         }
 
     }

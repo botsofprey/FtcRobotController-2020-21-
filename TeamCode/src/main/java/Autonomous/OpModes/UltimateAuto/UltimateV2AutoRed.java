@@ -79,29 +79,39 @@ public class UltimateV2AutoRed extends LinearOpMode {
         RingCount ringCount = RingCount.QUAD_STACK;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
         telemetry.addData("# of rings", ringCount);
+        telemetry.addData("Drop intake and wobble", "");
         telemetry.update();
 //        robot.vision.stopDetection(); // stop using the camera after we have taken our count, if you don't it may underperform
 
         // start by dropping down the intake
         robot.dropIntakeAndWobble(this);
-        telemetry.update();
 
+        telemetry.addData("deliver wobble goal", "");
+        telemetry.update();
         // next we deliver the first wobble goal to the zone
         robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
 
+        telemetry.addData("perform power shots", "");
+        telemetry.update();
         // following the delivery we shoot the preloaded rings at the power shot targets
         robot.performPowerShots(this, this.getRuntime());
 
+        telemetry.addData("intake rings, obtain second wobble", "");
+        telemetry.update();
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
         robot.intakeExtraRings(this, ringCount, this.getRuntime());
         robot.obtainSecondWobbleGoal(this, this.getRuntime());
 
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
 
+        telemetry.addData("deliver second wobble, shoot extra rings", "");
+        telemetry.update();
         // todo: added wobbleNum parameter to differentiate between the first and second wobble goals
         robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
         robot.shootExtraRings(this, ringCount, this.getRuntime());
 
+        telemetry.addData("park", "");
+        telemetry.update();
         // finally we park
         robot.park(this);
 

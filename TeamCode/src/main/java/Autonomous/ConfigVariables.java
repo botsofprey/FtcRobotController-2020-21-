@@ -77,12 +77,13 @@ public class ConfigVariables {
 
     public static final Location RING_DETECTION_POINT = new Location(52, -20, 180);
     public static final Location RING_CHECKPOINT = new Location(52, -10);
-    public static final Location RING_STACK_START_POINT = new Location(19, -23.7); // may need to adjust
+    public static final Location RING_STACK_START_POINT = new Location(12, -23.7); // may need to adjust
     public static final Location QUAD_STACK_END_POINT = new Location(35, -23.7);
 
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(42, 10);
-    public static final Location SHOOTING_LINE_POINT = new Location(24, -2.5, 0); // may need to adjust
+    public static final Location SHOOTING_LINE_POINT = new Location(24, 10, 0); // may need to adjust
+    public static final Location POWER_SHOT_POINT = new Location(20, 10);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
     public static final Location CENTER = new Location(0,0);
 
@@ -96,9 +97,9 @@ public class ConfigVariables {
     public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(48.8, -61.6, 0);
 
     // TODO find these locations
-    public static final double LEFT_POWER_SHOT_HEADING = -0.7;
-    public static final double MIDDLE_POWER_SHOT_HEADING = -6.4;
-    public static final double RIGHT_POWER_SHOT_HEADING = -11.9;
+    public static final double LEFT_POWER_SHOT_HEADING = -1.5;
+    public static final double MIDDLE_POWER_SHOT_HEADING = 4.4;
+    public static final double RIGHT_POWER_SHOT_HEADING = 9.9;
     public static final Location POWER_SHOT_LEFT = new Location(24, 0, LEFT_POWER_SHOT_HEADING);
     public static final Location POWER_SHOT_MIDDLE = new Location(24, 0, MIDDLE_POWER_SHOT_HEADING);
     public static final Location POWER_SHOT_RIGHT = new Location(24, 0, RIGHT_POWER_SHOT_HEADING);

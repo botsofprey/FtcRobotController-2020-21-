@@ -93,10 +93,11 @@ public class UltimateV2Better extends LinearOpMode {
 	protected static final double MED_SPEED = 25;
 	protected static final double LOW_SPEED = 15;
 	protected static final double MIN_SPEED = 5;
+	protected static final long SLEEP_TIME = 500;
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
 			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
-			dpadD2pressed = false, toggleIncrement = false, dpadU2pressed = false, toggleDecrement = false;
+			dpadD2pressed = false, dpadU2pressed = false, toggleDecrement = false, x1Pressed = false;
 	
 	@Override
 	public void runOpMode() {
@@ -157,6 +158,7 @@ public class UltimateV2Better extends LinearOpMode {
 				}
 				telemetry.addData("Wheel Power", shooter.betterWheelMotorMaybe.getMotorPower());
 				telemetry.addData("Wheel Speed (ticks/sec)", shooter.betterWheelMotorMaybe.getCurrentTicksPerSecond());
+				telemetry.addData("Robot Location", robot.getRobotLocation());
 				telemetry.addData("Robot Heading", robot.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
 				telemetry.update();
@@ -224,18 +226,14 @@ public class UltimateV2Better extends LinearOpMode {
 			shooter.setIndexRight();
 		}
 
-		// TODO: update this to be actually correct, need to determine which wall to be against and what the x and y values would be
-		if(gamepad1.x)
-			robot.setLocation(new Location(-23.5, robot.getRobotLocation().getY()));
-		
-		if(gamepad1.y)
-			robot.setLocation(new Location(robot.getRobotLocation().getX(), -70.5));
-		
-//		if (gamepad1.left_bumper)
-//			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM - 100);
-//
-//		if (gamepad1.right_bumper)
-//			shooter.wheelMotor.setRPM((int)shooter.wheelMotor.targetRPM + 100);
+		// Shoot three rings
+		if(gamepad1.x && !x1Pressed) {
+			x1Pressed = true;
+			shootThreeRings();
+		}
+		else if(!gamepad1.x){
+			x1Pressed = false;
+		}
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
@@ -355,6 +353,19 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 		else {
 			shooter.setIndexRight();
+		}
+	}
+
+	protected void indexShooter(){
+		shooter.setIndexLeft();
+		sleep(SLEEP_TIME);
+		shooter.setIndexRight();
+		sleep(SLEEP_TIME);
+	}
+
+	protected void shootThreeRings(){
+		for(int i = 0; i <= 3; i++){
+			indexShooter();
 		}
 	}
 	
