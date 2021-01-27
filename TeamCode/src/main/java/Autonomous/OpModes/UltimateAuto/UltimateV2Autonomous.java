@@ -219,8 +219,6 @@ public class UltimateV2Autonomous {
         robot.driveDistance(RED_WOBBLE_GOAL_LEFT.getY() - robot.getRobotLocation().getY(), UltimateNavigation2.NORTH, LOW_SPEED, mode);
     }
 
-
-
     // parks the robot over the launch line
     protected void park(LinearOpMode mode) {
         // turn everything off
@@ -232,6 +230,16 @@ public class UltimateV2Autonomous {
             // drive to parking line
             robot.driveDistance(PARKING_LOCATION.getY() - robot.getRobotLocation().getY(), UltimateNavigation2.NORTH, MED_SPEED, mode);
         }
+    }
 
+    public void driveInSquare() {
+        robot.driveToLocationPID(new Location(-48, -24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveToLocationPID(new Location(0, -24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveToLocationPID(new Location(0, 24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
+        robot.driveToLocationPID(new Location(-48, 24, 0), HIGH_SPEED, mode);
+        if (!mode.opModeIsActive()) return;
     }
 }

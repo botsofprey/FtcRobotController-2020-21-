@@ -35,6 +35,8 @@ package Autonomous.OpModes.UltimateAuto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.slf4j.helpers.NOPLoggerFactory;
+
 import Autonomous.AutoAlliance;
 import Autonomous.RingCount;
 
@@ -74,6 +76,9 @@ public class UltimateV2AutoRed extends LinearOpMode {
         }
 
         waitForStart();
+
+        while (opModeIsActive())
+            robot.driveInSquare();
 
         // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
