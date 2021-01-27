@@ -103,7 +103,7 @@ public class UltimateV2Autonomous {
         if(mode.opModeIsActive()) { // if the time remaining is more than the required action time, perform it
             wobbleGrabber.setLiftAngle();
             shooter.spinUp();
-            robot.driveDistanceToLocation(POWER_SHOT_POINT, LOW_SPEED, mode);
+            robot.driveToLocationPID(POWER_SHOT_POINT, LOW_SPEED, mode);
 
             // perform shots
             shooter.setPowerShotPower(); // spin up motor to expected power shot rpm
