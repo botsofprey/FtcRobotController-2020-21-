@@ -31,7 +31,7 @@ import SensorHandlers.LIDARSensor;
  */
 public class UltimateNavigation2 extends Thread {
 
-    public static final Rectangle NO_GO_ZONE = new Rectangle(23.674, 0, 144, 48);
+    public static final Rectangle NO_GO_ZONE = new Rectangle(0, 0, 144, 48);
 
     private static final double GOOD_DIST_READING_TOLERANCE = 72.0;
 
@@ -95,10 +95,10 @@ public class UltimateNavigation2 extends Thread {
         distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
         distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
         distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
-//        distanceSensors[LEFT_SENSOR].getDistance(); We shouldn't need these because of initSensor in LIDARSensor class
+//        distanceSensors[LEFT_SENSOR].getDistance(); //We shouldn't need these because of initSensor in LIDARSensor class
 //        distanceSensors[BACK_SENSOR].getDistance();
 //        distanceSensors[RIGHT_SENSOR].getDistance();
-//        if (!ignoreInitialSensorLocation) getInitialLocation();
+        if (!ignoreInitialSensorLocation) getInitialLocation();
 
         for (int i = 0; i < wheelVectors.length; i++)
             wheelVectors[i] = new HeadingVector();
@@ -129,7 +129,7 @@ public class UltimateNavigation2 extends Thread {
     }
 
     public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile) throws RuntimeException {
-        this(hw, startLocation, robotOrientationOffset, configFile, false);
+        this(hw, startLocation, robotOrientationOffset, configFile, true);
     }
 
     public UltimateNavigation2(HardwareMap hw, Location startLocation, String configFileLoc) throws RuntimeException {
@@ -228,12 +228,6 @@ public class UltimateNavigation2 extends Thread {
             shouldTranslateY = true;
         }
 
-//        if(simpleHeading < 2.5 && simpleHeading > -2.5) dir = NORTH;
-//        else if(simpleHeading < 92.5 && simpleHeading > 87.5) dir = EAST; // REVIEW: suggest to define HEADING_TOLERANCE = 1 and use abs(simpleHeading - 90) < HEADING_TOLERANCE
-//        else if(simpleHeading < 182.5 && simpleHeading > 177.5) dir = SOUTH;
-//        else if(simpleHeading < 272.5 && simpleHeading > 267.5) dir = WEST;
-
-
         // wheel location tracking
         HeadingVector travelVector = wheelVectors[0].addVectors(wheelVectors);
         travelVector = new HeadingVector(travelVector.x() / 2.0, travelVector.y() / 2.0);
@@ -251,8 +245,8 @@ public class UltimateNavigation2 extends Thread {
                 else if (sensorsToUse != null && sensorsToUse[1] == DRIVE_BASE)
                     shouldTranslateY = true;
                 if (!shouldTranslateX && 
-                        (myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_1_RED) || myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_2_RED) 
-                        || myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_1_BLUE) || myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_2_BLUE))) {
+                        (myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_1)
+                        || myLocation.withinRectangle(ConfigVariables.VALID_X_SENSOR_READ_AREA_2))) {
                     // REVIEW: there are several conditions to check to determine if a distance reading is good, so
                     // is is best to encapsulate this in a class.  I suggest to have a sensor.getGoodDistance()
                     // function that returns a Double distance or null, if a good distances isn't available.
@@ -275,8 +269,8 @@ public class UltimateNavigation2 extends Thread {
                     }
                 } else shouldTranslateX = true;
                 if (!shouldTranslateY &&
-                        (myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_1_RED) || myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_2_RED)
-                        || myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_1_BLUE) || myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_2_BLUE))) {
+                        (myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_1)
+                        || myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_2))) {
                     Double dist = distanceSensors[sensorsToUse[1]].getGoodDistance();
                     if (dist != null && dist < GOOD_DIST_READING_TOLERANCE) {
                         expectedY = 71.0 - dist - 7.0;

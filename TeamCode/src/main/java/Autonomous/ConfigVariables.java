@@ -126,4 +126,9 @@ public class ConfigVariables {
     public static final Rectangle VALID_Y_SENSOR_READ_AREA_2_BLUE = new Rectangle(-34, -48, 12, 48);
     public static final Rectangle VALID_X_SENSOR_READ_AREA_1_BLUE = new Rectangle(-48, 34, 48, 12);
     public static final Rectangle VALID_X_SENSOR_READ_AREA_2_BLUE = new Rectangle(-48, -34, 48, 12);
+
+    public static final Rectangle VALID_Y_SENSOR_READ_AREA_1 = new Rectangle(0,  47.348, 144, 24);
+    public static final Rectangle VALID_Y_SENSOR_READ_AREA_2 = new Rectangle(0, -47.348, 144, 24);
+    public static final Rectangle VALID_X_SENSOR_READ_AREA_1 = new Rectangle( 47.348, 0, 22, 144);
+    public static final Rectangle VALID_X_SENSOR_READ_AREA_2 = new Rectangle(-47.348, 0, 22, 144);
 }
