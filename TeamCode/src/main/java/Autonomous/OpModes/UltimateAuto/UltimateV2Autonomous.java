@@ -235,25 +235,51 @@ public class UltimateV2Autonomous {
 
     public void driveInSquare() {
         robot.driveToLocationPID(new Location(48, -24, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveToLocationPID(new Location(0, -24, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveToLocationPID(new Location(0, 24, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveToLocationPID(new Location(48, 24, 0), HIGH_SPEED, mode);
+        delay(500);
+        if (!mode.opModeIsActive()) return;
+    }
+
+    public void driveInSquare2() {
+        robot.driveDistanceToLocation(new Location(48, -24, 0), HIGH_SPEED, mode);
+        delay(500);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(0, -24, 0), HIGH_SPEED, mode);
+        delay(500);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(0, 24, 0), HIGH_SPEED, mode);
+        delay(500);
+        if (!mode.opModeIsActive()) return;
+        robot.driveDistanceToLocation(new Location(48, 24, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
     }
 
     public void driveToCorners() {
         robot.driveDistanceToLocation(new Location(-20, -61.6, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveDistanceToLocation(new Location(48.8, -61.6, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveDistanceToLocation(new Location(48.8, 61.6, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
         robot.driveDistanceToLocation(new Location(-20, 61.6, 0), HIGH_SPEED, mode);
+        delay(500);
         if (!mode.opModeIsActive()) return;
-        robot.driveDistanceToLocation(new Location(-20, -61.6, 0), HIGH_SPEED, mode);
-        if (!mode.opModeIsActive()) return;
+    }
+
+    private void delay(int milliseconds) {
+        long time = System.currentTimeMillis();
+        while (System.currentTimeMillis() - time < milliseconds);
     }
 }

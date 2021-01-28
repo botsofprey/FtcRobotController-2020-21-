@@ -31,7 +31,7 @@ import SensorHandlers.LIDARSensor;
  */
 public class UltimateNavigation2 extends Thread {
 
-    public static final Rectangle NO_GO_ZONE = new Rectangle(0, 0, 144, 48);
+    public static final Rectangle NO_GO_ZONE = new Rectangle(23.674, 0, 144, 48);
 
     private static final double GOOD_DIST_READING_TOLERANCE = 72.0;
 
@@ -41,7 +41,7 @@ public class UltimateNavigation2 extends Thread {
     public static final int BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR = 2;
     public static final int BACK_LEFT_HOLONOMIC_DRIVE_MOTOR = 3;
 
-    public static final double LOCATION_DISTANCE_TOLERANCE = 0.75, ROUGH_LOCATION_DISTANCE_TOLERANCE = 1.5, STOPPING_DISTANCE_FACTOR = 0.2;
+    public static final double LOCATION_DISTANCE_TOLERANCE = 0.25, ROUGH_LOCATION_DISTANCE_TOLERANCE = 1.5, STOPPING_DISTANCE_FACTOR = 0.2;
     public static final double LIDAR_DISTANCE_TOLERANCE = 15.0;
     public static final long TIME_TOLERANCE = 250;
     public static final long DEFAULT_DELAY_MILLIS = 10;

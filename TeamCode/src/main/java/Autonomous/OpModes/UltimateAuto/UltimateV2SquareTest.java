@@ -41,19 +41,11 @@ import Autonomous.RingCount;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
 /*
-    An opmode for the Ultimate Goal Autonomous
+    An opmode for testing the robot's ability to drive in a square
  */
-@Autonomous(name="UltimateV2Auto", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Autonomous(name="UltimateV2SquareTest", group="Linear Opmode")  // @Autonomous(...) is the other common choice
 //@Disabled
 public class UltimateV2SquareTest extends LinearOpMode {
-
-
-
-
-    // TODO ---- NOTE: the runtime is a parameter for each function to determine if we should abort an action and park
-
-
-
 
     @Override
     public void runOpMode() {
@@ -64,14 +56,6 @@ public class UltimateV2SquareTest extends LinearOpMode {
         robot.init();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-        // the loop below updates the ring count as the camera runs in a background thread
-        while(!opModeIsActive()) {
-            telemetry.addData("Status", "Initialized");
-//            telemetry.addData("# of rings", 4);
-            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
-            telemetry.update();
-        }
 
         waitForStart();
 

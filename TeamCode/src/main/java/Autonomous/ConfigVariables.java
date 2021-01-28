@@ -94,7 +94,7 @@ public class ConfigVariables {
     public static final Location WOBBLE_GOAL_PLACEMENT_OFFSET = new Location(3, -3);
 
     public static final Location STARTING_ROBOT_LOCATION_LEFT = new Location(24, -61.6);
-    public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(48.8, -61.6, 0);
+    public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(56.8, -61.6, 0);
 
     // TODO find these locations
     public static final double LEFT_POWER_SHOT_HEADING = -1.5;
