@@ -1133,6 +1133,126 @@ public class UltimateNavigation2 extends Thread {
         brake();
     }
 
+    public void driveToLocationAndTurn(Location targetLocation, double desiredSpeed, LinearOpMode mode) {
+        driveToLocationAndTurn(myLocation, targetLocation, desiredSpeed, LOCATION_DISTANCE_TOLERANCE, mode);
+    }
+
+    public void driveToLocationAndTurn(Location startLocation, Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode) {
+        if(targetLocation.getHeading() == Double.MIN_VALUE) targetLocation.setHeading(startLocation.getHeading()); // this should help to avoid having heading issues
+
+        xPositionController.setSp(0);
+        yPositionController.setSp(0);
+        turnController.setSp(0);
+
+        Location actualStartLocation = new Location(startLocation);
+//        double turnGain = 1; // was 45 (older) // was 60 1/29/2021 //
+        final double decel = 50;
+        final double accel = 80;
+        double xDist =  targetLocation.getX() - startLocation.getX();
+        double yDist = targetLocation.getY() - startLocation.getY();
+        final double distToTravel = Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
+        double distTravelled = 0;
+        double velocity = 0;
+        double distToHeading = targetLocation.getHeading() - startLocation.getHeading();
+        distToHeading = restrictAngle(distToHeading, 0, mode);
+        final double targetThetaFactor = restrictAngle(targetLocation.getHeading(), 0, mode)/distToTravel;
+        long startTime = System.currentTimeMillis();
+        while (mode.opModeIsActive() && (Math.abs(xDist) > locationTolerance || Math.abs(yDist) > locationTolerance || Math.abs(distToHeading) > HEADING_THRESHOLD)) {
+            xDist = targetLocation.getX() - startLocation.getX();
+            yDist = targetLocation.getY() - startLocation.getY();
+            distToHeading = targetLocation.getHeading() - startLocation.getHeading();
+            distToHeading = restrictAngle(distToHeading, 0, mode);
+            distTravelled = startLocation.distanceToLocation(actualStartLocation);
+            double targetTheta = restrictAngle(targetThetaFactor*distTravelled, 0, mode);
+            turnController.setSp(targetTheta);
+
+//            This wasn't really logging and I got confused
+            Log.d("Xdist", "" + xDist);
+            Log.d("Ydist", "" + yDist);
+
+            double timeToStop = velocity / decel;
+            double distToStop = 0.5 * velocity * timeToStop;
+            distToStop += distToTravel * STOPPING_DISTANCE_FACTOR;
+            Log.d("Time to stop: ", ""+timeToStop);
+            Log.d("Dist to stop: ", ""+distToStop);
+            Log.d("Dist to travel: ", ""+distToTravel);
+            Log.d("Dist travelled: ", ""+distTravelled);
+            Log.d("Velocity: ", ""+velocity);
+            mode.telemetry.addData("Velocity", velocity);
+            mode.telemetry.update();
+            if (distTravelled >= distToTravel - distToStop) {
+                Log.d("Decelerating", "...");
+                velocity = velocity - decel * (System.currentTimeMillis() - startTime) / 1000.0;
+                if(velocity > desiredSpeed) velocity = desiredSpeed;
+                if(velocity < 7.5) {
+                    velocity = 7.5; // limit to 15 to allow PID to take over
+                    Log.d("PID being used", "...");
+                }
+            } else {
+                Log.d("Accelerating/Constant", "...");
+                velocity = velocity + accel * (System.currentTimeMillis() - startTime) / 1000.0;
+                if(velocity > desiredSpeed) velocity = desiredSpeed;
+            }
+            startTime = System.currentTimeMillis();
+
+            double xCorrection = xPositionController.calculatePID(-xDist);
+            Log.d("xCorrection: ", xCorrection + "");
+            double yCorrection = yPositionController.calculatePID(-yDist);
+            Log.d("yCorrection: ", yCorrection + "");
+            double turnCorrection = turnController.calculatePID(restrictAngle(orientation.getOrientation(),0, mode));
+            Log.d("turnCorrection: ", turnCorrection + "");
+
+            double[] motorVelocities = new double[4];
+            if(startLocation.getHeading() <= 45 && startLocation.getHeading() > -45) { // 0
+                Log.d("dir", "0");
+                motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] = yCorrection + xCorrection;
+                motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] = yCorrection - xCorrection;
+                motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] = yCorrection + xCorrection;
+                motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] = yCorrection - xCorrection;
+
+            } else if(startLocation.getHeading() <= 135 && startLocation.getHeading() > 45) { // 90
+                Log.d("dir", "90");
+                motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection + xCorrection;
+                motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] = yCorrection + xCorrection;
+                motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection + xCorrection;
+                motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] = yCorrection + xCorrection;
+
+            } else if(startLocation.getHeading() <= -135 || startLocation.getHeading() > 135) { // 180 or -180
+                Log.d("dir", "180");
+                motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection - xCorrection;
+                motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection + xCorrection;
+                motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection - xCorrection;
+                motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection + xCorrection;
+
+            } else if(startLocation.getHeading() <= -45 && startLocation.getHeading() > -135) { // -90
+                Log.d("dir", "-90");
+                motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] = yCorrection - xCorrection;
+                motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection - xCorrection;
+                motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] = yCorrection - xCorrection;
+                motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] = -yCorrection - xCorrection;
+
+            }
+
+            double maxValue = motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR], minValue = motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR];
+
+            for (double d : motorVelocities) {
+                if (maxValue < d) maxValue = d;
+                else if (minValue > d) minValue = d;
+            }
+
+            double toScaleBy = (Math.abs(maxValue) > Math.abs(minValue)) ? Math.abs(velocity / maxValue) : Math.abs(velocity / minValue);
+            for (int i = 0; i < motorVelocities.length; i++) motorVelocities[i] *= toScaleBy;
+
+            motorVelocities[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
+            motorVelocities[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+            motorVelocities[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR] -= turnCorrection;
+            motorVelocities[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR] += turnCorrection;
+
+            applyMotorVelocities(motorVelocities);
+        }
+        brake();
+    }
+
     public void driveToLocationPID(Location startLocation, Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode) {
         if(targetLocation.getHeading() == Double.MIN_VALUE) targetLocation.setHeading(startLocation.getHeading()); // this should help to avoid having heading issues
 
@@ -1141,7 +1261,7 @@ public class UltimateNavigation2 extends Thread {
         turnController.setSp(0);
 
         Location actualStartLocation = new Location(startLocation);
-        double turnGain = 60; // was 45
+        double turnGain = 60; // was 45 (older) // was 60 1/29/2021 //
         double decel = 50;
         double accel = 80;
         double xDist =  targetLocation.getX() - startLocation.getX();
