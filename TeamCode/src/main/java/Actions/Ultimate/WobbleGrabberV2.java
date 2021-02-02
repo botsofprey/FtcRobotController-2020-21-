@@ -16,28 +16,31 @@ import SensorHandlers.LimitSwitch;
  *
  * Used for grabbing and releasing the wobble goal
  */
-public class WobbleGrabberV2Test implements ActionHandler {
+public class WobbleGrabberV2 implements ActionHandler {
 
-    public ServoHandler claw;
+    public ServoHandler leftClaw, rightClaw;
     public MotorController arm;
     public LimitSwitch sensor;
 
     private static final double ARM_POWER = .35;
+    private static final double SLOW_ARM_POWER = 0.2;
 
     public static final double CLAW_GRAB_POSITION = 1;
     public static final double CLAW_RELEASE_POSITION = -1;
 
     public static final double ANGLE_INCREMENT = 25;
     public static final double WALL_ANGLE = -53;
-    public static final double LIFT_ANGLE = -90;
-    public static final double GRAB_AND_DROP_ANGLE = -110;
+    public static final double LIFT_ANGLE = -80;
+    public static final double GRAB_AND_DROP_ANGLE = -97;
     public static final double INIT_ANGLE = 0;
 
     public boolean wobbleGrabbed;
 
-    public WobbleGrabberV2Test(HardwareMap hardwareMap) {
-        claw = new ServoHandler("wobbleGrabberClaw", hardwareMap);
-        claw.setDirection(Servo.Direction.FORWARD);
+    public WobbleGrabberV2(HardwareMap hardwareMap) {
+        leftClaw = new ServoHandler("leftWobbleClaw", hardwareMap);
+        leftClaw.setDirection(Servo.Direction.REVERSE);
+        rightClaw = new ServoHandler("rightWobbleClaw", hardwareMap);
+        rightClaw.setDirection(Servo.Direction.REVERSE);
 
         sensor = new LimitSwitch(hardwareMap.touchSensor.get("wobbleGrabberSensor"), "wobbleGrabberSensor");
 
@@ -55,11 +58,13 @@ public class WobbleGrabberV2Test implements ActionHandler {
     }
 
     public void setClawGrabAngle() {
-        claw.setPosition(CLAW_GRAB_POSITION);
+        leftClaw.setPosition(CLAW_GRAB_POSITION);
+        rightClaw.setPosition(CLAW_GRAB_POSITION);
     }
 
     public void releaseWobble() {
-        claw.setPosition(CLAW_RELEASE_POSITION);
+        leftClaw.setPosition(CLAW_RELEASE_POSITION);
+        rightClaw.setPosition(CLAW_RELEASE_POSITION);
     }
 
 
@@ -87,6 +92,10 @@ public class WobbleGrabberV2Test implements ActionHandler {
 
     public void setInitAngle(){
         setArmAngle(INIT_ANGLE);
+    }
+
+    public void setLiftAngleSlow(){
+        arm.setPositionDegrees(LIFT_ANGLE, SLOW_ARM_POWER);
     }
 
     public void pause() {

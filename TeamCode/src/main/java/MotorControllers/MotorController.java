@@ -24,15 +24,18 @@ public class MotorController extends Thread {
     private double wheelDiameterInInches = 0;
     private double ticksPerDegree = 0;
     //user set and program updated variables
+    private volatile int currentRPM = 0;
+    private volatile int targetRPM = 0;
     private long currentTicksPerSec = 0;
     private long curTickLocation = 0;
     DcMotor motor;
     private String logTag = "";
     private boolean shouldLog = false;
     private boolean takenStartValue = false;
+    private volatile boolean controllingRPM = false;
     private volatile boolean shouldRun = false;
     MotorTachometer tachometer;
-    PIDController holdController;
+    PIDController holdController, rpmController;
     private double initialDegree = 0;
     private long LOOP_MILLIS = 200;
     private int startPos = 0;
@@ -62,6 +65,8 @@ public class MotorController extends Thread {
                     loopStartMillis = System.currentTimeMillis();
                     //update for runtime
                     updateData();
+                    Log.d("conrtolling rpm value", ""+controllingRPM);
+                    if(controllingRPM) maintainRPM();
                     long remainingTime = LOOP_MILLIS - (System.currentTimeMillis() - loopStartMillis);
                     if (remainingTime > 0) safetySleep(remainingTime);
                 }
@@ -124,6 +129,7 @@ public class MotorController extends Thread {
     }
 
     public void killMotorController() {
+        controllingRPM = false;
         brake();
         shouldRun = false;
     }
@@ -139,9 +145,14 @@ public class MotorController extends Thread {
             throw e;
         }
         currentTicksPerSec = (long)(currentRPS * ticksPerRevolution + .5);
+        currentRPM = (int)(currentRPS*60.0 + 0.5);
         //update position
         curTickLocation = motor.getCurrentPosition();
     }
+
+//    private void updateRPM() {
+//        currentRPM = (int)
+//    }
 
     private int readConfig(String fileLoc) {
         InputStream stream = null;
@@ -164,6 +175,8 @@ public class MotorController extends Thread {
             maxTicksPerSecond = (long) motor.getMotorType().getAchieveableMaxTicksPerSecondRounded();
             holdController = new PIDController(reader.getDouble("HOLD_KP"), reader.getDouble("HOLD_KI"), reader.getDouble("HOLD_KD"));
             holdController.setIMax(reader.getDouble("HOLD_I_MAX"));
+            rpmController = new PIDController(reader.getDouble("RPM_KP"), reader.getDouble("RPM_KI"), reader.getDouble("RPM_KD"));
+            rpmController.setIMax(reader.getDouble("RPM_I_MAX"));
         } catch(Exception e) {
             logError(logTag + " MotorController Error", "Config File Read Fail: " + e.toString());
             return 0;
@@ -187,6 +200,10 @@ public class MotorController extends Thread {
         return (double)getCurrentTicksPerSecond() / (double)ticksPerRevolution;
     }
 
+    public int getCurrentRPM() {
+        return currentRPM;
+    }
+
     public long getCurrentTick() { return motor.getCurrentPosition(); }
 
     public double getInchesFromStart(){
@@ -198,6 +215,7 @@ public class MotorController extends Thread {
     }
 
     public void setTicksPerSecondVelocity(long ticksPerSec) {
+        controllingRPM = false;
         if(getMotorRunMode() != DcMotor.RunMode.RUN_USING_ENCODER) setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         takenStartValue = false;
         //check for flip in sign, if so, reset our pid controller
@@ -238,6 +256,7 @@ public class MotorController extends Thread {
 
         Log.d("Hold Position", "Start");
 
+        controllingRPM = false;
         setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         if (!takenStartValue) {
             startPos = motor.getCurrentPosition();
@@ -254,6 +273,23 @@ public class MotorController extends Thread {
 //        motor.setPower(0);
     }
 
+    private void maintainRPM() {
+//        updateRPM();
+        double powerAdjustment = rpmController.calculatePID(currentRPM);
+        double targetPower = (targetRPM)/(maxTicksPerSecond * 60.0 / ticksPerRevolution) + powerAdjustment;
+        setMotorPower(targetPower);
+        Log.d("Target Power for RPM", ""+targetPower);
+    }
+
+    public void setRPM(int rpm) {
+        if(getMotorRunMode() != DcMotor.RunMode.RUN_USING_ENCODER) setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        controllingRPM = true;
+        Log.d("Motor Controller", "controlling rpm "+controllingRPM);
+        targetRPM = rpm;
+        rpmController.setSp(targetRPM);
+        Log.d("target rpm", targetRPM+"");
+    }
+
     public double getWheelDiameterInInches(){
         return wheelDiameterInInches;
     }
@@ -261,11 +297,13 @@ public class MotorController extends Thread {
     public int getTicksPerRevolution() { return (int)ticksPerRevolution; }
 
     public void setMotorPower(double power) {
+        controllingRPM = false;
         takenStartValue = false;
         motor.setPower(power);
     }
 
     public void brake() {
+        controllingRPM = false;
         takenStartValue = false;
         if(getMotorRunMode() == DcMotor.RunMode.RUN_TO_POSITION)
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -274,6 +312,7 @@ public class MotorController extends Thread {
 
     public void setPositionInches(double positionInInches) {
         //go ahead and set mode
+        controllingRPM = false;
         motor.setPower(0);
         int positionInTicks = (int)(positionInInches/(wheelDiameterInInches* Math.PI)*ticksPerRevolution);
         logDebug("Desired tick", Double.toString(positionInTicks));

@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package Autonomous.OpModes.UltimateAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
@@ -49,7 +50,7 @@ import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
     An opmode for the Ultimate Goal Autonomous
  */
 @Autonomous(name="Ultimate Auto North Test", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+@Disabled
 public class UltimateAutoNorthTest extends LinearOpMode {
 
     @Override

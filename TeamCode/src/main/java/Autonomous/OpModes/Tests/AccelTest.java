@@ -30,13 +30,14 @@
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.Location;
 import DriveEngine.Annie.AnnieNavigation;
 
 @Autonomous(name="AccelTest", group="Testers")
-//@Disabled
+@Disabled
 public class AccelTest extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;

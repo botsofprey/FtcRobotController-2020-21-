@@ -29,13 +29,14 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Annie.StoneStackingSystemV2;
 
 @TeleOp(name="Lift Height Test", group="Testers")
-//@Disabled
+@Disabled
 public class LiftHeightTest extends LinearOpMode {
     // create objects and locally global variables here
     int heightInInches = 0;

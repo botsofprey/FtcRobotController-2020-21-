@@ -30,13 +30,14 @@
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Actions.Annie.StoneStackingSystemV3;
 import Actions.HardwareWrappers.DoubledSpoolMotor;
 
-@Autonomous(name="LiftTest", group="Competition")
-//@Disabled
+@Autonomous(name="LiftTest", group="Testers")
+@Disabled
 public class LiftTest extends LinearOpMode {
     // create objects and locally global variables here
     DoubledSpoolMotor lift;

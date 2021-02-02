@@ -1,6 +1,7 @@
-package Autonomous.OpModes;
+package Autonomous.OpModes.AnnieAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
@@ -15,7 +16,7 @@ import Autonomous.OpModes.AnnieAuto.AutonomousRoutines;
 
 
 @Autonomous(name = "Auto Refactor Blue Main", group = "Testers")
-//@Disabled
+@Disabled
 public class AutoRefactorBlue extends LinearOpMode {
 
     @Override

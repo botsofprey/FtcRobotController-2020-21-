@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+/* Copyright (c) 2018 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -29,16 +29,18 @@
 
 package Autonomous.OpModes.Tests;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import Autonomous.AutoAlliance;
-import Autonomous.Location;
-import Autonomous.OpModes.UltimateAuto.UltimateAutonomous;
-import DriveEngine.Ultimate.UltimateNavigation;
 import DriveEngine.Ultimate.UltimateNavigation2;
 
-@Autonomous(name="Drive to Location Test", group="Testers")
+import Autonomous.Location;
+
+import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
+
+@Autonomous(name="Drive To Location w/ Turn", group ="Testers")
 //@Disabled
 public class DriveToLocationAndTurnTest extends LinearOpMode {
 
@@ -47,15 +49,23 @@ public class DriveToLocationAndTurnTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new UltimateNavigation2(hardwareMap, new Location(60, -32), "RobotConfig/UltimateV2.json");
+        try {
+            robot = new UltimateNavigation2(hardwareMap, new Location(0, 0, 0), "RobotConfig/UltimateV2.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
-        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Status", "Initialized!");
         telemetry.update();
-
         waitForStart();
 
         robot.driveToLocationAndTurn(new Location(12, 12, 90), 25, this);
+        Log.d("Final Robot Location", robot.getRobotLocation().toString());
+        telemetry.addData("Location", robot.getRobotLocation().toString());
+        telemetry.update();
 
+        while (opModeIsActive());
         robot.stopNavigation();
     }
 }

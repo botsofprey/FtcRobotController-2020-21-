@@ -27,56 +27,63 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package Autonomous.OpModes;
+package UserControlled;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import Actions.Annie.MiscellaneousActionsV2;
-import Autonomous.Location;
-import DriveEngine.Annie.AnnieNavigation;
+import Actions.Annie.MiscellaneousActions;
+import Actions.Ultimate.ShooterSystemV2Test;
 
-import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
-
-@Autonomous(name="Bridge Park", group="Competition")
+@TeleOp(name="Shooter RPM Test", group="Testers")
 //@Disabled
-public class BridgePark extends LinearOpMode {
-    // create objects and locally global variables here
-    AnnieNavigation robot;
-    DistanceSensor left, right;
-    MiscellaneousActionsV2 otherActions;
+public class ShooterMotorTest extends LinearOpMode {
+    ShooterSystemV2Test shooter;
+    int targetRPM = 3000;
+    boolean dpadUpPressed = false, dpadDownPressed = false, triggerPressed = false, index = false;
+
     @Override
     public void runOpMode() {
-        // initialize objects and variables here
-        // also create and initialize function local variables here
-        otherActions = new MiscellaneousActionsV2(hardwareMap);
-        try {
-            robot = new AnnieNavigation(hardwareMap, new Location(0, 0), 0, "RobotConfig/AnnieV1.json");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        left = hardwareMap.get(DistanceSensor.class, "left");
-        right = hardwareMap.get(DistanceSensor.class, "right");
+        shooter = new ShooterSystemV2Test(hardwareMap);
 
         // add any other useful telemetry data or logging data here
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        // nothing goes between the above and below lines
+
+
         waitForStart();
-        // should only be used for a time keeper or other small things, avoid using this space when possible
-        robot.driveDistance(24, (left.getDistance(INCH) < right.getDistance(INCH))? AnnieNavigation.RIGHT: AnnieNavigation.LEFT,25,this);
-        otherActions.spitTape();
-        sleep(300);
-        otherActions.pauseTape();
 
-        while (opModeIsActive());
-        otherActions.kill();
-        robot.stopNavigation();
 
-        // finish drive code and test
-        // may be a good idea to square self against wall
+        while (opModeIsActive()) {
+            if(gamepad1.dpad_up && !dpadUpPressed) {
+                dpadUpPressed = true;
+                targetRPM += 100;
+            } else if(!gamepad1.dpad_up) {
+                dpadUpPressed = false;
+            }
 
+            if(gamepad1.dpad_down && !dpadDownPressed) {
+                dpadDownPressed = true;
+                targetRPM -= 100;
+            } else if(!gamepad1.dpad_down) {
+                dpadDownPressed = false;
+            }
+
+            if(gamepad1.right_trigger > 0.1 && !triggerPressed) {
+                triggerPressed = true;
+                index = !index;
+            } else if(gamepad1.right_trigger <= 0.1) {
+                triggerPressed = false;
+            }
+
+            if(index) shooter.setIndexRight();
+            else shooter.setIndexLeft();
+
+            shooter.setRPM(targetRPM);
+            telemetry.addData("Shooter RPM", shooter.getRPM());
+            telemetry.update();
+        }
+        shooter.kill();
     }
-    // misc functions here
 }

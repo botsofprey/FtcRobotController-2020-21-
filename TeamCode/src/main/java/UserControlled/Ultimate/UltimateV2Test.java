@@ -34,12 +34,10 @@ import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import Actions.Ultimate.RingIntakeSystemV2Test;
-import Actions.Ultimate.ShooterSystemV2Test;
-import Actions.Ultimate.WobbleGrabberV2Test;
-import Autonomous.ConfigVariables;
+import Actions.Ultimate.RingIntakeSystemV2;
+import Actions.Ultimate.ShooterSystemV2;
+import Actions.Ultimate.WobbleGrabberV2;
 import Autonomous.Location;
-import DriveEngine.Ultimate.UltimateNavigation2;
 import DriveEngine.Ultimate.UltimateNavigationSimple;
 import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
@@ -86,9 +84,9 @@ public class UltimateV2Test extends LinearOpMode {
 	UltimateNavigationSimple robot;
 	JoystickHandler leftStick, rightStick;
 	
-	RingIntakeSystemV2Test intake;
-	ShooterSystemV2Test shooter;
-	WobbleGrabberV2Test grabber;
+	RingIntakeSystemV2 intake;
+	ShooterSystemV2 shooter;
+	WobbleGrabberV2 grabber;
 	
 	GamepadController controllerOne, controllerTwo;
 
@@ -118,9 +116,9 @@ public class UltimateV2Test extends LinearOpMode {
 		}
 		
 		// initialize systems
-		intake = new RingIntakeSystemV2Test(hardwareMap);
-		shooter = new ShooterSystemV2Test(hardwareMap);
-		grabber = new WobbleGrabberV2Test(hardwareMap);
+		intake = new RingIntakeSystemV2(hardwareMap);
+		shooter = new ShooterSystemV2(hardwareMap);
+		grabber = new WobbleGrabberV2(hardwareMap);
 
 		/** ideally we can use these gamepads for inputs, however the logic is flawed within the
 		    gamepad class which causes multiple button presses to be necessary for any kind of response */
@@ -286,13 +284,13 @@ public class UltimateV2Test extends LinearOpMode {
 		}
 
 		if (gamepad2.dpad_up)
-			grabber.setArmAngle(WobbleGrabberV2Test.WALL_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.WALL_ANGLE);
 		else if (gamepad2.dpad_right)
-			grabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.LIFT_ANGLE);
 		else if (gamepad2.dpad_down)
-			grabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.GRAB_AND_DROP_ANGLE);
 		else if (gamepad2.dpad_left)
-			grabber.setArmAngle(WobbleGrabberV2Test.INIT_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.INIT_ANGLE);
 
 		// Intake servo toggle
 		if (gamepad2.right_trigger > 0.1 && !rt2Pressed) {

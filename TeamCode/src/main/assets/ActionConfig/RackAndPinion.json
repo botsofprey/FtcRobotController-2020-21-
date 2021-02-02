@@ -4,6 +4,10 @@
   "HOLD_KI":"0.0",
   "HOLD_I_MAX":"0.1",
   "HOLD_KD":"0.0",
+  "RPM_KP": "0.0",
+  "RPM_KI":"0.0",
+  "RPM_I_MAX":"0.0",
+  "RPM_KD":"0.0",
   "TICKS_PER_DEGREE":"0.0",
   "INITIAL_DEGREE":"0.0"
 }

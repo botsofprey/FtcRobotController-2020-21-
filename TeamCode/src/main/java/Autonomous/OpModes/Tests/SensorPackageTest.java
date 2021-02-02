@@ -31,6 +31,7 @@ package Autonomous.OpModes.Tests;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -41,7 +42,7 @@ import SensorHandlers.SensorPackage;
 import SensorHandlers.UltrasonicIRSensor;
 
 @Autonomous(name="Sensor Package Test", group="Testers")
-//@Disabled
+@Disabled
 public class SensorPackageTest extends LinearOpMode {
     // create objects and locally global variables here
     SensorPackage sensors;

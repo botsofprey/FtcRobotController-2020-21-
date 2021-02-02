@@ -31,6 +31,7 @@ package UserControlled;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -39,7 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @TeleOp(name="Record JSON", group="Competition")
-//@Disabled
+@Disabled
 public class RecordJSONTest extends LinearOpMode {
     // create objects and locally global variables here
 

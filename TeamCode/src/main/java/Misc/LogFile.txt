@@ -252,7 +252,7 @@
 10-06 14:40:48.801  1655  1655 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar --oat-fd=119 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.40.47-296419536@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:40:48.900  1655  1655 I dex2oat : dex2oat took 99.513ms (threads: 4) arena alloc=1223KB (1252832B) java alloc=59KB (61296B) native alloc=493KB (505560B) free=2MB (2115880B)
 10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.Location
-10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:40:48.906  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar: Autonomous.Rectangle
@@ -265,7 +265,7 @@
 10-06 14:40:48.908  1018  1647 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar
 10-06 14:40:48.912  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:40:48.913  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:40:48.913  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:40:48.913  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:40:48.914  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:40:48.914  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:40:48.914  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.40.47-296419536/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -404,7 +404,7 @@
 10-06 14:42:12.539  1667  1667 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar --oat-fd=91 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.42.11--1841389694@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:42:12.639  1667  1667 I dex2oat : dex2oat took 100.588ms (threads: 4) arena alloc=839KB (859672B) java alloc=63KB (65264B) native alloc=493KB (505712B) free=1554KB (1591440B)
 10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.Location
-10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:42:12.644  1018  1647 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar: Autonomous.Rectangle
@@ -417,7 +417,7 @@
 10-06 14:42:12.647  1018  1647 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar
 10-06 14:42:12.653  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:42:12.654  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:42:12.654  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:42:12.654  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:42:12.655  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:42:12.655  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:42:12.656  1018  1647 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.42.11--1841389694/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -1578,7 +1578,7 @@
 10-06 14:43:23.622  1691  1691 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar --oat-fd=118 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.43.22-114407160@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:43:23.714  1691  1691 I dex2oat : dex2oat took 93.676ms (threads: 4) arena alloc=1095KB (1121864B) java alloc=71KB (73208B) native alloc=493KB (505760B) free=2MB (2115680B)
 10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.Location
-10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:43:23.721  1018  1683 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar: Autonomous.Rectangle
@@ -1591,7 +1591,7 @@
 10-06 14:43:23.724  1018  1683 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar
 10-06 14:43:23.729  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:43:23.729  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:43:23.730  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:43:23.730  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:43:23.730  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:43:23.730  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:43:23.730  1018  1683 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.22-114407160/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -2740,7 +2740,7 @@
 10-06 14:43:50.769  1715  1715 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar --oat-fd=119 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.43.44--966674876@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:43:50.850  1715  1715 I dex2oat : dex2oat took 82.496ms (threads: 4) arena alloc=1110KB (1137440B) java alloc=63KB (65264B) native alloc=485KB (497392B) free=2MB (2124048B)
 10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.Location
-10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:43:50.855  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar: Autonomous.Rectangle
@@ -2753,7 +2753,7 @@
 10-06 14:43:50.858  1018  1714 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar
 10-06 14:43:50.862  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:43:50.863  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:43:50.864  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:43:50.864  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:43:50.864  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:43:50.864  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:43:50.865  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.43.44--966674876/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -2911,7 +2911,7 @@
 10-06 14:44:50.250  1742  1742 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar --oat-fd=113 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.44.49--1589154076@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:44:50.350  1742  1742 I dex2oat : dex2oat took 100.486ms (threads: 4) arena alloc=1223KB (1252920B) java alloc=71KB (73208B) native alloc=493KB (505760B) free=2MB (2115680B)
 10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.Location
-10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:44:50.356  1018  1714 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar: Autonomous.Rectangle
@@ -2924,7 +2924,7 @@
 10-06 14:44:50.358  1018  1714 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar
 10-06 14:44:50.362  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:44:50.363  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:44:50.363  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:44:50.363  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:44:50.363  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:44:50.364  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:44:50.364  1018  1714 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.44.49--1589154076/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -4139,7 +4139,7 @@
 10-06 14:46:23.319  1018  1778 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 14:46:23.405  1776  1776 I dex2oat : dex2oat took 98.103ms (threads: 4) arena alloc=1095KB (1121840B) java alloc=55KB (57328B) native alloc=493KB (505056B) free=2MB (2116384B)
 10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.Location
-10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:46:23.410  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar: Autonomous.Rectangle
@@ -4152,7 +4152,7 @@
 10-06 14:46:23.413  1018  1759 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar
 10-06 14:46:23.423  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:46:23.423  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:46:23.424  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:46:23.424  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:46:23.424  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:46:23.424  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:46:23.424  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.46.22-1020339338/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -4334,7 +4334,7 @@
 10-06 14:47:21.836  1798  1798 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar --oat-fd=115 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.47.21-1378078171@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:47:21.924  1798  1798 I dex2oat : dex2oat took 88.503ms (threads: 4) arena alloc=854KB (875400B) java alloc=63KB (65264B) native alloc=493KB (505792B) free=2MB (2115648B)
 10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.Location
-10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:47:21.930  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar: Autonomous.Rectangle
@@ -4347,7 +4347,7 @@
 10-06 14:47:21.932  1018  1759 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar
 10-06 14:47:21.937  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:47:21.938  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:47:21.938  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:47:21.938  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:47:21.938  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:47:21.939  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:47:21.939  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.47.21-1378078171/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -4492,7 +4492,7 @@
 10-06 14:49:51.286  1018  1778 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 14:49:51.358  1819  1819 I dex2oat : dex2oat took 105.953ms (threads: 4) arena alloc=1095KB (1121840B) java alloc=63KB (65264B) native alloc=493KB (505392B) free=2MB (2116048B)
 10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.Location
-10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:49:51.364  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar: Autonomous.Rectangle
@@ -4505,7 +4505,7 @@
 10-06 14:49:51.366  1018  1759 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar
 10-06 14:49:51.370  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:49:51.371  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:49:51.371  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:49:51.371  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:49:51.371  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:49:51.371  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:49:51.372  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.49.50--1424371494/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -4650,7 +4650,7 @@
 10-06 14:52:34.809  1843  1843 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar --oat-fd=122 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.52.34--1644026268@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 14:52:34.916  1843  1843 I dex2oat : dex2oat took 108.312ms (threads: 4) arena alloc=967KB (990776B) java alloc=63KB (65264B) native alloc=493KB (505008B) free=2MB (2116432B)
 10-06 14:52:34.921  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.Location
-10-06 14:52:34.921  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:52:34.921  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:52:34.921  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:52:34.921  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:52:34.922  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar: Autonomous.Rectangle
@@ -4663,7 +4663,7 @@
 10-06 14:52:34.924  1018  1759 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar
 10-06 14:52:34.929  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:52:34.929  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:52:34.930  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:52:34.930  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:52:34.930  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:52:34.930  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:52:34.930  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.52.34--1644026268/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -4849,7 +4849,7 @@
 10-06 14:53:40.765  1018  1868 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 14:53:40.833  1866  1866 I dex2oat : dex2oat took 95.551ms (threads: 4) arena alloc=854KB (875368B) java alloc=63KB (65264B) native alloc=492KB (504736B) free=2MB (2116704B)
 10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.Location
-10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 14:53:40.839  1018  1759 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.Rectangle
@@ -4862,7 +4862,7 @@
 10-06 14:53:40.842  1018  1759 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar
 10-06 14:53:40.847  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 14:53:40.847  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 14:53:40.848  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 14:53:40.848  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 14:53:40.848  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.Location
 10-06 14:53:40.848  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.Shape
 10-06 14:53:40.848  1018  1759 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -5072,7 +5072,7 @@
 12-31 19:00:14.732  1128  1128 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar --oat-fd=79 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+14.53.40--76973287@OnBotJava.jar@classes.dex --compiler-filter=speed
 12-31 19:00:14.806  1128  1128 I dex2oat : dex2oat took 74.493ms (threads: 4) arena alloc=982KB (1006352B) java alloc=55KB (57328B) native alloc=492KB (504664B) free=2MB (2116776B)
 12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.Location
-12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 12-31 19:00:14.811  1004  1004 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar: Autonomous.Rectangle
@@ -5085,7 +5085,7 @@
 12-31 19:00:14.813  1004  1004 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar
 12-31 19:00:15.326  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: UserControlled.JoystickHandler
 12-31 19:00:15.326  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-12-31 19:00:15.327  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+12-31 19:00:15.327  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 12-31 19:00:15.327  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.Location
 12-31 19:00:15.327  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.Shape
 12-31 19:00:15.327  1004  1004 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+14.53.40--76973287/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -5462,7 +5462,7 @@
 10-06 18:39:11.653  1233  1233 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar --oat-fd=114 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+18.39.08--1082935695@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 18:39:11.755  1233  1233 I dex2oat : dex2oat took 103.043ms (threads: 4) arena alloc=1110KB (1137408B) java alloc=79KB (81504B) native alloc=497KB (509720B) free=2MB (2111720B)
 10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.Location
-10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:39:11.762  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar: Autonomous.Rectangle
@@ -5475,7 +5475,7 @@
 10-06 18:39:11.765  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar
 10-06 18:39:11.770  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:39:11.770  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:39:11.771  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:39:11.771  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:39:11.772  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:39:11.772  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:39:11.773  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.39.08--1082935695/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -5693,7 +5693,7 @@
 10-06 18:40:02.260  1004  1227 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 18:40:02.362  1265  1265 I dex2oat : dex2oat took 110.507ms (threads: 4) arena alloc=1095KB (1121840B) java alloc=83KB (85464B) native alloc=497KB (509616B) free=2MB (2111824B)
 10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.Location
-10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:40:02.368  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar: Autonomous.Rectangle
@@ -5706,7 +5706,7 @@
 10-06 18:40:02.371  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar
 10-06 18:40:02.376  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:40:02.377  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:40:02.377  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:02.377  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:02.378  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:40:02.378  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:40:02.379  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.00-1722917119/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -5852,7 +5852,7 @@
 10-06 18:40:19.361  1004  1227 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 18:40:19.428  1280  1280 I dex2oat : dex2oat took 90.393ms (threads: 4) arena alloc=982KB (1006352B) java alloc=79KB (81504B) native alloc=497KB (509592B) free=2MB (2111848B)
 10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.Location
-10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:40:19.434  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar: Autonomous.Rectangle
@@ -5865,7 +5865,7 @@
 10-06 18:40:19.437  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar
 10-06 18:40:19.442  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:40:19.443  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:40:19.443  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:19.443  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:19.444  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:40:19.444  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:40:19.445  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.18--1113045954/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -6008,7 +6008,7 @@
 10-06 18:40:31.136  1004  1291 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 18:40:31.220  1296  1296 I dex2oat : dex2oat took 103.085ms (threads: 4) arena alloc=783KB (801808B) java alloc=79KB (81504B) native alloc=497KB (509592B) free=2MB (2111848B)
 10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.Location
-10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:40:31.225  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar: Autonomous.Rectangle
@@ -6021,7 +6021,7 @@
 10-06 18:40:31.228  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar
 10-06 18:40:31.232  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:40:31.233  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:40:31.233  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:31.233  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:31.234  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:40:31.235  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:40:31.235  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.30--1260571676/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -6166,7 +6166,7 @@
 10-06 18:40:53.477  1310  1310 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar --oat-fd=115 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+18.40.52-47771317@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 18:40:53.591  1310  1310 I dex2oat : dex2oat took 115.021ms (threads: 4) arena alloc=1095KB (1121896B) java alloc=83KB (85464B) native alloc=497KB (509616B) free=2MB (2111824B)
 10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.Location
-10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:40:53.599  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar: Autonomous.Rectangle
@@ -6179,7 +6179,7 @@
 10-06 18:40:53.602  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar
 10-06 18:40:53.607  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:40:53.607  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:40:53.608  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:40:53.608  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:40:53.608  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:40:53.608  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:40:53.609  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.40.52-47771317/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -6325,7 +6325,7 @@
 10-06 18:41:20.288  1004  1291 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 18:41:20.405  1327  1327 I dex2oat : dex2oat took 124.394ms (threads: 4) arena alloc=1223KB (1252840B) java alloc=79KB (81504B) native alloc=497KB (509944B) free=2MB (2111496B)
 10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.Location
-10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:41:20.411  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar: Autonomous.Rectangle
@@ -6338,7 +6338,7 @@
 10-06 18:41:20.414  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar
 10-06 18:41:20.419  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:41:20.419  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:41:20.420  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:41:20.420  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:41:20.420  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:41:20.421  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:41:20.421  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.41.19--1043866752/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -6482,7 +6482,7 @@
 10-06 18:42:10.061  1342  1342 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar --oat-fd=115 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+18.42.09--445186766@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 18:42:10.157  1342  1342 I dex2oat : dex2oat took 96.821ms (threads: 4) arena alloc=982KB (1006384B) java alloc=71KB (73552B) native alloc=498KB (510024B) free=2MB (2111416B)
 10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.Location
-10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.OpModes.RecordJSONTest
 10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:42:10.163  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar: Autonomous.Rectangle
@@ -6495,7 +6495,7 @@
 10-06 18:42:10.166  1004  1158 V OnBotJava:ClassLoader: opening DexFile /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar
 10-06 18:42:10.171  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:42:10.172  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:42:10.172  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:10.172  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:10.172  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:42:10.173  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:42:10.173  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.09--445186766/OnBotJava.jar loaded: Autonomous.OpModes.RecordJSONTest
@@ -6639,7 +6639,7 @@
 10-06 18:42:39.545  1004  1291 V ProgrammingModeManager: serve uri=/java/build/wait
 10-06 18:42:39.618  1360  1360 I dex2oat : dex2oat took 90.106ms (threads: 4) arena alloc=854KB (875400B) java alloc=79KB (81504B) native alloc=497KB (509944B) free=2MB (2111496B)
 10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.Location
-10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.RecordJSONTest
 10-06 18:42:39.624  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar: Autonomous.Rectangle
@@ -6653,7 +6653,7 @@
 10-06 18:42:39.632  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:42:39.633  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.RecordJSONTest
 10-06 18:42:39.634  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:42:39.634  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:39.634  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:39.634  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:42:39.635  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:42:39.635  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.38-1114590732/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -6795,7 +6795,7 @@
 10-06 18:42:51.815  1374  1374 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar --oat-fd=107 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+18.42.50-1518697841@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-06 18:42:51.896  1374  1374 I dex2oat : dex2oat took 81.223ms (threads: 4) arena alloc=1095KB (1121808B) java alloc=79KB (81504B) native alloc=498KB (510072B) free=2MB (2111368B)
 10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.Location
-10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.RecordJSONTest
 10-06 18:42:51.901  1004  1158 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.Rectangle
@@ -6809,7 +6809,7 @@
 10-06 18:42:51.908  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-06 18:42:51.909  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.RecordJSONTest
 10-06 18:42:51.909  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-06 18:42:51.909  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-06 18:42:51.909  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-06 18:42:51.910  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.Location
 10-06 18:42:51.910  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.Shape
 10-06 18:42:51.911  1004  1158 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -7028,7 +7028,7 @@
 12-31 19:00:15.164  1133  1133 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar --oat-fd=79 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-06+18.42.50-1518697841@OnBotJava.jar@classes.dex --compiler-filter=speed
 12-31 19:00:15.252  1133  1133 I dex2oat : dex2oat took 88.596ms (threads: 4) arena alloc=1095KB (1121808B) java alloc=75KB (77536B) native alloc=498KB (510000B) free=2MB (2111440B)
 12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.Location
-12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.RecordJSONTest
 12-31 19:00:15.257  1015  1015 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar: Autonomous.Rectangle
@@ -7042,7 +7042,7 @@
 12-31 19:00:15.921  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: UserControlled.JoystickHandler
 12-31 19:00:15.921  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.RecordJSONTest
 12-31 19:00:15.922  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-12-31 19:00:15.922  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+12-31 19:00:15.922  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 12-31 19:00:15.923  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.Location
 12-31 19:00:15.923  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.Shape
 12-31 19:00:15.924  1015  1015 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-06+18.42.50-1518697841/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -7353,7 +7353,7 @@
 10-07 11:30:17.290  1213  1213 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar --oat-fd=114 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-07+11.30.14-1688680905@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-07 11:30:17.369  1213  1213 I dex2oat : dex2oat took 80.829ms (threads: 4) arena alloc=982KB (1006384B) java alloc=63KB (65264B) native alloc=499KB (511888B) free=2MB (2109552B)
 10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.Location
-10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.Rectangle
 10-07 11:30:17.375  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar: Autonomous.Shape
@@ -7367,7 +7367,7 @@
 10-07 11:30:17.383  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-07 11:30:17.384  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: UserControlled.RecordJSONTest
 10-07 11:30:17.384  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-07 11:30:17.385  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-07 11:30:17.385  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:30:17.385  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.Location
 10-07 11:30:17.386  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.Shape
 10-07 11:30:17.387  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.30.14-1688680905/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -7527,7 +7527,7 @@
 10-07 11:31:37.118  1251  1251 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar --oat-fd=113 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-07+11.31.35--740943532@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-07 11:31:37.209  1251  1251 I dex2oat : dex2oat took 92.104ms (threads: 4) arena alloc=1095KB (1121872B) java alloc=71KB (73208B) native alloc=499KB (511936B) free=2MB (2109504B)
 10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.Location
-10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.Rectangle
 10-07 11:31:37.215  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar: Autonomous.Shape
@@ -7541,7 +7541,7 @@
 10-07 11:31:37.222  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-07 11:31:37.222  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: UserControlled.RecordJSONTest
 10-07 11:31:37.223  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-07 11:31:37.223  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-07 11:31:37.223  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:31:37.224  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.Location
 10-07 11:31:37.224  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.Shape
 10-07 11:31:37.225  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.31.35--740943532/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -7771,7 +7771,7 @@
 10-07 11:32:33.734  1288  1288 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar --oat-fd=115 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-07+11.32.32-1494504068@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-07 11:32:33.835  1288  1288 I dex2oat : dex2oat took 102.242ms (threads: 4) arena alloc=1223KB (1252936B) java alloc=59KB (61296B) native alloc=499KB (511864B) free=2MB (2109576B)
 10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.Location
-10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.Rectangle
 10-07 11:32:33.841  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar: Autonomous.Shape
@@ -7785,7 +7785,7 @@
 10-07 11:32:33.849  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-07 11:32:33.850  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: UserControlled.RecordJSONTest
 10-07 11:32:33.851  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-07 11:32:33.852  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-07 11:32:33.852  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:32:33.852  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.Location
 10-07 11:32:33.853  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.Shape
 10-07 11:32:33.854  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.32.32-1494504068/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1
@@ -7939,7 +7939,7 @@
 10-07 11:33:09.434  1314  1314 I dex2oat : /system/bin/dex2oat --dex-file=/storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar --oat-fd=114 --oat-location=/data/user/0/com.qualcomm.ftcrobotcontroller/code_cache/@storage@emulated@0@FIRST@java@build@jars@onBotJavaJar-2020-10-07+11.33.08-1905882810@OnBotJava.jar@classes.dex --compiler-filter=speed
 10-07 11:33:09.506  1314  1314 I dex2oat : dex2oat took 73.079ms (threads: 4) arena alloc=982KB (1006376B) java alloc=71KB (73208B) native alloc=499KB (511936B) free=2MB (2109504B)
 10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.Location
-10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.OpModes.PlayJSONTest
+10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.OpModes.UltimateAuto.UltimateV1AutoRed
 10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.Rectangle
 10-07 11:33:09.511  1015  1163 I OnBotJavaHelperImpl: /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar: Autonomous.Shape
@@ -7953,7 +7953,7 @@
 10-07 11:33:09.518  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: UserControlled.JoystickHandler
 10-07 11:33:09.519  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: UserControlled.RecordJSONTest
 10-07 11:33:09.520  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone
-10-07 11:33:09.520  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.OpModes.PlayJSONTest
+10-07 11:33:09.520  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.OpModes.Tests.PlayJSONTest
 10-07 11:33:09.520  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.Location
 10-07 11:33:09.521  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.Shape
 10-07 11:33:09.521  1015  1163 V OnBotJava:ClassLoader: From /storage/emulated/0/FIRST/java/build/jars/onBotJavaJar-2020-10-07+11.33.08-1905882810/OnBotJava.jar loaded: Autonomous.VisionHelperSkyStone$1

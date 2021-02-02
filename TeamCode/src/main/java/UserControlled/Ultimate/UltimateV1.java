@@ -30,6 +30,7 @@
 package UserControlled.Ultimate;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.PWMOutput;
@@ -76,7 +77,7 @@ import UserControlled.JoystickHandler;
  */
 
 @TeleOp(name="Ultimate V1", group="Competition")
-//@Disabled
+@Disabled
 public class UltimateV1 extends LinearOpMode {
 
     // TODO add speed values and angles when using the wobble grabber

@@ -33,25 +33,27 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package Autonomous.OpModes.UltimateAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
-import Autonomous.RingCount;
+import Autonomous.Location;
+import Autonomous.OpModes.UltimateAuto.UltimateV2Autonomous;
 
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
 /*
     An opmode for testing the robot's ability to drive in a square
  */
-@Autonomous(name="UltimateV2SquareTest", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+@Autonomous(name="UltimateV2SquareTest", group="Testers")  // @Autonomous(...) is the other common choice
+@Disabled
 public class UltimateV2SquareTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
 
         // initialize robot // TODO: check starting location
-        UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, STARTING_ROBOT_LOCATION_RIGHT, this);
+        UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, new Location(5, -5, 0), this);
 
         robot.init();
         telemetry.addData("Status", "Initialized");
@@ -64,8 +66,6 @@ public class UltimateV2SquareTest extends LinearOpMode {
 
         telemetry.addData("park", "");
         telemetry.update();
-        // finally we park
-        robot.park(this);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive());

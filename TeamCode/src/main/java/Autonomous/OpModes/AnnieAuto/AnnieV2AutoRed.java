@@ -34,6 +34,7 @@ import android.graphics.Bitmap;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -66,7 +67,7 @@ import static Autonomous.ConfigVariables.STONE_TWO_RIGHT;
 import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
 
 @Autonomous(name="RedV2", group="Competition")
-//@Disabled
+@Disabled
 public class AnnieV2AutoRed extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;

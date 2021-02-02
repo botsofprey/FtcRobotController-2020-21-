@@ -32,14 +32,15 @@ package Autonomous.OpModes.Tests;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import Autonomous.Location;
 import DriveEngine.Annie.AnnieNavigation;
 
-@Autonomous(name="RotateTest", group="Competition")
-//@Disabled
+@Autonomous(name="RotateTest", group="Testers")
+@Disabled
 public class RotateTest extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;

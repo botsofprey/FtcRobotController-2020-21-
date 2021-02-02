@@ -35,8 +35,6 @@ package Autonomous.OpModes.UltimateAuto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.slf4j.helpers.NOPLoggerFactory;
-
 import Autonomous.AutoAlliance;
 import Autonomous.RingCount;
 
@@ -45,9 +43,9 @@ import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 /*
     An opmode for the Ultimate Goal Autonomous
  */
-@Autonomous(name="UltimateV2Auto", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Autonomous(name="UltimateV2AutoAltPath", group="Linear Opmode")  // @Autonomous(...) is the other common choice
 //@Disabled
-public class UltimateV2AutoRed extends LinearOpMode {
+public class UltimateV2AutoRedAltPath extends LinearOpMode {
 
 
 
@@ -79,7 +77,7 @@ public class UltimateV2AutoRed extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
-        RingCount ringCount = RingCount.SINGLE_STACK;
+        RingCount ringCount = RingCount.QUAD_STACK;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
         telemetry.addData("# of rings", ringCount);
         telemetry.addData("Drop intake and wobble", "");
@@ -91,27 +89,29 @@ public class UltimateV2AutoRed extends LinearOpMode {
 
         telemetry.addData("shoot power shots", "");
         telemetry.update();
+
         // next we deliver the first wobble goal to the zone
-        robot.performPowerShots(this, this.getRuntime(), ringCount);
+        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
 
         telemetry.addData("deliver wobble goal", "");
         telemetry.update();
 
         // following the delivery we shoot the preloaded rings at the power shot targets
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
+        robot.performPowerShots(this, this.getRuntime(), ringCount);
 
         telemetry.addData("intake rings, obtain second wobble", "");
         telemetry.update();
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
-        robot.intakeExtraRings(this, ringCount, this.getRuntime());
         robot.obtainSecondWobbleGoal(this, this.getRuntime());
+        robot.intakeExtraRings(this, ringCount, this.getRuntime());
 
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
         telemetry.addData("deliver second wobble, shoot extra rings", "");
         telemetry.update();
         // todo: added wobbleNum parameter to differentiate between the first and second wobble goals
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
         robot.shootExtraRings(this, ringCount, this.getRuntime());
+        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
+
 
         telemetry.addData("park", "");
         telemetry.update();

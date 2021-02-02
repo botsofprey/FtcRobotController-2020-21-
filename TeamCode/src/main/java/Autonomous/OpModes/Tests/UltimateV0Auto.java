@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -40,8 +41,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /*
     An opmode for the User Controlled portion of the game
  */
-@Autonomous(name="UltimateV0Auto", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+@Autonomous(name="UltimateV0Auto", group="Scrimmage")  // @Autonomous(...) is the other common choice
+@Disabled
 public class UltimateV0Auto extends LinearOpMode {
 
     String b = null;

@@ -34,13 +34,11 @@ import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import Actions.Ultimate.RingIntakeSystemV2Test;
-import Actions.Ultimate.ShooterSystemV1;
-import Actions.Ultimate.ShooterSystemV2Test;
-import Actions.Ultimate.WobbleGrabberV2Test;
+import Actions.Ultimate.RingIntakeSystemV2;
+import Actions.Ultimate.ShooterSystemV2;
+import Actions.Ultimate.WobbleGrabberV2;
 import Autonomous.ConfigVariables;
 import Autonomous.Location;
-import DriveEngine.Ultimate.UltimateNavigation;
 import DriveEngine.Ultimate.UltimateNavigation2;
 import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
@@ -77,15 +75,15 @@ import UserControlled.JoystickHandler;
 
 @TeleOp(name="Ultimate V2", group="Competition")
 //@Disabled
-public class UltimateV2Better extends LinearOpMode {
+public class UltimateV2 extends LinearOpMode {
 
 	// create objects and locally global variables here
 	UltimateNavigation2 robot;
 	JoystickHandler leftStick, rightStick;
 	
-	RingIntakeSystemV2Test intake;
-	ShooterSystemV2Test shooter;
-	WobbleGrabberV2Test grabber;
+	RingIntakeSystemV2 intake;
+	ShooterSystemV2 shooter;
+	WobbleGrabberV2 grabber;
 	
 	GamepadController controllerOne, controllerTwo;
 
@@ -115,9 +113,9 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 		
 		// initialize systems
-		intake = new RingIntakeSystemV2Test(hardwareMap);
-		shooter = new ShooterSystemV2Test(hardwareMap);
-		grabber = new WobbleGrabberV2Test(hardwareMap);
+		intake = new RingIntakeSystemV2(hardwareMap);
+		shooter = new ShooterSystemV2(hardwareMap);
+		grabber = new WobbleGrabberV2(hardwareMap);
 
 		/** ideally we can use these gamepads for inputs, however the logic is flawed within the
 		    gamepad class which causes multiple button presses to be necessary for any kind of response */
@@ -190,7 +188,7 @@ public class UltimateV2Better extends LinearOpMode {
 		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
 		double drivePower = slowMode ? leftStick.magnitude() / 3.0 : leftStick.magnitude();
-		double turnPower = slowMode ? rightStick.x() / 4.0 : rightStick.x() / 2.0;
+		double turnPower = slowMode ? rightStick.x() / 4.0 : rightStick.x() / 1.3;
 		if (!eStop)
 			robot.driveOnHeadingWithTurning(leftStick.angle(), drivePower, turnPower);
 	}
@@ -284,13 +282,13 @@ public class UltimateV2Better extends LinearOpMode {
 		}
 
 		if (gamepad2.dpad_up)
-			grabber.setArmAngle(WobbleGrabberV2Test.WALL_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.WALL_ANGLE);
 		else if (gamepad2.dpad_right)
-			grabber.setArmAngle(WobbleGrabberV2Test.LIFT_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.LIFT_ANGLE);
 		else if (gamepad2.dpad_down)
-			grabber.setArmAngle(WobbleGrabberV2Test.GRAB_AND_DROP_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.GRAB_AND_DROP_ANGLE);
 		else if (gamepad2.dpad_left)
-			grabber.setArmAngle(WobbleGrabberV2Test.INIT_ANGLE);
+			grabber.setArmAngle(WobbleGrabberV2.INIT_ANGLE);
 
 		// Intake servo toggle
 		if (gamepad2.right_trigger > 0.1 && !rt2Pressed) {
@@ -315,7 +313,7 @@ public class UltimateV2Better extends LinearOpMode {
 	}
 	
 	private void powerShots() {
-		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LOCATION_NO_HEADING, MED_SPEED, this);
+//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LOCATION_NO_HEADING, MED_SPEED, this);
 		powerShotLeft();
 		powerShotCenter();
 		powerShotRight();
@@ -325,7 +323,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotLeft() {
 		shooter.setPowerShotPower();
-		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LEFT, MED_SPEED,this);
+//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LEFT, MED_SPEED,this);
 		if(shooter.indexServo.getPosition() == 1) {
 			shooter.setIndexLeft();
 		}
@@ -336,7 +334,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotCenter() {
 		shooter.setPowerShotPower();
-		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_MIDDLE, MED_SPEED,this);
+//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_MIDDLE, MED_SPEED,this);
 		if(shooter.indexServo.getPosition() == 1){
 			shooter.setIndexLeft();
 		}
@@ -347,7 +345,7 @@ public class UltimateV2Better extends LinearOpMode {
 	
 	private void powerShotRight() {
 		shooter.setPowerShotPower();
-		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_RIGHT, MED_SPEED,this);
+//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_RIGHT, MED_SPEED,this);
 		if(shooter.indexServo.getPosition() == 1) {
 			shooter.setIndexLeft();
 		}

@@ -29,6 +29,7 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -36,7 +37,7 @@ import Autonomous.ColorDetector;
 import Autonomous.VuforiaHelper;
 
 @TeleOp(name="Vuforia Test", group="Testers")
-//@Disabled
+@Disabled
 public class VuforiaTest extends LinearOpMode {
     // create objects and locally global variables here
 

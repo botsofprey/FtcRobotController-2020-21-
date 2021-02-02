@@ -29,6 +29,7 @@
 
 package UserControlled.Annie;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -44,7 +45,7 @@ import SensorHandlers.SensorPackage;
 import UserControlled.JoystickHandler;
 
 @TeleOp(name="Annie V1", group="Competition")
-//@Disabled
+@Disabled
 public class AnnieV1 extends LinearOpMode {
 
     // create objects and locally global variables here

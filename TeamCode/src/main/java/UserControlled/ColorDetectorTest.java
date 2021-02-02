@@ -30,11 +30,12 @@
 package UserControlled;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Color Detector Test", group="Testers")
-//@Disabled
+@Disabled
 public class ColorDetectorTest extends LinearOpMode {
     // create objects and locally global variables here
 

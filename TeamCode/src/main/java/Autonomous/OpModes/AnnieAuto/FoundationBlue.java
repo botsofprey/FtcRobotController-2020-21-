@@ -27,11 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package Autonomous.OpModes;
+package Autonomous.OpModes.AnnieAuto;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -43,7 +44,7 @@ import DriveEngine.Annie.AnnieNavigation;
 import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
 
 @Autonomous(name="FoundationBlue", group="Competition")
-//@Disabled
+@Disabled
 public class FoundationBlue extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;

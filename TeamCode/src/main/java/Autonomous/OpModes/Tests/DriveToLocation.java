@@ -30,6 +30,7 @@
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
@@ -37,7 +38,7 @@ import Autonomous.Location;
 import Autonomous.OpModes.UltimateAuto.UltimateAutonomous;
 
 @Autonomous(name="Drive to Location Test", group="Testers")
-//@Disabled
+@Disabled
 public class DriveToLocation extends LinearOpMode {
 
     @Override

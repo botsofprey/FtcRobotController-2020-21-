@@ -31,6 +31,7 @@ package Autonomous.OpModes.Tests;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -43,7 +44,7 @@ import Autonomous.VisionHelperSkyStone;
  */
 
 @Autonomous(name="Camera Test", group="Testers")
-//@Disabled
+@Disabled
 public class CameraTest extends LinearOpMode {
     // create objects and locally global variables here
 

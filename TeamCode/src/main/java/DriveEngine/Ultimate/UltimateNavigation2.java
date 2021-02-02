@@ -31,7 +31,7 @@ import SensorHandlers.LIDARSensor;
  */
 public class UltimateNavigation2 extends Thread {
 
-    public static final Rectangle NO_GO_ZONE = new Rectangle(0, 0, 144, 48);
+    public static final Rectangle NO_GO_ZONE = new Rectangle(23.674, 0, 22, 70);
 
     private static final double GOOD_DIST_READING_TOLERANCE = 72.0;
 
@@ -41,7 +41,7 @@ public class UltimateNavigation2 extends Thread {
     public static final int BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR = 2;
     public static final int BACK_LEFT_HOLONOMIC_DRIVE_MOTOR = 3;
 
-    public static final double LOCATION_DISTANCE_TOLERANCE = 0.25, ROUGH_LOCATION_DISTANCE_TOLERANCE = 1.5, STOPPING_DISTANCE_FACTOR = 0.2;
+    public static final double LOCATION_DISTANCE_TOLERANCE = 0.75, ROUGH_LOCATION_DISTANCE_TOLERANCE = 1.5, STOPPING_DISTANCE_FACTOR = 0.2;
     public static final double LIDAR_DISTANCE_TOLERANCE = 15.0;
     public static final long TIME_TOLERANCE = 250;
     public static final long DEFAULT_DELAY_MILLIS = 10;
@@ -64,7 +64,7 @@ public class UltimateNavigation2 extends Thread {
     public ImuHandler orientation;
     private double orientationOffset = 0;
 
-    private volatile boolean shouldRun = true, loggingData = true, usingSensors = true;
+    private volatile boolean shouldRun = true, loggingData = true, usingSensors = false;
     private volatile long startTime = System.nanoTime();
     private volatile HeadingVector IMUTravelVector = new HeadingVector();
 
@@ -143,7 +143,7 @@ public class UltimateNavigation2 extends Thread {
         else if(myLocation.getX() < 0 && myLocation.getY() >= 0) quadrant = Q2;
         else if(myLocation.getX() < 0 && myLocation.getY() < 0) quadrant = Q3;
         else if(myLocation.getX() >= 0 && myLocation.getY() < 0) quadrant = Q4;
-        Log.d("Quadrant: ", ""+quadrant);
+        Log.d("Quadrant: ", "" + quadrant);
 
         double simpleHeading = myLocation.getHeading() % 360;
         int dir = -1;
@@ -151,12 +151,12 @@ public class UltimateNavigation2 extends Thread {
         else if(simpleHeading < 91 && simpleHeading > 89) dir = EAST; // REVIEW: suggest to define HEADING_TOLERANCE = 1 and use abs(simpleHeading - 90) < HEADING_TOLERANCE
         else if(simpleHeading < 181 && simpleHeading > 179) dir = SOUTH;
         else if(simpleHeading < 271 && simpleHeading > 269) dir = WEST;
-        Log.d("Direction: ", ""+dir);
+        Log.d("Direction: ", "" + dir);
 
         int[] sensorsToUse = updateLocationInformation[quadrant].get(dir);
         if (sensorsToUse != null && sensorsToUse[0] != DRIVE_BASE) {
             double x = 71.0 - distanceSensors[sensorsToUse[0]].getDistance() - 7.0;
-            x *= quadrant == Q2 || quadrant == Q3 ? -1 : 1; //TODO this is wrong I'm pretty sure
+            x *= quadrant == Q2 || quadrant == Q3 ? -1 : 1; // TODO this is wrong I'm pretty sure
             Log.d("Start sensor X: ", "" + x);
             Log.d("Start loc X: ", myLocation.getX()+"");
             if (Math.abs(myLocation.getX() - x) < 50) myLocation.setX(x);
@@ -259,7 +259,7 @@ public class UltimateNavigation2 extends Thread {
                     Log.d("X sensor dist: ", dist+"");
                     if (dist != null && dist < GOOD_DIST_READING_TOLERANCE) {
                         // REVIEW: the magic numbers in the following formula should be pulled out as named constants
-                        expectedX = 71.0 - dist - 7.0;
+                        expectedX = 70.622 - dist - 7.0;
                         if (quadrant == Q2 || quadrant == Q3) expectedX *= -1;
                         if (Math.abs(expectedX - (myLocation.getX() + deltaX)) <= LIDAR_DISTANCE_TOLERANCE)
                             myLocation.setX(expectedX);
@@ -273,7 +273,7 @@ public class UltimateNavigation2 extends Thread {
                         || myLocation.withinRectangle(ConfigVariables.VALID_Y_SENSOR_READ_AREA_2))) {
                     Double dist = distanceSensors[sensorsToUse[1]].getGoodDistance();
                     if (dist != null && dist < GOOD_DIST_READING_TOLERANCE) {
-                        expectedY = 71.0 - dist - 7.0;
+                        expectedY = 70.622 - dist - 7.0;
                         if (quadrant == Q3 || quadrant == Q4) expectedY *= -1;
                         myLocation.setY(expectedY);
                         if (Math.abs(expectedY - (myLocation.getY() + deltaY)) <= LIDAR_DISTANCE_TOLERANCE)
@@ -1145,7 +1145,7 @@ public class UltimateNavigation2 extends Thread {
         turnController.setSp(0);
 
         Location actualStartLocation = new Location(startLocation);
-//        double turnGain = 1; // was 45 (older) // was 60 1/29/2021 //
+        double turnGain = 60;
         final double decel = 50;
         final double accel = 80;
         double xDist =  targetLocation.getX() - startLocation.getX();
@@ -1199,7 +1199,7 @@ public class UltimateNavigation2 extends Thread {
             Log.d("xCorrection: ", xCorrection + "");
             double yCorrection = yPositionController.calculatePID(-yDist);
             Log.d("yCorrection: ", yCorrection + "");
-            double turnCorrection = turnController.calculatePID(restrictAngle(orientation.getOrientation(),0, mode));
+            double turnCorrection = turnController.calculatePID(restrictAngle(orientation.getOrientation(),0, mode)) * turnGain;
             Log.d("turnCorrection: ", turnCorrection + "");
 
             double[] motorVelocities = new double[4];
@@ -1297,8 +1297,8 @@ public class UltimateNavigation2 extends Thread {
                 Log.d("Decelerating", "...");
                 velocity = velocity - decel * (System.currentTimeMillis() - startTime) / 1000.0;
                 if(velocity > desiredSpeed) velocity = desiredSpeed;
-                if(velocity < 7.5) {
-                    velocity = 7.5; // limit to 15 to allow PID to take over
+                if(velocity < 10) {
+                    velocity = 10; // limit to 15 to allow PID to take over
                     Log.d("PID being used", "...");
                 }
             } else {

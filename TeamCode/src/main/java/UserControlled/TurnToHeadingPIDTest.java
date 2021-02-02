@@ -29,6 +29,7 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -39,7 +40,7 @@ import DriveEngine.Ultimate.UltimateNavigationSimple;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
 @TeleOp(name="Turn to Heading PID Test", group="Competition")
-//@Disabled
+@Disabled
 public class TurnToHeadingPIDTest extends LinearOpMode {
     // create objects and locally global variables here
 

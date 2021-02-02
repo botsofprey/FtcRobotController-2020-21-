@@ -18,7 +18,7 @@ import java.io.IOException;
 import Actions.ActionHandler;
 import MotorControllers.MotorController;
 
-public class RingIntakeSystemV2Test implements ActionHandler {
+public class RingIntakeSystemV2 implements ActionHandler {
 	
 	private static final int MOTOR_POWER = 1;
 	
@@ -51,17 +51,17 @@ public class RingIntakeSystemV2Test implements ActionHandler {
 	
 	public int numRingsTakenIn;
 	
-	public RingIntakeSystemV2Test(HardwareMap hardwareMap) {
+	public RingIntakeSystemV2(HardwareMap hardwareMap) {
 		try {
 			intakeMotor = new MotorController("intakeMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 			intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-			intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+			intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
 			rollerMotor = new MotorController("rollerMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			rollerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // there is no encoder on this motor currently
 			rollerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-			rollerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+			rollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 			
 			intakeServo = hardwareMap.servo.get("intakeServo");
 		} catch (IOException e) {

@@ -32,6 +32,7 @@ package Autonomous.OpModes.AnnieAuto;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -45,7 +46,7 @@ import DriveEngine.Annie.AnnieNavigation;
 import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
 
 @Autonomous(name="Red", group="Competition")
-//@Disabled
+@Disabled
 public class AnnieV1AutoRed extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;

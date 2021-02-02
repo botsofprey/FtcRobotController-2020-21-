@@ -29,6 +29,7 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -41,7 +42,7 @@ import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
 @TeleOp(name="Drive To Location Test", group="Competition")
-//@Disabled
+@Disabled
 public class DriveToLocationTest extends LinearOpMode {
     // create objects and locally global variables here
 

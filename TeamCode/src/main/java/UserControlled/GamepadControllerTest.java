@@ -29,11 +29,12 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Gamepad Controller Test", group="Testers")
-//@Disabled
+@Disabled
 public class GamepadControllerTest extends LinearOpMode {
     // create objects and locally global variables here
 

@@ -27,62 +27,53 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package Autonomous.OpModes;
+package Autonomous.OpModes.AnnieAuto;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import Actions.Annie.MiscellaneousActionsV2;
 import Autonomous.Location;
 import DriveEngine.Annie.AnnieNavigation;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
 
-@Autonomous(name="RedReset", group="Competition")
-//@Disabled
-public class RedReset extends LinearOpMode {
+@Autonomous(name="Bridge Park", group="Competition")
+@Disabled
+public class BridgePark extends LinearOpMode {
     // create objects and locally global variables here
     AnnieNavigation robot;
-    DistanceSensor back, right, left;
-
-
+    DistanceSensor left, right;
+    MiscellaneousActionsV2 otherActions;
     @Override
     public void runOpMode() {
         // initialize objects and variables here
         // also create and initialize function local variables here
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        back = hardwareMap.get(DistanceSensor.class, "back");
-        right = hardwareMap.get(DistanceSensor.class, "right");
-        left = hardwareMap.get(DistanceSensor.class, "left");
-
+        otherActions = new MiscellaneousActionsV2(hardwareMap);
         try {
             robot = new AnnieNavigation(hardwareMap, new Location(0, 0), 0, "RobotConfig/AnnieV1.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Stone detection
-
+        left = hardwareMap.get(DistanceSensor.class, "left");
+        right = hardwareMap.get(DistanceSensor.class, "right");
 
         // add any other useful telemetry data or logging data here
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // nothing goes between the above and below lines
         waitForStart();
+        // should only be used for a time keeper or other small things, avoid using this space when possible
+        robot.driveDistance(24, (left.getDistance(INCH) < right.getDistance(INCH))? AnnieNavigation.RIGHT: AnnieNavigation.LEFT,25,this);
+        otherActions.spitTape();
+        sleep(300);
+        otherActions.pauseTape();
 
-        while(opModeIsActive() && (left.getDistance(INCH) < 28.75 || left.getDistance(INCH) > 50)){
-            if(left.getDistance(INCH) < 42)
-                robot.driveOnHeadingPID(AnnieNavigation.RIGHT, 20,0,this);
-            if(left.getDistance(INCH) > 50)
-                robot.driveOnHeadingPID(AnnieNavigation.LEFT, 20,0,this);
-        }
-        while(opModeIsActive() && back.getDistance(INCH) > 6){
-            robot.driveOnHeadingPID(AnnieNavigation.BACK, 20,0,this);
-        }
+        while (opModeIsActive());
+        otherActions.kill();
         robot.stopNavigation();
-//        VuforiaHelper.kill(); -- this crashes the app...
 
         // finish drive code and test
         // may be a good idea to square self against wall

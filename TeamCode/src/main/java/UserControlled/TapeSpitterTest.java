@@ -29,13 +29,14 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Annie.MiscellaneousActions;
 
 @TeleOp(name="Tape Spitter Test", group="Testers")
-//@Disabled
+@Disabled
 public class TapeSpitterTest extends LinearOpMode {
     // create objects and locally global variables here
     MiscellaneousActions otherActions;

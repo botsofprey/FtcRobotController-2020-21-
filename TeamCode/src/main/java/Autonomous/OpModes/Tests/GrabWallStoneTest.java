@@ -30,14 +30,15 @@
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
 import Autonomous.OpModes.AnnieAuto.AnnieAutonomous;
 import Autonomous.SkyStonePosition;
 
-@Autonomous(name="Grab Wall Stone Test", group="Competition")
-//@Disabled
+@Autonomous(name="Grab Wall Stone Test", group="Testers")
+@Disabled
 public class GrabWallStoneTest extends LinearOpMode {
     // create objects and locally global variables here
     AnnieAutonomous annie;

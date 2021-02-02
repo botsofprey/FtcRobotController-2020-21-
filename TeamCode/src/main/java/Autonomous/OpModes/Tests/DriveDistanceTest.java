@@ -30,6 +30,7 @@
 package Autonomous.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -37,7 +38,7 @@ import Autonomous.Location;
 import DriveEngine.Annie.AnnieNavigation;
 
 @Autonomous(name="Drive Distance", group="Testers")
-//@Disabled
+@Disabled
 public class DriveDistanceTest extends LinearOpMode {
     // create objects and locally global variables here
 

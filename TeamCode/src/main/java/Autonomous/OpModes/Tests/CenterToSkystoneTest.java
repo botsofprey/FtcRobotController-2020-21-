@@ -32,6 +32,7 @@ package Autonomous.OpModes.Tests;
 import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -45,7 +46,7 @@ import DriveEngine.Annie.AnnieNavigation;
 import static org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH;
 
 @Autonomous(name="CenterToSkystone Test", group="Testers")
-//@Disabled
+@Disabled
 public class CenterToSkystoneTest extends LinearOpMode {
     // create objects and locally global variables here
     SkystoneImageProcessor stoneFinder;

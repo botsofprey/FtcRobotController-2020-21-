@@ -27,53 +27,41 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package UserControlled;
+package Autonomous.OpModes.AnnieAuto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import Autonomous.Location;
-import DriveEngine.Ultimate.UltimateNavigation;
+import Actions.Annie.MiscellaneousActionsV2;
 
-@TeleOp(name="Holonomic Drive Base Test", group="Competition")
-//@Disabled
-public class HolonomicDriveBaseTest extends LinearOpMode {
+@Autonomous(name="Wall Park", group="Competition")
+@Disabled
+public class WallPark extends LinearOpMode {
     // create objects and locally global variables here
-
-    UltimateNavigation robot;
-    JoystickHandler leftStick, rightStick;
+    MiscellaneousActionsV2 otherActions;
 
     @Override
     public void runOpMode() {
         // initialize objects and variables here
         // also create and initialize function local variables here
-
-        try {
-            robot = new UltimateNavigation(hardwareMap, new Location(0, 0), "RobotConfig/UltimateV1.json");
-        } catch (Exception e) {
-            telemetry.addData("Error", "Must've been the file I guess..." + e.toString());
-        }
-        telemetry.addData("This is the holo base test", "");
-
-        leftStick = new JoystickHandler(gamepad1, JoystickHandler.LEFT_JOYSTICK);
-        rightStick = new JoystickHandler(gamepad1, JoystickHandler.RIGHT_JOYSTICK);
+        otherActions = new MiscellaneousActionsV2(hardwareMap);
 
         // add any other useful telemetry data or logging data here
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // nothing goes between the above and below lines
         waitForStart();
-
         // should only be used for a time keeper or other small things, avoid using this space when possible
-        while (opModeIsActive()) {
+        otherActions.spitTape();
+        sleep(300);
+        otherActions.pauseTape();
 
-            double drivePower = leftStick.magnitude();
-            double turnPower = rightStick.x();
+        while (opModeIsActive());
+        otherActions.kill();
+        // finish drive code and test
+        // may be a good idea to square self against wall
 
-            telemetry.update();
-        }
-
-        // disable/kill/stop objects here
     }
-
+    // misc functions here
 }

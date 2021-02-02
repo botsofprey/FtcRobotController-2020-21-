@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package Autonomous.OpModes.UltimateAuto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Autonomous.AutoAlliance;
@@ -51,7 +52,7 @@ import static Autonomous.ConfigVariables.WOBBLE_GOAL_PLACEMENT_OFFSET;
     An opmode for the Ultimate Goal Autonomous
  */
 @Autonomous(name="UltimateV1Auto", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
+@Disabled
 public class UltimateV1AutoRed extends LinearOpMode {
 
 //    volatile boolean shouldRun = true;

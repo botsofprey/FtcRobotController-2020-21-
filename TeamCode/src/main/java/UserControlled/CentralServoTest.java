@@ -29,13 +29,14 @@
 
 package UserControlled;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Annie.StoneStackingSystemV2;
 
 @TeleOp(name="Central Servo Test", group="Testers")
-//@Disabled
+@Disabled
 public class CentralServoTest extends LinearOpMode {
     // create objects and locally global variables here
     int degree = 0;
