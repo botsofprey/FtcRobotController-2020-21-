@@ -187,8 +187,8 @@ public class UltimateV2 extends LinearOpMode {
 	private void controlDrive() {
 		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
-		double drivePower = slowMode ? leftStick.magnitude() / 3.0 : leftStick.magnitude();
-		double turnPower = slowMode ? rightStick.x() / 4.0 : rightStick.x() / 1.3;
+		double drivePower = slowMode ? leftStick.magnitude() / 1.5 : leftStick.magnitude();
+		double turnPower = slowMode ? rightStick.x() / 2.0 : rightStick.x();
 		if (!eStop)
 			robot.driveOnHeadingWithTurning(leftStick.angle(), drivePower, turnPower);
 	}

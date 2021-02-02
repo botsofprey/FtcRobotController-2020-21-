@@ -65,8 +65,7 @@ public class MotorController extends Thread {
                     loopStartMillis = System.currentTimeMillis();
                     //update for runtime
                     updateData();
-                    Log.d("conrtolling rpm value", ""+controllingRPM);
-                    if(controllingRPM) maintainRPM();
+//                    if(controllingRPM) maintainRPM();
                     long remainingTime = LOOP_MILLIS - (System.currentTimeMillis() - loopStartMillis);
                     if (remainingTime > 0) safetySleep(remainingTime);
                 }
@@ -150,9 +149,9 @@ public class MotorController extends Thread {
         curTickLocation = motor.getCurrentPosition();
     }
 
-//    private void updateRPM() {
-//        currentRPM = (int)
-//    }
+    private void updateRPM() {
+        currentRPM = (int)(motor.getPower()*maxTicksPerSecond/ticksPerRevolution);
+    }
 
     private int readConfig(String fileLoc) {
         InputStream stream = null;
@@ -274,7 +273,7 @@ public class MotorController extends Thread {
     }
 
     private void maintainRPM() {
-//        updateRPM();
+        updateRPM();
         double powerAdjustment = rpmController.calculatePID(currentRPM);
         double targetPower = (targetRPM)/(maxTicksPerSecond * 60.0 / ticksPerRevolution) + powerAdjustment;
         setMotorPower(targetPower);
@@ -284,10 +283,9 @@ public class MotorController extends Thread {
     public void setRPM(int rpm) {
         if(getMotorRunMode() != DcMotor.RunMode.RUN_USING_ENCODER) setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         controllingRPM = true;
-        Log.d("Motor Controller", "controlling rpm "+controllingRPM);
         targetRPM = rpm;
         rpmController.setSp(targetRPM);
-        Log.d("target rpm", targetRPM+"");
+        maintainRPM();
     }
 
     public double getWheelDiameterInInches(){

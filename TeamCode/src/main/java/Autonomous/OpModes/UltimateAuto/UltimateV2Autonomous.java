@@ -11,6 +11,8 @@ import Autonomous.RingCount;
 import Autonomous.VisionHelperUltimateGoal;
 import DriveEngine.Ultimate.UltimateNavigation2;
 
+import static Autonomous.ConfigVariables.ALT_HIGH_GOAL_HEADING;
+import static Autonomous.ConfigVariables.ALT_HIGH_GOAL_POINT;
 import static Autonomous.ConfigVariables.HIGH_GOAL_HEADING;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
@@ -197,8 +199,8 @@ public class UltimateV2Autonomous {
         if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
                 robot.turnToHeading(UltimateNavigation2.NORTH, mode);
                 shooter.setHighGoalPower();
-                robot.driveToLocationPID(SHOOTING_LINE_POINT, MED_SPEED, mode);
-                robot.turnToHeading(HIGH_GOAL_HEADING, mode);
+                robot.driveToLocationPID(ALT_HIGH_GOAL_POINT, MED_SPEED, mode);
+                robot.turnToHeading(ALT_HIGH_GOAL_HEADING, mode);
 
                 // shoot rings
                 if(ringCount == RingCount.SINGLE_STACK){ // if there is only one extra ring, only index once

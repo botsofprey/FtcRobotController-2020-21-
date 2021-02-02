@@ -86,6 +86,7 @@ public class ConfigVariables {
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(30, 0);
     public static final Location SHOOTING_LINE_POINT = new Location(22, -1); // may need to adjust
+    public static final Location ALT_HIGH_GOAL_POINT = new Location(51, -12); // This is used after we intake the rings, to see if we can avoid going back to the shooting loc
     public static final Location POWER_SHOT_POINT = new Location(18.75, 10);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
     public static final Location CENTER = new Location(0,0);
@@ -108,6 +109,8 @@ public class ConfigVariables {
     public static final Location POWER_SHOT_RIGHT = new Location(24, 0, RIGHT_POWER_SHOT_HEADING);
     public static final Location POWER_SHOT_LOCATION_NO_HEADING = new Location(24, 0);
     public static final double HIGH_GOAL_HEADING = 16.0;
+    public static final Location HIGH_GOAL_LOC = new Location(38, 71);
+    public static final double ALT_HIGH_GOAL_HEADING = Math.atan2(HIGH_GOAL_LOC.getY() - ALT_HIGH_GOAL_POINT.getY(), HIGH_GOAL_LOC.getX() - ALT_HIGH_GOAL_POINT.getX());
 
 
     public static final double POWER_SHOT_HEIGHT_CM = 77;
