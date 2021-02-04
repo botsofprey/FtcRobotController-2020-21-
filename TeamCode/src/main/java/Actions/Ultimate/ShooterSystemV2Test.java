@@ -13,6 +13,7 @@ import Actions.ActionHandler;
 import Actions.HardwareWrappers.ServoHandler;
 import Autonomous.ConfigVariables;
 import MotorControllers.MotorController;
+import MotorControllers.MotorControllerTest;
 
 /**
  * Author: Jordan Martin
@@ -22,7 +23,7 @@ import MotorControllers.MotorController;
  */
 public class ShooterSystemV2Test implements ActionHandler {
 
-	public MotorController shooterMotor;
+	public MotorControllerTest shooterMotor;
 
 	// TODO fix PID controller in rpm class
 	private static final int SHOOTER_ON_SPEED = 5000; // rotations per minute
@@ -49,7 +50,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 
 	public ShooterSystemV2Test(HardwareMap hardwareMap) {
 		try {
-			shooterMotor = new MotorController("wheelMotor", "ActionConfig/ShooterMotor.json", hardwareMap);
+			shooterMotor = new MotorControllerTest("wheelMotor", "ActionConfig/ShooterMotor.json", hardwareMap);
 			shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 			shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 			shooterMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -67,12 +68,12 @@ public class ShooterSystemV2Test implements ActionHandler {
 		shooterMotor.setMotorPower(power);
 	}
 
-	public void setRPM(int rpm) {
+	public void setRPM(double rpm) {
 		shooterMotor.setRPM(rpm);
 		Log.d("Shooter", "set rpm");
 	}
 
-	public int getRPM() { return shooterMotor.getCurrentRPM(); }
+	public double getRPM() { return shooterMotor.getCurrentRPM(); }
 
 	public void pauseShooter() {
 		shooterMotor.brake();
