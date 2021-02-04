@@ -62,7 +62,7 @@ public class TurnToHeadingPIDTest extends LinearOpMode {
 
         waitForStart();
 
-        robot.turnToHeadingPID(90, 0.25, this);
+        robot.turnToHeadingPID(90, 0.25, false, this);
     }
     // misc functions here
 }

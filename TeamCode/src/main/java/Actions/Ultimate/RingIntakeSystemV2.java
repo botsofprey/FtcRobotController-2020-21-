@@ -61,7 +61,7 @@ public class RingIntakeSystemV2 implements ActionHandler {
 			rollerMotor = new MotorController("rollerMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			rollerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // there is no encoder on this motor currently
 			rollerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-			rollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+			rollerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 			
 			intakeServo = hardwareMap.servo.get("intakeServo");
 		} catch (IOException e) {

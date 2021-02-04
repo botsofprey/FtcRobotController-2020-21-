@@ -125,8 +125,8 @@ public class UltimateNavigationSimple {
      * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
      */
     public void turn(double percentOfMaxTurnRate) {
-        double[] velocities = calculatePowersToTurn(percentOfMaxTurnRate);
-        applyMotorVelocities(velocities);
+        double[] powers = calculatePowersToTurn(percentOfMaxTurnRate);
+        applyMotorPowers(powers);
     }
 
     /**
@@ -135,8 +135,8 @@ public class UltimateNavigationSimple {
      * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeading(double heading, double percentOfMaxTurnRate, LinearOpMode mode) {
-        turnToHeading(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, mode);
+    public void turnToHeading(double heading, double percentOfMaxTurnRate, boolean estop, LinearOpMode mode) {
+        turnToHeading(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, estop, mode);
     }
 
     /**
@@ -146,10 +146,11 @@ public class UltimateNavigationSimple {
      * @param tolerance the acceptable +/- error for the robot to orient within
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeading(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
+    public void turnToHeading(double heading, double percentOfMaxTurnRate, double tolerance, boolean estop, LinearOpMode mode) {
+        heading = normalizeAngle(heading);
         percentOfMaxTurnRate = Math.abs(percentOfMaxTurnRate) * Math.signum(heading - normalizeAngle(orientation.getOrientation()));
         Log.d("Turn Percent", "" + (percentOfMaxTurnRate*100));
-        while(mode.opModeIsActive() && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
+        while(mode.opModeIsActive() && !estop && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
             turn(percentOfMaxTurnRate);
             Log.d("Turn To Heading", "Current Heading: " + orientation.getOrientation());
         }
@@ -162,8 +163,8 @@ public class UltimateNavigationSimple {
      * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, LinearOpMode mode) {
-        turnToHeadingPID(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, mode);
+    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, boolean estop, LinearOpMode mode) {
+        turnToHeadingPID(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, estop, mode);
     }
 
     /**
@@ -173,9 +174,10 @@ public class UltimateNavigationSimple {
      * @param tolerance the acceptable +/- error for the robot to orient within
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
+    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, double tolerance, boolean estop, LinearOpMode mode) {
+        heading = normalizeAngle(heading);
         turnController.setSp(heading);
-        while (mode.opModeIsActive() && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
+        while (mode.opModeIsActive() && !estop && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
             double turnRate = turnController.calculatePID(normalizeAngle(orientation.getOrientation()));
             turnRate /= maxTurnRPS;
             if(turnRate > percentOfMaxTurnRate) turnRate = percentOfMaxTurnRate;

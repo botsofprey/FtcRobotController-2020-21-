@@ -42,6 +42,7 @@ import DriveEngine.Ultimate.UltimateNavigationSimple;
 import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
 
+import static Autonomous.ConfigVariables.HIGH_GOAL_HEADING;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
@@ -189,8 +190,8 @@ public class UltimateV2Test extends LinearOpMode {
 	private void controlDrive() {
 		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
-		double drivePower = slowMode ? leftStick.magnitude() / 3.0 : leftStick.magnitude();
-		double turnPower = slowMode ? rightStick.x() / 4.0 : rightStick.x() / 2.0;
+		double drivePower = slowMode ? leftStick.magnitude() / 1.5 : leftStick.magnitude();
+		double turnPower = slowMode ? rightStick.x() / 2.0 : rightStick.x() / 1.3;
 		if (!eStop)
 			robot.driveOnHeadingWithTurning(leftStick.angle(), drivePower, turnPower);
 	}
@@ -229,11 +230,21 @@ public class UltimateV2Test extends LinearOpMode {
 		// Shoot three rings
 		if(gamepad1.x && !x1Pressed) {
 			x1Pressed = true;
-			shootThreeRings();
+//			shootThreeRings();
+			highGoalShot();
 		}
 		else if(!gamepad1.x){
 			x1Pressed = false;
 		}
+	}
+
+	private void highGoalShot() {
+		robot.turnToHeading(HIGH_GOAL_HEADING, 0.25, eStop,this);
+		indexShooter();
+		sleep(SLEEP_TIME);
+		indexShooter();
+		sleep(SLEEP_TIME);
+		indexShooter();
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
@@ -323,48 +334,30 @@ public class UltimateV2Test extends LinearOpMode {
 	// TODO: Modify the functions below to actually go to the correct positions and score power shots
 	
 	private void powerShotLeft() {
-		shooter.setPowerShotPower();
-		robot.turnToHeadingPID(LEFT_POWER_SHOT_HEADING, 0.25, 0, this);
-		if(shooter.indexServo.getPosition() == 1) {
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 	
 	private void powerShotCenter() {
-		shooter.setPowerShotPower();
-		robot.turnToHeadingPID(MIDDLE_POWER_SHOT_HEADING, 0.25, 0, this);
-		if(shooter.indexServo.getPosition() == 1){
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 	
 	private void powerShotRight() {
-		shooter.setPowerShotPower();
-		robot.turnToHeadingPID(RIGHT_POWER_SHOT_HEADING, 0.25, 0, this);
-		if(shooter.indexServo.getPosition() == 1) {
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 
 	protected void indexShooter(){
-		shooter.setIndexLeft();
-		sleep(SLEEP_TIME);
-		shooter.setIndexRight();
-		sleep(SLEEP_TIME);
-	}
-
-	protected void shootThreeRings(){
-		for(int i = 0; i <= 3; i++){
-			indexShooter();
+		if(toggleIndex) {
+			toggleIndex = false;
+			shooter.setIndexRight();
+		} else {
+			toggleIndex = true;
+			shooter.setIndexLeft();
 		}
 	}
 	

@@ -23,15 +23,15 @@ public class WobbleGrabberV2 implements ActionHandler {
     public LimitSwitch sensor;
 
     private static final double ARM_POWER = .35;
-    private static final double SLOW_ARM_POWER = 0.2;
+    private static final double SLOW_ARM_POWER = 0.175;
 
     public static final double CLAW_GRAB_POSITION = 1;
     public static final double CLAW_RELEASE_POSITION = -1;
 
     public static final double ANGLE_INCREMENT = 25;
-    public static final double WALL_ANGLE = -53;
+    public static final double WALL_ANGLE = -40;
     public static final double LIFT_ANGLE = -80;
-    public static final double GRAB_AND_DROP_ANGLE = -97;
+    public static final double GRAB_AND_DROP_ANGLE = -115;
     public static final double INIT_ANGLE = 0;
 
     public boolean wobbleGrabbed;
@@ -94,8 +94,8 @@ public class WobbleGrabberV2 implements ActionHandler {
         setArmAngle(INIT_ANGLE);
     }
 
-    public void setLiftAngleSlow(){
-        arm.setPositionDegrees(LIFT_ANGLE, SLOW_ARM_POWER);
+    public void setGrabAngleSlow(){
+        arm.setPositionDegrees(GRAB_AND_DROP_ANGLE, SLOW_ARM_POWER);
     }
 
     public void pause() {

@@ -34,7 +34,10 @@ public class ShooterSystemV2Test implements ActionHandler {
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
 	public static final double HIGH_GOAL_POWER = 0.65;
-	public static final double POWER_SHOT_POWER = 0.58;
+	public static final double RIGHT_POWER_SHOT_POWER = 0.625;
+	public static final double MIDDLE_POWER_SHOT_POWER = 0.595;
+	public static final double LEFT_POWER_SHOT_POWER = 0.58;
+
 	private double power = HIGH_GOAL_POWER;
 
 	// good
@@ -84,11 +87,6 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public void setIndexRight(){
 		indexServo.setPosition(INDEX_RIGHT);
 		indexAngle = INDEX_RIGHT;
-	}
-	
-	public void setPowerShotPower() {
-		power = POWER_SHOT_POWER;
-		spinUp();
 	}
 
 	public void setHighGoalPower() {

@@ -68,8 +68,8 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
         // the loop below updates the ring count as the camera runs in a background thread
         while(!opModeIsActive()) {
             telemetry.addData("Status", "Initialized");
-//            telemetry.addData("# of rings", 4);
-            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
+            telemetry.addData("# of rings", 0);
+//            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
             telemetry.update();
         }
 
@@ -77,7 +77,7 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
-        RingCount ringCount = RingCount.QUAD_STACK;
+        RingCount ringCount = RingCount.NO_RINGS;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
         telemetry.addData("# of rings", ringCount);
         telemetry.addData("Drop intake and wobble", "");
@@ -97,12 +97,12 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
         telemetry.update();
 
         // following the delivery we shoot the preloaded rings at the power shot targets
-        robot.performPowerShots(this, this.getRuntime(), ringCount);
+        robot.performPowerShots(this, ringCount, this.getRuntime());
 
         telemetry.addData("intake rings, obtain second wobble", "");
         telemetry.update();
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
-        robot.obtainSecondWobbleGoal(this, this.getRuntime());
+        robot.obtainSecondWobbleGoal(this, ringCount, this.getRuntime());
         robot.intakeExtraRings(this, ringCount, this.getRuntime());
 
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
@@ -119,7 +119,8 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
         robot.park(this, ringCount);
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive());
+//        while (opModeIsActive());
+        // TODO once the camera is back in, uncomment vision.kill() in robot.kill()
         robot.kill();
     }
 }

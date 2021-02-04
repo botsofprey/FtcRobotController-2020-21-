@@ -31,6 +31,7 @@ package UserControlled.Ultimate;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -74,7 +75,7 @@ import UserControlled.JoystickHandler;
  */
 
 @TeleOp(name="Ultimate V2", group="Competition")
-//@Disabled
+@Disabled
 public class UltimateV2 extends LinearOpMode {
 
 	// create objects and locally global variables here

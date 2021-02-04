@@ -277,7 +277,9 @@ public class MotorController extends Thread {
         double powerAdjustment = rpmController.calculatePID(currentRPM);
         double targetPower = (targetRPM)/(maxTicksPerSecond * 60.0 / ticksPerRevolution) + powerAdjustment;
         setMotorPower(targetPower);
+        Log.d("RPM Target", ""+targetRPM);
         Log.d("Target Power for RPM", ""+targetPower);
+        Log.d("RPM Current", ""+currentRPM);
     }
 
     public void setRPM(int rpm) {

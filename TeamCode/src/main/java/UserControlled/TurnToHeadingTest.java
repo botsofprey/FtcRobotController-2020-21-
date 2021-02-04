@@ -65,7 +65,7 @@ public class TurnToHeadingTest extends LinearOpMode {
 
         waitForStart();
 
-        robot.turnToHeading(90, 1, this);
+        robot.turnToHeading(90, 1, false, this);
     }
     // misc functions here
 }

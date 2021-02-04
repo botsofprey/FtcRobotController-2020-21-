@@ -202,7 +202,7 @@ public class UltimateV1 extends LinearOpMode {
             shooter.toggleWheelPower();
 
         if (controller.dpadUpPressed)
-            robot.turnToShoot(ConfigVariables.TOP_GOAL, this);  // set angle to aim at the top goal
+            robot.turnToShoot(ConfigVariables.HIGH_GOAL_LOC, this);  // set angle to aim at the top goal
 
         if (controller.dpadDownPressed)
             robot.turnToShoot(ConfigVariables.POWER_SHOT_MIDDLE, this); // set angle to center power shot

@@ -34,8 +34,8 @@ public class ShooterSystemV2 implements ActionHandler {
 
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
-	public static final double HIGH_GOAL_POWER = 0.64;
-	public static final double POWER_SHOT_POWER = 0.61;
+	public static final double HIGH_GOAL_POWER = 0.655;
+	public static final double POWER_SHOT_POWER = 0.60;
 	private double power = HIGH_GOAL_POWER;
 	
 	// good
@@ -115,6 +115,11 @@ public class ShooterSystemV2 implements ActionHandler {
 	
 	public void setPowerShotPower() {
 		power = POWER_SHOT_POWER;
+		spinUp();
+	}
+
+	public void setShooterMotorPower(double power) {
+		this.power = power;
 		spinUp();
 	}
 
