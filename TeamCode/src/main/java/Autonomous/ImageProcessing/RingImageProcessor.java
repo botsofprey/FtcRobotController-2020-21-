@@ -38,7 +38,7 @@ public class RingImageProcessor {
     private int team;
 
     private final int MIN_ORANGE_WIDTH = 4;
-    private final int QUAD_STACK_MIN_HEIGHT = 10, SINGLE_STACK_MIN_HEIGHT = 4;
+    private final int QUAD_STACK_MIN_HEIGHT = 3, SINGLE_STACK_MIN_HEIGHT = 1;
 
     /**
      * constructor for this class, you should not use this as you can not set the team's color to look for
@@ -156,8 +156,10 @@ public class RingImageProcessor {
     public int getNumOfRings(Bitmap bmp, boolean shouldModifyImage) {
         Rectangle orangeBoxOnScreen = getOrangeBox(bmp, shouldModifyImage);
         if(orangeBoxOnScreen.height != Double.MIN_VALUE) {
-            if (orangeBoxOnScreen.height >= QUAD_STACK_MIN_HEIGHT) return 4;
-            else if (orangeBoxOnScreen.height >= SINGLE_STACK_MIN_HEIGHT) return 1;
+            if(orangeBoxOnScreen.width > MIN_ORANGE_WIDTH) {
+                if (orangeBoxOnScreen.height >= QUAD_STACK_MIN_HEIGHT) return 4;
+                else return 1;
+            }
         }
         return -1;
     }
