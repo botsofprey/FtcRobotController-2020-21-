@@ -31,18 +31,21 @@ package UserControlled.Ultimate;
 
 import android.util.Log;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Ultimate.RingIntakeSystemV2;
 import Actions.Ultimate.ShooterSystemV2;
 import Actions.Ultimate.WobbleGrabberV2;
-import Autonomous.ConfigVariables;
 import Autonomous.Location;
-import DriveEngine.Ultimate.UltimateNavigation2;
+import DriveEngine.Ultimate.UltimateNavigationSimple;
 import UserControlled.GamepadController;
 import UserControlled.JoystickHandler;
+
+import static Autonomous.ConfigVariables.HIGH_GOAL_HEADING;
+import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
+import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
+import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
 
 /**
  * Author: Software Team 2020-2021
@@ -75,11 +78,11 @@ import UserControlled.JoystickHandler;
  */
 
 @TeleOp(name="Ultimate V2", group="Competition")
-@Disabled
+//@Disabled
 public class UltimateV2 extends LinearOpMode {
 
 	// create objects and locally global variables here
-	UltimateNavigation2 robot;
+	UltimateNavigationSimple robot;
 	JoystickHandler leftStick, rightStick;
 	
 	RingIntakeSystemV2 intake;
@@ -96,7 +99,7 @@ public class UltimateV2 extends LinearOpMode {
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
 			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
-			dpadD2pressed = false, dpadU2pressed = false, toggleDecrement = false, x1Pressed = false;
+			dpadD2pressed = false, dpadU2pressed = false, toggleDecrement = false, x1Pressed = false, usingDpad = false, extraSlowMode = false, start1Pressed = false;
 	
 	@Override
 	public void runOpMode() {
@@ -106,7 +109,7 @@ public class UltimateV2 extends LinearOpMode {
 		// initialize robot
 		// TODO get starting angle
 		try {
-			robot = new UltimateNavigation2(hardwareMap, new Location(0, 0, 0), "RobotConfig/UltimateV2.json");
+			robot = new UltimateNavigationSimple(hardwareMap, new Location(0, 0, 0), "RobotConfig/UltimateV2.json");
 			Log.d("Robot: ", robot.toString());
 		} catch (Exception e) {
 			telemetry.addData("Robot Error", e.toString());
@@ -157,8 +160,7 @@ public class UltimateV2 extends LinearOpMode {
 				}
 				telemetry.addData("Wheel Power", shooter.betterWheelMotorMaybe.getMotorPower());
 				telemetry.addData("Wheel Speed (ticks/sec)", shooter.betterWheelMotorMaybe.getCurrentTicksPerSecond());
-				telemetry.addData("Robot Location", robot.getRobotLocation());
-				telemetry.addData("Robot Heading", robot.getOrientation());
+				telemetry.addData("Robot Heading", robot.orientation.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
 				telemetry.update();
 
@@ -176,7 +178,7 @@ public class UltimateV2 extends LinearOpMode {
 		intake.kill();
 		shooter.kill();
 		grabber.kill();
-		robot.stopNavigation();
+		robot.kill();
 	}
 	
 	// misc functions here
@@ -188,8 +190,26 @@ public class UltimateV2 extends LinearOpMode {
 	private void controlDrive() {
 		if(controllerOne.leftTriggerHeld) slowMode = true;
 		else slowMode = false;
-		double drivePower = slowMode ? leftStick.magnitude() / 1.5 : leftStick.magnitude();
-		double turnPower = slowMode ? rightStick.x() / 2.0 : rightStick.x();
+
+		if(gamepad1.start && !start1Pressed) {
+			start1Pressed = true;
+			extraSlowMode = !extraSlowMode;
+		} else if(start1Pressed && !gamepad1.start) {
+			start1Pressed = false;
+		}
+
+//		double drivePower = slowMode ? leftStick.magnitude() / 1.5 : leftStick.magnitude();
+//		double turnPower = slowMode ? rightStick.x() / 2.0 : rightStick.x() / 1.3;
+
+		double drivePower = leftStick.magnitude();
+		double turnPower = rightStick.x();
+		if(slowMode) {
+			drivePower /= 1.5;
+			turnPower /= 2.0;
+		} else if(extraSlowMode) {
+			drivePower /= 2.0;
+			turnPower /= 3.0;
+		} else turnPower /= 1.3;
 		if (!eStop)
 			robot.driveOnHeadingWithTurning(leftStick.angle(), drivePower, turnPower);
 	}
@@ -228,11 +248,22 @@ public class UltimateV2 extends LinearOpMode {
 		// Shoot three rings
 		if(gamepad1.x && !x1Pressed) {
 			x1Pressed = true;
-			shootThreeRings();
+//			shootThreeRings();
+			highGoalShot();
 		}
 		else if(!gamepad1.x){
 			x1Pressed = false;
 		}
+	}
+
+	private void highGoalShot() {
+		robot.turnToHeading(HIGH_GOAL_HEADING, 0.25, eStop,this);
+		indexShooter();
+		sleep(SLEEP_TIME);
+		indexShooter();
+		sleep(SLEEP_TIME);
+		indexShooter();
+		indexShooter();
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
@@ -282,14 +313,29 @@ public class UltimateV2 extends LinearOpMode {
 			grabber.releaseWobble();
 		}
 
-		if (gamepad2.dpad_up)
+		if (gamepad2.dpad_up) {
+			usingDpad = true;
 			grabber.setArmAngle(WobbleGrabberV2.WALL_ANGLE);
-		else if (gamepad2.dpad_right)
+		} else if (gamepad2.dpad_right) {
+			usingDpad = true;
 			grabber.setArmAngle(WobbleGrabberV2.LIFT_ANGLE);
-		else if (gamepad2.dpad_down)
+		} else if (gamepad2.dpad_down) {
+			usingDpad = true;
 			grabber.setArmAngle(WobbleGrabberV2.GRAB_AND_DROP_ANGLE);
-		else if (gamepad2.dpad_left)
+		} else if (gamepad2.dpad_left) {
+			usingDpad = true;
 			grabber.setArmAngle(WobbleGrabberV2.INIT_ANGLE);
+		}
+
+		if(gamepad2.right_trigger > 0.1) {
+			usingDpad = false;
+			grabber.setArmPower(0.35);
+		} else if(gamepad2.left_trigger > 0.1) {
+			usingDpad = false;
+			grabber.setArmPower(-0.35);
+		} else if(!usingDpad) {
+			grabber.holdArm();
+		}
 
 		// Intake servo toggle
 		if (gamepad2.right_trigger > 0.1 && !rt2Pressed) {
@@ -314,57 +360,38 @@ public class UltimateV2 extends LinearOpMode {
 	}
 	
 	private void powerShots() {
-//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LOCATION_NO_HEADING, MED_SPEED, this);
-		powerShotLeft();
-		powerShotCenter();
 		powerShotRight();
+		powerShotCenter();
+		powerShotLeft();
 	}
 	
 	// TODO: Modify the functions below to actually go to the correct positions and score power shots
 	
 	private void powerShotLeft() {
-		shooter.setPowerShotPower();
-//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_LEFT, MED_SPEED,this);
-		if(shooter.indexServo.getPosition() == 1) {
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 	
 	private void powerShotCenter() {
-		shooter.setPowerShotPower();
-//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_MIDDLE, MED_SPEED,this);
-		if(shooter.indexServo.getPosition() == 1){
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 	
 	private void powerShotRight() {
-		shooter.setPowerShotPower();
-//		robot.driveToLocationPID(ConfigVariables.POWER_SHOT_RIGHT, MED_SPEED,this);
-		if(shooter.indexServo.getPosition() == 1) {
-			shooter.setIndexLeft();
-		}
-		else {
-			shooter.setIndexRight();
-		}
+//		shooter.setPowerShotPower();
+		robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		indexShooter();
 	}
 
 	protected void indexShooter(){
-		shooter.setIndexLeft();
-		sleep(SLEEP_TIME);
-		shooter.setIndexRight();
-		sleep(SLEEP_TIME);
-	}
-
-	protected void shootThreeRings(){
-		for(int i = 0; i <= 3; i++){
-			indexShooter();
+		if(toggleIndex) {
+			toggleIndex = false;
+			shooter.setIndexRight();
+		} else {
+			toggleIndex = true;
+			shooter.setIndexLeft();
 		}
 	}
 	

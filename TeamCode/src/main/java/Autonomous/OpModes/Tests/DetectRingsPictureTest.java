@@ -40,6 +40,7 @@ public class DetectRingsPictureTest extends LinearOpMode {
         long timeStart = System.currentTimeMillis();
         //get an image
         bmp = vuforia.getImage(RingImageProcessor.DESIRED_WIDTH, RingImageProcessor.DESIRED_HEIGHT);
+        vuforia.saveBMP(bmp); // save before editing as well
         if(bmp != null && imageTaken <= 0){
 
             ringCount = ringFinder.getRingCount(bmp,true);
