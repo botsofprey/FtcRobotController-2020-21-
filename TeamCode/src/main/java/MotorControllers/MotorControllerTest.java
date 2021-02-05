@@ -9,9 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Rotation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,9 +49,9 @@ public class MotorControllerTest extends Thread {
 
     HardwareMap hardwareMap;
 
-    public MotorControllerTest(DcMotor m, String configFileLoc, HardwareMap hw) throws IOException, RuntimeException {
+    public MotorControllerTest(DcMotorEx m, String configFileLoc, HardwareMap hw) throws IOException, RuntimeException {
         hardwareMap = hw;
-        motor = (DcMotorEx)m;
+        motor = m;
         if(!(motor instanceof  DcMotorEx)) throw new RuntimeException("Error! Motor could not cast to DcMotorEx!");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -80,17 +82,17 @@ public class MotorControllerTest extends Thread {
     }
 
     public MotorControllerTest(String motorName, String configFileLoc, HardwareMap hw) throws IOException, RuntimeException {
-        this(hw.dcMotor.get(motorName), configFileLoc, hw);
+        this(hw.get(DcMotorEx.class, motorName), configFileLoc, hw);
     }
 
     public MotorControllerTest(String motorName, String configFileLoc, String debugTag, HardwareMap hw) throws IOException, RuntimeException {
-        this(hw.dcMotor.get(motorName), configFileLoc, hw);
+        this(hw.get(DcMotorEx.class, motorName), configFileLoc, hw);
         shouldLog = true;
         logTag = debugTag;
     }
 
     public MotorControllerTest(String motorName, HardwareMap hardwareMap) throws RuntimeException {
-        motor = (DcMotorEx)hardwareMap.dcMotor.get(motorName);
+        motor = hardwareMap.get(DcMotorEx.class, motorName);
         if(!(motor instanceof DcMotorEx)) throw new RuntimeException("Error! Motor could not cast to DcMotorEx!");
     }
 
@@ -173,16 +175,18 @@ public class MotorControllerTest extends Thread {
             wheelDiameterInInches = reader.getDouble("WHEEL_DIAMETER");
             ticksPerDegree = reader.getDouble("TICKS_PER_DEGREE");
             initialDegree = reader.getDouble("INITIAL_DEGREE");
-            //double maxRPS = reader.getDouble("MAX_RPS");
-            double maxRPS = motor.getMotorType().getMaxRPM();
-            //maxTicksPerSecond = (long)(maxRPS * ticksPerRevolution + .5);
+//            double maxRPS = motor.getMotorType().getMaxRPM();
             maxTicksPerSecond = (long) motor.getMotorType().getAchieveableMaxTicksPerSecondRounded();
             holdPIDCoefficients = new PIDFCoefficients(reader.getDouble("HOLD_KP"), reader.getDouble("HOLD_KI"), reader.getDouble("HOLD_KD"), reader.getDouble("HOLD_KF"));
             rpmPIDCoefficients = new PIDFCoefficients(reader.getDouble("RPM_KP"), reader.getDouble("RPM_KI"), reader.getDouble("RPM_KD"), reader.getDouble("RPM_KF"));
-//            holdController = new PIDController(reader.getDouble("HOLD_KP"), reader.getDouble("HOLD_KI"), reader.getDouble("HOLD_KD"));
-//            holdController.setIMax(reader.getDouble("HOLD_I_MAX"));
-//            rpmController = new PIDController(reader.getDouble("RPM_KP"), reader.getDouble("RPM_KI"), reader.getDouble("RPM_KD"));
-//            rpmController.setIMax(reader.getDouble("RPM_I_MAX"));
+            MotorConfigurationType motorConfig = new MotorConfigurationType();
+            double maxRPM = reader.getDouble("MAX_RPM");
+            motorConfig.setMaxRPM(maxRPM);
+            motorConfig.setAchieveableMaxRPMFraction(maxRPM);
+            motorConfig.setGearing(reader.getDouble("GEARING"));
+            motorConfig.setTicksPerRev(reader.getDouble("TICKS_PER_REV"));
+            motorConfig.setOrientation(motor.getMotorType().getOrientation());
+            motor.setMotorType(motorConfig);
         } catch(Exception e) {
             logError(logTag + " MotorController Error", "Config File Read Fail: " + e.toString());
             return 0;
@@ -218,6 +222,14 @@ public class MotorControllerTest extends Thread {
 
     public double getDegree() {
         return getCurrentTick() / ticksPerDegree + initialDegree;
+    }
+
+    public PIDFCoefficients getHoldPID() {
+        return holdPIDCoefficients;
+    }
+
+    public PIDFCoefficients getRPMPID() {
+        return rpmPIDCoefficients;
     }
 
     public void setTicksPerSecondVelocity(long ticksPerSec) {
@@ -287,8 +299,10 @@ public class MotorControllerTest extends Thread {
 
     public void setRPM(double rpm) {
         motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, rpmPIDCoefficients);
+        motor.setVelocityPIDFCoefficients(rpmPIDCoefficients.p, rpmPIDCoefficients.i, rpmPIDCoefficients.d, rpmPIDCoefficients.f);
         if(getMotorRunMode() != DcMotor.RunMode.RUN_USING_ENCODER) setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         double angularVelocity = rpm * (360.0/60.0); // convert to deg/sec
+        Log.d("Motor target velocity", angularVelocity+" deg/sec");
         motor.setVelocity(angularVelocity, AngleUnit.DEGREES);
     }
 

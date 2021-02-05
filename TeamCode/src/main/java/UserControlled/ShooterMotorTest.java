@@ -40,7 +40,7 @@ import Actions.Ultimate.ShooterSystemV2Test;
 //@Disabled
 public class ShooterMotorTest extends LinearOpMode {
     ShooterSystemV2Test shooter;
-    int targetRPM = 3000;
+    int targetRPM = 2400;
     boolean dpadUpPressed = false, dpadDownPressed = false, triggerPressed = false, index = false;
 
     @Override
@@ -81,7 +81,10 @@ public class ShooterMotorTest extends LinearOpMode {
             else shooter.setIndexLeft();
 
             shooter.setRPM(targetRPM);
+//            shooter.setHighGoalPower();
+            telemetry.addData("Target RPM", targetRPM);
             telemetry.addData("Shooter RPM", shooter.getRPM());
+            telemetry.addData("Shooter PID", shooter.getPID().toString());
             telemetry.update();
         }
         shooter.kill();

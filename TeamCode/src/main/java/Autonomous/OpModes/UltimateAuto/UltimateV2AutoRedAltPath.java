@@ -77,7 +77,7 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
-        RingCount ringCount = RingCount.NO_RINGS;
+        RingCount ringCount = RingCount.QUAD_STACK;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
         telemetry.addData("# of rings", ringCount);
         telemetry.addData("Drop intake and wobble", "");

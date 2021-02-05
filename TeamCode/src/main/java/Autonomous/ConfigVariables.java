@@ -70,7 +70,7 @@ public class ConfigVariables {
     public static final Location RED_FOUNDATION_STACK_LEFT = new Location(20+9+4, 37.5, 270);
     public static final Location BLUE_FOUNDATION_CENTER = new Location(-24-10-5, 49.5, 90);
 
-    public static final Location RED_ZONE_ONE = new Location(62, -2); // may want to use something like 60 for the x value
+    public static final Location RED_ZONE_ONE = new Location(62, 10); // may want to use something like 60 for the x value
     public static final Location RED_ZONE_ONE_EAST = new Location(50, 16);
     public static final Location RED_ZONE_TWO = new Location(40, 22);
     public static final Location RED_ZONE_THREE = new Location(62, 48.5);

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
-	public static final double HIGH_GOAL_POWER = 0.65;
+	public static final double HIGH_GOAL_POWER = 1.0; // .65
 	public static final double RIGHT_POWER_SHOT_POWER = 0.625;
 	public static final double MIDDLE_POWER_SHOT_POWER = 0.595;
 	public static final double LEFT_POWER_SHOT_POWER = 0.58;
@@ -74,6 +75,10 @@ public class ShooterSystemV2Test implements ActionHandler {
 	}
 
 	public double getRPM() { return shooterMotor.getCurrentRPM(); }
+
+	public PIDFCoefficients getPID() {
+		return shooterMotor.getRPMPID();
+	}
 
 	public void pauseShooter() {
 		shooterMotor.brake();
