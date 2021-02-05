@@ -245,6 +245,7 @@ public class UltimateV2Test extends LinearOpMode {
 		indexShooter();
 		sleep(SLEEP_TIME);
 		indexShooter();
+		indexShooter();
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
@@ -322,6 +323,14 @@ public class UltimateV2Test extends LinearOpMode {
 
 		if(gamepad2.left_bumper) {
 			shooter.setPowerShotPower();
+		}
+
+		if(gamepad2.right_trigger > 0.1) {
+			grabber.setArmPower(0.35);
+		} else if(gamepad2.left_trigger > 0.1) {
+			grabber.setArmPower(-0.35);
+		} else {
+			grabber.holdArm();
 		}
 	}
 	

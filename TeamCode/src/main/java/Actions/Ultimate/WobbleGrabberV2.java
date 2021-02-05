@@ -57,6 +57,15 @@ public class WobbleGrabberV2 implements ActionHandler {
         wobbleGrabbed = false;
     }
 
+    public void holdArm() {
+        arm.holdPosition();
+    }
+
+    public void setArmPower(double power) {
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMotorPower(power);
+    }
+
     public void setClawGrabAngle() {
         leftClaw.setPosition(CLAW_GRAB_POSITION);
         rightClaw.setPosition(CLAW_GRAB_POSITION);

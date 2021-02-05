@@ -25,8 +25,8 @@ public class RingImageProcessor {
     public int imageHeight;
     private double percentRequiredInColumnToCheck;
     private int minimumColumnWidth;
-    public static final int DESIRED_HEIGHT = 40;
-    public static final int DESIRED_WIDTH = 40;
+    public static final int DESIRED_HEIGHT = 80;
+    public static final int DESIRED_WIDTH = 80;
     public static final double CLOSE_UP_MIN_PERCENT_COLUMN_CHECK = 0.3;
     public static final double FAR_AWAY_MIN_PERCENT_COLUMN_CHECK = 0.1;
     public static final int RED_TEAM = 0, BLUE_TEAM = 1;
@@ -66,12 +66,15 @@ public class RingImageProcessor {
     }
 
     public Rectangle getOrangeBox(Bitmap bmp, boolean showOrangePixelsOnScreen) {
+        int width = bmp.getWidth(), height = bmp.getHeight()-60;
+        int[] pixels = new int[height*width];
+        bmp.getPixels(pixels, 0, width, 0, 30, width, height);
         Rectangle orangeBox = new Rectangle();
         Point topLeft = new Point(), topRight = new Point(), bottomLeft = new Point(), bottomRight = new Point();
         int orangePixelCount = 0;
-        for(int y = 0; y < bmp.getHeight(); y++) {
-            for(int x = 0; x < bmp.getWidth(); x++) {
-                int color = bmp.getPixel(x, y);
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                int color = pixels[y * width + x];
                 if(checkIfOrange(color)) {
                     if(orangePixelCount == 0) {
                         topLeft = new Point(x, y);
@@ -91,18 +94,17 @@ public class RingImageProcessor {
         }
 
         if(showOrangePixelsOnScreen) {
-            int[] pixels = new int[bmp.getHeight() * bmp.getWidth()];
-            bmp.getPixels(pixels, 0, bmp.getWidth(), 0, 0, bmp.getWidth(), bmp.getHeight());
+            bmp.getPixels(pixels, 0, width, 0, 30, width, height);
             showOrangePixels(pixels, bmp.getHeight(), bmp.getWidth(), Color.GREEN);
-            bmp.setPixels(pixels, 0, bmp.getWidth(), 0, 0, bmp.getWidth(), bmp.getHeight());
+            bmp.setPixels(pixels, 0, width, 0, 30, width, height);
         }
 
         if(orangePixelCount == 4) {
             int x = (int) (((topRight.x - topLeft.x) / 2.0)+((bottomRight.x - bottomLeft.x) / 2.0) / 2.0 + 0.5);
             int y = (int) (((bottomLeft.y - topLeft.y) / 2.0)+((bottomRight.y - topRight.y) / 2.0) / 2.0 + 0.5);
-            int width = (int) ((Math.abs(topLeft.x - topRight.x) + Math.abs(bottomLeft.x - bottomRight.x)) / 2.0 + 0.5);
-            int height = (int) ((Math.abs(topLeft.y - bottomLeft.y) + Math.abs(topRight.y - bottomRight.y)) / 2.0 + 0.5);
-            orangeBox = new Rectangle(x, y, width, height);
+            int newWidth = (int) ((Math.abs(topLeft.x - topRight.x) + Math.abs(bottomLeft.x - bottomRight.x)) / 2.0 + 0.5);
+            int newHeight = (int) ((Math.abs(topLeft.y - bottomLeft.y) + Math.abs(topRight.y - bottomRight.y)) / 2.0 + 0.5);
+            orangeBox = new Rectangle(x, y, newWidth, newHeight);
         }
         return orangeBox;
     }
@@ -153,8 +155,8 @@ public class RingImageProcessor {
 
     public boolean checkIfOrange(float [] hsl) {
         if (hsl[0] > 0 || hsl[0] < 360) {
-            if (hsl[1] > .64) {
-                if (hsl[2] > .5) {
+            if (hsl[1] > .54) {
+                if (hsl[2] > .33 && hsl[2] < .62) {
                     return true;
                 }
             }

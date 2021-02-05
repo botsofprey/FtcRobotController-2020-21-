@@ -108,25 +108,61 @@ public class UltimateV2Autonomous {
     protected void performPowerShots(LinearOpMode mode, RingCount ringCount, double runtime) {
         if(mode.opModeIsActive()) { // if the time remaining is more than the required action time, perform it
             shooter.setShooterMotorPower(RIGHT_POWER_SHOT_POWER);
-            robot.driveToLocationPID(SHOOTING_LINE_POINT, HIGH_SPEED, mode);
+            robot.driveToLocationPID(SHOOTING_LINE_POINT, MED_SPEED, mode);
+            // this is really gross but each path requires slightly different headings
+            switch(ringCount){
+                case NO_RINGS:
+                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
+                    powerShotIndex();
 
-            // perform shots
-            robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
-            powerShotIndex();
+                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING - 0.5, 1, mode);
+                    powerShotIndex();
 
-            if(ringCount == RingCount.NO_RINGS) {
-                shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
-                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING-0.5, 1, mode);
-            } else {
-                shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
-                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode); // turn to heading for second power shot and shoot
+                    shooter.setPowerShotPower();
+                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
+                    powerShotIndex();
+                    break;
+                case SINGLE_STACK:
+                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
+                    powerShotIndex();
+
+                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER - 0.005);
+                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode);
+                    powerShotIndex();
+
+                    shooter.setPowerShotPower();
+                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
+                    powerShotIndex();
+                    break;
+                case QUAD_STACK:
+                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING + 3.2, 1,  mode); // turn to heading for first power shot and shoot
+                    powerShotIndex();
+
+                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING + 3.0, 1, mode);
+                    powerShotIndex();
+
+                    shooter.setPowerShotPower();
+                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING + 2.5, 1, mode); // turn to heading for third power shot and shoot
+                    powerShotIndex();
+                    break;
+
             }
-            powerShotIndex();
 
-
-            shooter.setPowerShotPower();
-            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
-            powerShotIndex();
+//            if(ringCount == RingCount.NO_RINGS) {
+//                shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+//                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING-0.5, 1, mode);
+//            } else {
+//                shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+//                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode); // turn to heading for second power shot and shoot
+//            }
+//            powerShotIndex();
+//
+//
+//            shooter.setPowerShotPower();
+//            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
+//            powerShotIndex();
 
             shooter.pauseShooter();
         }
@@ -160,7 +196,7 @@ public class UltimateV2Autonomous {
             else { // Place second wobble goal slightly off from the location of the first to avoid collision
                 Location offsetTarget = new Location(targetLocation.getX(), targetLocation.getY() - WOBBLE_OFFSET);
                 if(ringCount == RingCount.NO_RINGS) {
-                    offsetTarget = new Location(targetLocation.getX(), targetLocation.getY() - WOBBLE_OFFSET + 5);
+                    offsetTarget = new Location(targetLocation.getX(), targetLocation.getY() - WOBBLE_OFFSET + 4.5);
                 }
                 robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
                 while(mode.opModeIsActive() && wobbleGrabber.armIsBusy());
@@ -181,7 +217,7 @@ public class UltimateV2Autonomous {
 //            robot.driveToLocationPID(RING_STACK_START_POINT, HIGH_SPEED, mode);
 //            robot.turnToHeading(UltimateNavigation2.EAST, mode);
             turnToRingStack();
-            robot.driveDistance(24, NORTH, KIND_OF_SLOW_SPEED, mode);
+            robot.driveDistance(32, NORTH, KIND_OF_SLOW_SPEED, mode);
             robot.turnToHeading(NORTH, mode);
         }
     }
@@ -194,7 +230,7 @@ public class UltimateV2Autonomous {
                 wobbleGrabber.releaseWobble(); // Open claw
                 robot.turnToHeading(UltimateNavigation2.SOUTH, mode);
                 robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), robot.getRobotLocation().getY(), SOUTH), HIGH_SPEED, mode);
-                robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), RED_WOBBLE_GOAL_LEFT.getY() + 12.5, SOUTH), KIND_OF_SLOW_SPEED, 1, mode);
+                robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), RED_WOBBLE_GOAL_LEFT.getY() + 12.5, SOUTH), MED_SPEED, 1, mode);
 //            robot.driveOnHeading(UltimateNavigation2.NORTH, LOW_SPEED); // Drive forwards, slowly
 //            while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
 //            robot.brake(); // Once sensor is pressed, stop
@@ -208,7 +244,7 @@ public class UltimateV2Autonomous {
                 wobbleGrabber.releaseWobble(); // Open claw
                 robot.turnToHeading(UltimateNavigation2.SOUTH, mode);
                 robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), robot.getRobotLocation().getY(), SOUTH), HIGH_SPEED, mode);
-                robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), RED_WOBBLE_GOAL_LEFT.getY() + 10, SOUTH), KIND_OF_SLOW_SPEED, 1, mode);
+                robot.driveToLocationPID(new Location(RED_WOBBLE_GOAL_LEFT.getX(), RED_WOBBLE_GOAL_LEFT.getY() + 10, SOUTH), MED_SPEED, 1, mode);
 //            robot.driveOnHeading(UltimateNavigation2.NORTH, LOW_SPEED); // Drive forwards, slowly
 //            while(!wobbleGrabber.sensor.isPressed() && mode.opModeIsActive());
 //            robot.brake(); // Once sensor is pressed, stop
@@ -224,13 +260,14 @@ public class UltimateV2Autonomous {
     // drives to the correct position to shoot the extra rings then shoots them if there are extra rings
     protected void shootExtraRings(LinearOpMode mode, RingCount ringCount, double runtime) {
         if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
-            shooter.setShooterMotorPower(0.675);
+            shooter.setShooterMotorPower(0.665);
             turnToHighGoalFromRings(robot.getRobotLocation());
 
                 // shoot rings
                 if(ringCount == RingCount.SINGLE_STACK) { // if there is only one extra ring, only index once
                     for(int i = 0; i < 2; i++) {
                         indexShooter();
+                        shooter.setShooterMotorPower(0.65+.005); // Due to PID overshooting, decrease power for second shot
                     }
                 }
                 else { // otherwise (there are four rings), index three times

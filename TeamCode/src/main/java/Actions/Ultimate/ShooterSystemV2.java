@@ -35,7 +35,7 @@ public class ShooterSystemV2 implements ActionHandler {
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
 	public static final double HIGH_GOAL_POWER = 0.655;
-	public static final double POWER_SHOT_POWER = 0.60;
+	public static final double POWER_SHOT_POWER = 0.615;
 	private double power = HIGH_GOAL_POWER;
 	
 	// good
