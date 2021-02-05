@@ -30,7 +30,7 @@ public class DetectRingsPictureTest extends LinearOpMode {
         VuforiaHelper vuforia = new VuforiaHelper(hardwareMap);
         //wait for the op mode to start, this is the time to change teams
         //initialize the image processor 
-        ringFinder = new RingImageProcessor(SkystoneImageProcessor.DESIRED_HEIGHT, SkystoneImageProcessor.DESIRED_WIDTH);
+        ringFinder = new RingImageProcessor(RingImageProcessor.DESIRED_HEIGHT, RingImageProcessor.DESIRED_WIDTH);
         telemetry.addData("Status","Initialized");
         telemetry.update();
         waitForStart();

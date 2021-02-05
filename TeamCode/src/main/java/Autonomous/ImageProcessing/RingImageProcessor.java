@@ -32,6 +32,7 @@ public class RingImageProcessor {
     public static final int RED_TEAM = 0, BLUE_TEAM = 1;
     public static final int LEFT = 0, CENTER = 1, RIGHT = 2;
     public static final int UNKNOWN = -500;
+    public static final int PIXEL_THRESHHOLD = 5;
     public enum RING_COLOR {ORANGE};
     RING_COLOR colorToFind = RING_COLOR.ORANGE;
     private int team;
@@ -68,6 +69,8 @@ public class RingImageProcessor {
     public Rectangle getOrangeBox(Bitmap bmp, boolean showOrangePixelsOnScreen) {
         int width = bmp.getWidth(), height = bmp.getHeight()-60;
         int[] pixels = new int[height*width];
+        int[] pixelsx = new int[width];
+        int[] pixelsy = new int[height];
         bmp.getPixels(pixels, 0, width, 0, 30, width, height);
         Rectangle orangeBox = new Rectangle();
         Point topLeft = new Point(), topRight = new Point(), bottomLeft = new Point(), bottomRight = new Point();
@@ -76,26 +79,62 @@ public class RingImageProcessor {
             for(int x = 0; x < width; x++) {
                 int color = pixels[y * width + x];
                 if(checkIfOrange(color)) {
-                    if(orangePixelCount == 0) {
-                        topLeft = new Point(x, y);
-                        orangePixelCount++;
-                    } else if(orangePixelCount == 1 && Math.abs(topLeft.y - y) <= 3 && Math.abs(topLeft.x - x) >= MIN_ORANGE_WIDTH) {
-                        topRight = new Point(x, y);
-                        orangePixelCount++;
-                    } else if(orangePixelCount == 2 && Math.abs(topLeft.y - y) <= QUAD_STACK_MIN_HEIGHT+3 && Math.abs(topLeft.x - x) <= 3) {
-                        bottomLeft = new Point(x, y);
-                        orangePixelCount++;
-                    } else if(orangePixelCount == 3 && Math.abs(bottomLeft.y - y) <= 3 && Math.abs(bottomLeft.x - x) >= MIN_ORANGE_WIDTH) {
-                        bottomRight = new Point(x, y);
-                        orangePixelCount++;
-                    }
+                    pixelsx[x]++;
+                    pixelsy[y]++;
+//                    if(orangePixelCount == 0) {
+//                        topLeft = new Point(x, y);
+//                        orangePixelCount++;
+//                    } else if(orangePixelCount == 1 && Math.abs(topLeft.y - y) <= 3 && Math.abs(topLeft.x - x) >= MIN_ORANGE_WIDTH) {
+//                        topRight = new Point(x, y);
+//                        orangePixelCount++;
+//                    } else if(orangePixelCount == 2 && Math.abs(topLeft.y - y) <= QUAD_STACK_MIN_HEIGHT+3 && Math.abs(topLeft.x - x) <= 3) {
+//                        bottomLeft = new Point(x, y);
+//                        orangePixelCount++;
+//                    } else if(orangePixelCount == 3 && Math.abs(bottomLeft.y - y) <= 3 && Math.abs(bottomLeft.x - x) >= MIN_ORANGE_WIDTH) {
+//                        bottomRight = new Point(x, y);
+//                        orangePixelCount++;
+//                    }
                 }
             }
         }
+        int xinit = -1;
+        int xfinal = -1;
+        int yinit = -1;
+        int yfinal = -1;
+        for(int x = 0; x < width; x++) {
+            if(pixelsx[x] > PIXEL_THRESHHOLD) {
+                xinit = x;
+                break;
+            }
+        }
+        for(int x = width; x > 0; x--){
+            if(pixels[x - 1] > PIXEL_THRESHHOLD) {
+                xfinal = x;
+                break;
+            }
+        }
+        for(int y = 0; y < height; y++) {
+            if(pixelsy[y] > PIXEL_THRESHHOLD) {
+                yinit = y;
+                break;
+            }
+        }
+        for(int y = height; y > 0; y--){
+            if(pixelsy[y - 1] > PIXEL_THRESHHOLD) {
+                yfinal = y;
+                break;
+            }
+        }
+
+        topLeft = new Point(xinit, yinit);
+        bottomLeft = new Point(xinit, yfinal);
+        topRight = new Point(xfinal, yinit);
+        bottomRight = new Point(xfinal, yfinal);
+
 
         if(showOrangePixelsOnScreen) {
             bmp.getPixels(pixels, 0, width, 0, 30, width, height);
-            showOrangePixels(pixels, bmp.getHeight(), bmp.getWidth(), Color.GREEN);
+            showOrangePixels(pixels, height, width, Color.GREEN);
             bmp.setPixels(pixels, 0, width, 0, 30, width, height);
         }
 
@@ -155,8 +194,8 @@ public class RingImageProcessor {
 
     public boolean checkIfOrange(float [] hsl) {
         if (hsl[0] > 0 || hsl[0] < 360) {
-            if (hsl[1] > .54) {
-                if (hsl[2] > .33 && hsl[2] < .62) {
+            if (hsl[1] > .45 && hsl[1] < .77) {
+                if (hsl[2] > .45 && hsl[2] < .71) {
                     return true;
                 }
             }
