@@ -44,7 +44,7 @@ public class VuforiaHelper {
     VuforiaTrackable backSpace;
     private final float UPRIGHT_POST_ROTATE_IN_DEG = 270;
     private final float HORIZONTAL_WITH_CAMERA_TO_LEFT_POST_ROTATE_IN_DEG = 180;
-    private final float WEBCAM_POST_ROTATE_IN_DEG = 0;
+    private final float WEBCAM_POST_ROTATE_IN_DEG = -90;
 
     public VuforiaHelper(HardwareMap hw) { initVuforia(hw); }
 

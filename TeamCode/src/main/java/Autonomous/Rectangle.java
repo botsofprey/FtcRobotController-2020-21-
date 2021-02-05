@@ -2,7 +2,7 @@ package Autonomous;
 
 public class Rectangle extends Shape {
 
-    public Rectangle() { super(); }
+    public Rectangle() { super(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE); }
     public Rectangle(double x, double y, double width, double height) { super(x, y, width, height); }
 
     @Override

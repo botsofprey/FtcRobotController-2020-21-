@@ -5,7 +5,9 @@ public abstract class Shape {
     public double top, right, bottom, left;
     public double width, height;
 
-    public Shape() {}
+    public Shape() {
+
+    }
     public Shape(double x, double y) {
         this.x = x;
         this.y = y;
