@@ -144,6 +144,11 @@ public class RingImageProcessor {
             int newWidth = (int) ((Math.abs(topLeft.x - topRight.x) + Math.abs(bottomLeft.x - bottomRight.x)) / 2.0 + 0.5);
             int newHeight = (int) ((Math.abs(topLeft.y - bottomLeft.y) + Math.abs(topRight.y - bottomRight.y)) / 2.0 + 0.5);
             orangeBox = new Rectangle(x, y, newWidth, newHeight);
+//            Log.d("Height", ""+newHeight);
+//            Log.d("Width", ""+newWidth);
+//            Log.d("X", ""+x);
+//            Log.d("Y", ""+y);
+            Log.d("Rectangle", orangeBox.toString());
         }
         return orangeBox;
     }

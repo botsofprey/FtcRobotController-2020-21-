@@ -10,4 +10,9 @@ public class Rectangle extends Shape {
 
     @Override
     public double getPerimeter() { return 2*width + 2*height; }
+
+    @Override
+    public String toString() {
+        return "X: " + this.x + ", Y: " + this.y + ", width: " + this.width + ", height: " + this.height;
+    }
 }
