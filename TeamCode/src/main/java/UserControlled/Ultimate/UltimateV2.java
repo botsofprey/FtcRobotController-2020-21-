@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Ultimate.RingIntakeSystemV2;
 import Actions.Ultimate.ShooterSystemV2;
+import Actions.Ultimate.ShooterSystemV2Test;
 import Actions.Ultimate.WobbleGrabberV2;
 import Autonomous.Location;
 import DriveEngine.Ultimate.UltimateNavigationSimple;
@@ -86,7 +87,7 @@ public class UltimateV2 extends LinearOpMode {
 	JoystickHandler leftStick, rightStick;
 	
 	RingIntakeSystemV2 intake;
-	ShooterSystemV2 shooter;
+	ShooterSystemV2Test shooter;
 	WobbleGrabberV2 grabber;
 	
 	GamepadController controllerOne, controllerTwo;
@@ -118,7 +119,7 @@ public class UltimateV2 extends LinearOpMode {
 		
 		// initialize systems
 		intake = new RingIntakeSystemV2(hardwareMap);
-		shooter = new ShooterSystemV2(hardwareMap);
+		shooter = new ShooterSystemV2Test(hardwareMap);
 		grabber = new WobbleGrabberV2(hardwareMap);
 
 		/** ideally we can use these gamepads for inputs, however the logic is flawed within the
@@ -158,8 +159,8 @@ public class UltimateV2 extends LinearOpMode {
 					playerOneFunctions(controllerOne);
 					playerTwoFunctions(controllerTwo);
 				}
-				telemetry.addData("Wheel Power", shooter.betterWheelMotorMaybe.getMotorPower());
-				telemetry.addData("Wheel Speed (ticks/sec)", shooter.betterWheelMotorMaybe.getCurrentTicksPerSecond());
+				telemetry.addData("Wheel Power", shooter.shooterMotor.getMotorPower());
+				telemetry.addData("Wheel Speed (ticks/sec)", shooter.shooterMotor.getCurrentTicksPerSecond());
 				telemetry.addData("Robot Heading", robot.orientation.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
 				telemetry.update();
@@ -257,7 +258,7 @@ public class UltimateV2 extends LinearOpMode {
 	}
 
 	private void highGoalShot() {
-		robot.turnToHeading(HIGH_GOAL_HEADING, 0.25, eStop,this);
+		robot.turnToHeadingEnhanced(HIGH_GOAL_HEADING, 0.25,this);
 		indexShooter();
 		sleep(SLEEP_TIME);
 		indexShooter();
@@ -351,11 +352,11 @@ public class UltimateV2 extends LinearOpMode {
 		}
 
 		if (gamepad2.right_bumper) {
-			shooter.setHighGoalPower();
+			shooter.setRPM(ShooterSystemV2Test.HIGH_GOAL_RPM);
 		}
 
 		if(gamepad2.left_bumper) {
-			shooter.setPowerShotPower();
+			shooter.setRPM(ShooterSystemV2Test.POWER_SHOT_RPM);
 		}
 	}
 	
@@ -369,19 +370,19 @@ public class UltimateV2 extends LinearOpMode {
 	
 	private void powerShotLeft() {
 //		shooter.setPowerShotPower();
-		robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		robot.turnToHeadingEnhanced(LEFT_POWER_SHOT_HEADING, 0.25, this);
 		indexShooter();
 	}
 	
 	private void powerShotCenter() {
 //		shooter.setPowerShotPower();
-		robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 0.25, eStop, this);
+		robot.turnToHeadingEnhanced(MIDDLE_POWER_SHOT_HEADING, 0.25, this);
 		indexShooter();
 	}
 	
 	private void powerShotRight() {
 //		shooter.setPowerShotPower();
-		robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 0.25, eStop, this);
+		robot.turnToHeadingEnhanced(RIGHT_POWER_SHOT_HEADING, 0.25, this);
 		indexShooter();
 	}
 

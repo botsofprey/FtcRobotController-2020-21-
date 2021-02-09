@@ -70,8 +70,6 @@ public class UltimateV2AutoRed extends LinearOpMode {
         // the loop below updates the ring count as the camera runs in a background thread
         while(!opModeIsActive()) {
             telemetry.addData("Status", "Initialized");
-//            telemetry.addData("# of rings", 4);
-            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
             telemetry.update();
         }
 

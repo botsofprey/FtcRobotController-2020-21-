@@ -35,10 +35,17 @@ public class ShooterSystemV2Test implements ActionHandler {
 
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
-	public static final double HIGH_GOAL_POWER = 1.0; // .65
-	public static final double RIGHT_POWER_SHOT_POWER = 0.625;
+	public static final double HIGH_GOAL_POWER = 0.655; // .65
+	public static final double RIGHT_POWER_SHOT_POWER = 0.615;
 	public static final double MIDDLE_POWER_SHOT_POWER = 0.595;
 	public static final double LEFT_POWER_SHOT_POWER = 0.58;
+	public static final double POWER_SHOT_POWER = 0.615;
+
+	public static final double HIGH_GOAL_RPM = 3440;
+	public static final double RIGHT_POWER_SHOT_RPM = 3000;
+	public static final double MIDDLE_POWER_SHOT_RPM = 2800;
+	public static final double LEFT_POWER_SHOT_RPM = 2800;
+	public static final double POWER_SHOT_RPM = 3000;
 
 	private double power = HIGH_GOAL_POWER;
 
@@ -99,7 +106,17 @@ public class ShooterSystemV2Test implements ActionHandler {
 		power = HIGH_GOAL_POWER;
 		spinUp();
 	}
-	
+
+	public void setShooterMotorPower(double power) {
+		this.power = power;
+		spinUp();
+	}
+
+	public void setPowerShotPower() {
+		power = POWER_SHOT_POWER;
+		spinUp();
+	}
+
 	@Override
 	public boolean doAction(String action, long maxTimeAllowed) {
 		return false;

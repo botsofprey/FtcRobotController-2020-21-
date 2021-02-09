@@ -77,9 +77,9 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
 
         // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
-        RingCount ringCount = RingCount.SINGLE_STACK;
+//        RingCount ringCount = RingCount.QUAD_STACK;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
-        telemetry.addData("# of rings", ringCount);
+//        telemetry.addData("# of rings", ringCount);
         telemetry.addData("Drop intake and wobble", "");
         telemetry.update();
 //        robot.vision.stopDetection(); // stop using the camera after we have taken our count, if you don't it may underperform
@@ -87,13 +87,17 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
         // start by dropping down the intake
         robot.dropIntakeAndWobble(this);
 
-        telemetry.addData("shoot power shots", "");
+        robot.driveToRingStack(this);
+        RingCount ringCount = robot.distSensorCountRings();
+        telemetry.addData("Ring Count", ringCount);
+
+        telemetry.addData("deliver wobble goal", "");
         telemetry.update();
 
         // next we deliver the first wobble goal to the zone
         robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
 
-        telemetry.addData("deliver wobble goal", "");
+        telemetry.addData("power shots", "");
         telemetry.update();
 
         // following the delivery we shoot the preloaded rings at the power shot targets

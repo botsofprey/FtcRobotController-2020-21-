@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Autonomous.HeadingVector;
 import Autonomous.Rectangle;
@@ -37,8 +38,8 @@ public class RingImageProcessor {
     RING_COLOR colorToFind = RING_COLOR.ORANGE;
     private int team;
 
-    private final int MIN_ORANGE_WIDTH = 4;
-    private final int QUAD_STACK_MIN_HEIGHT = 3, SINGLE_STACK_MIN_HEIGHT = 1;
+    private final int MIN_ORANGE_WIDTH = 5;
+    private final int QUAD_STACK_MIN_HEIGHT = 5, SINGLE_STACK_MIN_HEIGHT = 1;
 
     /**
      * constructor for this class, you should not use this as you can not set the team's color to look for
@@ -66,34 +67,18 @@ public class RingImageProcessor {
         return b;
     }
 
-    public Rectangle getOrangeBox(Bitmap bmp, boolean showOrangePixelsOnScreen) {
-        int width = bmp.getWidth(), height = bmp.getHeight()-60;
+    public int getNumOfRings(Bitmap bmp, boolean showOrangePixelsOnScreen) {
+        int width = bmp.getWidth(), height = bmp.getHeight();
         int[] pixels = new int[height*width];
         int[] pixelsx = new int[width];
         int[] pixelsy = new int[height];
-        bmp.getPixels(pixels, 0, width, 0, 30, width, height);
-        Rectangle orangeBox = new Rectangle();
-        Point topLeft = new Point(), topRight = new Point(), bottomLeft = new Point(), bottomRight = new Point();
-        int orangePixelCount = 0;
-        for(int y = 0; y < height; y++) {
-            for(int x = 0; x < width; x++) {
+        bmp.getPixels(pixels, 0, width, 0, 0, width, height);
+        for(int y = 31; y < height-38; y++) {
+            for(int x = 19; x < width-43; x++) {
                 int color = pixels[y * width + x];
                 if(checkIfOrange(color)) {
                     pixelsx[x]++;
                     pixelsy[y]++;
-//                    if(orangePixelCount == 0) {
-//                        topLeft = new Point(x, y);
-//                        orangePixelCount++;
-//                    } else if(orangePixelCount == 1 && Math.abs(topLeft.y - y) <= 3 && Math.abs(topLeft.x - x) >= MIN_ORANGE_WIDTH) {
-//                        topRight = new Point(x, y);
-//                        orangePixelCount++;
-//                    } else if(orangePixelCount == 2 && Math.abs(topLeft.y - y) <= QUAD_STACK_MIN_HEIGHT+3 && Math.abs(topLeft.x - x) <= 3) {
-//                        bottomLeft = new Point(x, y);
-//                        orangePixelCount++;
-//                    } else if(orangePixelCount == 3 && Math.abs(bottomLeft.y - y) <= 3 && Math.abs(bottomLeft.x - x) >= MIN_ORANGE_WIDTH) {
-//                        bottomRight = new Point(x, y);
-//                        orangePixelCount++;
-//                    }
                 }
             }
         }
@@ -108,8 +93,8 @@ public class RingImageProcessor {
             }
         }
         for(int x = width; x > 0; x--){
-            if(pixels[x - 1] > PIXEL_THRESHHOLD) {
-                xfinal = x;
+            if(pixelsx[x - 1] > PIXEL_THRESHHOLD) {
+                xfinal = x-1;
                 break;
             }
         }
@@ -121,45 +106,26 @@ public class RingImageProcessor {
         }
         for(int y = height; y > 0; y--){
             if(pixelsy[y - 1] > PIXEL_THRESHHOLD) {
-                yfinal = y;
+                yfinal = y-1;
                 break;
             }
         }
 
-        topLeft = new Point(xinit, yinit);
-        bottomLeft = new Point(xinit, yfinal);
-        topRight = new Point(xfinal, yinit);
-        bottomRight = new Point(xfinal, yfinal);
-
-
         if(showOrangePixelsOnScreen) {
-            bmp.getPixels(pixels, 0, width, 0, 30, width, height);
+            bmp.getPixels(pixels, 0, width, 0, 0, width, height);
             showOrangePixels(pixels, height, width, Color.GREEN);
-            bmp.setPixels(pixels, 0, width, 0, 30, width, height);
+            bmp.setPixels(pixels, 0, width, 0, 0, width, height);
         }
 
-        if(orangePixelCount == 4) {
-            int x = (int) (((topRight.x - topLeft.x) / 2.0)+((bottomRight.x - bottomLeft.x) / 2.0) / 2.0 + 0.5);
-            int y = (int) (((bottomLeft.y - topLeft.y) / 2.0)+((bottomRight.y - topRight.y) / 2.0) / 2.0 + 0.5);
-            int newWidth = (int) ((Math.abs(topLeft.x - topRight.x) + Math.abs(bottomLeft.x - bottomRight.x)) / 2.0 + 0.5);
-            int newHeight = (int) ((Math.abs(topLeft.y - bottomLeft.y) + Math.abs(topRight.y - bottomRight.y)) / 2.0 + 0.5);
-            orangeBox = new Rectangle(x, y, newWidth, newHeight);
-//            Log.d("Height", ""+newHeight);
-//            Log.d("Width", ""+newWidth);
-//            Log.d("X", ""+x);
-//            Log.d("Y", ""+y);
-            Log.d("Rectangle", orangeBox.toString());
-        }
-        return orangeBox;
-    }
-
-    public int getNumOfRings(Bitmap bmp, boolean shouldModifyImage) {
-        Rectangle orangeBoxOnScreen = getOrangeBox(bmp, shouldModifyImage);
-        if(orangeBoxOnScreen.height != Double.MIN_VALUE) {
-            if(orangeBoxOnScreen.width > MIN_ORANGE_WIDTH) {
-                if (orangeBoxOnScreen.height >= QUAD_STACK_MIN_HEIGHT) return 4;
-                else return 1;
-            }
+        Log.d("Rectangle x final", xfinal+"");
+        Log.d("Rectangle x init", xinit+"");
+        Log.d("Rectangle y final", yfinal+"");
+        Log.d("Rectangle y init", yinit+"");
+        Log.d("RectangleHistX", Arrays.toString(pixelsx));
+        Log.d("RectangleHistY", Arrays.toString(pixelsy));
+        if(yinit != -1) {
+            if(xinit != -1) return 4;
+            else return 1;
         }
         return -1;
     }
@@ -200,9 +166,9 @@ public class RingImageProcessor {
     }
 
     public boolean checkIfOrange(float [] hsl) {
-        if (hsl[0] > 0 || hsl[0] < 360) {
-            if (hsl[1] > .45 && hsl[1] < .77) {
-                if (hsl[2] > .45 && hsl[2] < .71) {
+        if (hsl[0] > 7 || hsl[0] < 360) {
+            if (hsl[1] > .57) {
+                if (hsl[2] > .5 && hsl[2] < .72) {
                     return true;
                 }
             }

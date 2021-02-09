@@ -42,8 +42,8 @@ import static Autonomous.ConfigVariables.CENTER;
 import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT;
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
-@TeleOp(name="Turn to Heading Test", group="Competition")
-@Disabled
+@TeleOp(name="Turn to Heading Test", group="Testers")
+//@Disabled
 public class TurnToHeadingTest extends LinearOpMode {
     // create objects and locally global variables here
 
@@ -65,7 +65,10 @@ public class TurnToHeadingTest extends LinearOpMode {
 
         waitForStart();
 
-        robot.turnToHeading(90, 1, false, this);
+        robot.turnToHeadingEnhanced(90, 0.1, this);
+
+        while (opModeIsActive());
+        robot.kill();
     }
     // misc functions here
 }

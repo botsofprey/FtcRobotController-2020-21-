@@ -29,23 +29,21 @@
 
 package UserControlled;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-import Actions.Annie.MiscellaneousActions;
 import Actions.Ultimate.ShooterSystemV2Test;
+import Actions.Ultimate.WobbleGrabberV2;
 
-@TeleOp(name="Shooter RPM Test", group="Testers")
+@TeleOp(name="Wobble Arm Test", group="Testers")
 //@Disabled
-public class ShooterMotorTest extends LinearOpMode {
-    ShooterSystemV2Test shooter;
-    int targetRPM = 3450;
-    boolean dpadUpPressed = false, dpadDownPressed = false, triggerPressed = false, index = false;
+public class WobbleArmTest extends LinearOpMode {
+    WobbleGrabberV2 grabber;
 
     @Override
     public void runOpMode() {
-        shooter = new ShooterSystemV2Test(hardwareMap);
+        grabber = new WobbleGrabberV2(hardwareMap);
 
         // add any other useful telemetry data or logging data here
         telemetry.addData("Status", "Initialized");
@@ -56,37 +54,10 @@ public class ShooterMotorTest extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            if(gamepad1.dpad_up && !dpadUpPressed) {
-                dpadUpPressed = true;
-                targetRPM += 5;
-            } else if(!gamepad1.dpad_up) {
-                dpadUpPressed = false;
-            }
-
-            if(gamepad1.dpad_down && !dpadDownPressed) {
-                dpadDownPressed = true;
-                targetRPM -= 5;
-            } else if(!gamepad1.dpad_down) {
-                dpadDownPressed = false;
-            }
-
-            if(gamepad1.right_trigger > 0.1 && !triggerPressed) {
-                triggerPressed = true;
-                index = !index;
-            } else if(gamepad1.right_trigger <= 0.1) {
-                triggerPressed = false;
-            }
-
-            if(index) shooter.setIndexRight();
-            else shooter.setIndexLeft();
-
-            shooter.setRPM(targetRPM);
-//            shooter.setHighGoalPower();
-            telemetry.addData("Target RPM", targetRPM);
-            telemetry.addData("Shooter RPM", shooter.getRPM());
-            telemetry.addData("Shooter PID", shooter.getPID().toString());
+            if(grabber.armLimit.isActivated()) grabber.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            telemetry.addData("Arm angle", grabber.arm.getDegree());
             telemetry.update();
         }
-        shooter.kill();
+        grabber.kill();
     }
 }

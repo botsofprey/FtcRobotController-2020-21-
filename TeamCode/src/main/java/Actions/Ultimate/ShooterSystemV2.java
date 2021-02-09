@@ -31,7 +31,6 @@ public class ShooterSystemV2 implements ActionHandler {
 	private static final int HIGH_GOAL_SPEED = 0;
 	private static final int POWER_SHOT_SPEED = 0;
 
-
 	// TODO USE THESE POWERS
 	private static final double SHOOTER_OFF_POWER = 0;
 	public static final double HIGH_GOAL_POWER = 0.655;
@@ -43,17 +42,6 @@ public class ShooterSystemV2 implements ActionHandler {
 	private double indexAngle;
 	public static final double INDEX_LEFT = -1;
 	public static final double INDEX_RIGHT = 1;
-
-
-//	private RevBlinkinLedDriver ringCount;
-//	private DistanceSensor ringDetector;
-//	private static final double RING_DETECTOR_HEIGHT = 0;//todo find this value
-//	private static final RevBlinkinLedDriver.BlinkinPattern[] COLORS = {
-//			RevBlinkinLedDriver.BlinkinPattern.BLACK,
-//			RevBlinkinLedDriver.BlinkinPattern.DARK_GRAY,
-//			RevBlinkinLedDriver.BlinkinPattern.GRAY,
-//			RevBlinkinLedDriver.BlinkinPattern.WHITE
-//	};
 	
 	public ShooterSystemV2(HardwareMap hardwareMap) {
 //		wheelMotor = new WheelMotor("wheelMotor", hardwareMap);
@@ -71,8 +59,6 @@ public class ShooterSystemV2 implements ActionHandler {
 		
 		wheelSpinning = false;
 		indexAngle = INDEX_LEFT;
-		
-//		ringDetector = hardwareMap.get(DistanceSensor.class, "ringDetector");
 	}
 
 	public void spinUp() {
@@ -130,8 +116,6 @@ public class ShooterSystemV2 implements ActionHandler {
 
 	public void update() {
 		wheelMotor.updateShooterRPM();
-
-//		updateRingLEDs();
 	}
 	
 	public double calculateRingVelocity(double xDistance, double yDistance) {
@@ -141,12 +125,6 @@ public class ShooterSystemV2 implements ActionHandler {
 		double temp1 = Math.sqrt(-4.9 * xDistance * temp0);
 		return Math.cos(ConfigVariables.SHOOTER_ANGLE) / temp1;
 	}
-	
-//	private void updateRingLEDs() {
-//		double stackHeight = RING_DETECTOR_HEIGHT - ringDetector.getDistance(DistanceUnit.INCH);
-//		int numRings = (int)Math.round(stackHeight / .75);
-//		ringCount.setPattern(COLORS[numRings]);
-//	}
 	
 	@Override
 	public boolean doAction(String action, long maxTimeAllowed) {

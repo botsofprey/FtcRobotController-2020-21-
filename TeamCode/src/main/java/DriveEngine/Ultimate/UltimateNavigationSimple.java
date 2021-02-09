@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.io.InputStream;
+import java.util.Arrays;
 
 import Autonomous.HeadingVector;
 import Autonomous.Location;
@@ -33,6 +34,7 @@ public class UltimateNavigationSimple {
     private double orientationOffset = 0;
     private volatile boolean shouldRun = true;
     private final double HEADING_THRESHOLD = 1;
+    private double ticksPerRev = 0;
     private double wheelBase = 0;
     private final double FL_WHEEL_HEADING_OFFSET = 45;
     private final double FR_WHEEL_HEADING_OFFSET = 315;
@@ -49,6 +51,7 @@ public class UltimateNavigationSimple {
     public UltimateNavigationSimple(HardwareMap hw, String configFile){
         hardwareMap = hw;
         readConfigAndInitialize(configFile);
+        ticksPerRev = driveMotors[0].getTicksPerRevolution();
         double avg = 0;
         for(int i = 0; i < driveMotors.length; i ++){
             avg += driveMotors[i].getMaxSpeed();
@@ -130,13 +133,27 @@ public class UltimateNavigationSimple {
     }
 
     /**
+     * turns the wheels a requested amount in ticks
+     * @param amountToTurnWheels the ticks to turn the drive motors
+     * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
+     */
+    public void turn(double amountToTurnWheels, double percentOfMaxTurnRate) {
+        percentOfMaxTurnRate = Math.abs(percentOfMaxTurnRate);
+        double[] powers = new double[4];
+        for(int i = 0; i < powers.length; i++) {
+            powers[i] = percentOfMaxTurnRate;
+        }
+        runMotorsToPosition(powers, amountToTurnWheels);
+    }
+
+    /**
      * turns the robot to face a desired heading
      * @param heading heading to orient to from -180 to 180
      * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeading(double heading, double percentOfMaxTurnRate, boolean estop, LinearOpMode mode) {
-        turnToHeading(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, estop, mode);
+    public void turnToHeading(double heading, double percentOfMaxTurnRate, LinearOpMode mode) {
+        turnToHeading(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, mode);
     }
 
     /**
@@ -146,10 +163,10 @@ public class UltimateNavigationSimple {
      * @param tolerance the acceptable +/- error for the robot to orient within
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeading(double heading, double percentOfMaxTurnRate, double tolerance, boolean estop, LinearOpMode mode) {
+    public void turnToHeading(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
         heading = normalizeAngle(heading);
         percentOfMaxTurnRate = Math.abs(percentOfMaxTurnRate) * Math.signum(heading - normalizeAngle(orientation.getOrientation()));
-        while(mode.opModeIsActive() && !estop && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
+        while(mode.opModeIsActive() && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
             turn(percentOfMaxTurnRate);
             Log.d("Turn to heading", "Raw heading: " + orientation.getOrientation());
             Log.d("Turn To Heading", "Current Heading: " + normalizeAngle(orientation.getOrientation()));
@@ -165,8 +182,8 @@ public class UltimateNavigationSimple {
      * @param percentOfMaxTurnRate value from -1 to 1 corresponding to the max turn rate
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, boolean estop, LinearOpMode mode) {
-        turnToHeadingPID(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, estop, mode);
+    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, LinearOpMode mode) {
+        turnToHeadingPID(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, mode);
     }
 
     /**
@@ -176,15 +193,33 @@ public class UltimateNavigationSimple {
      * @param tolerance the acceptable +/- error for the robot to orient within
      * @param mode LinearOpMode corresponding to the running op mode
      */
-    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, double tolerance, boolean estop, LinearOpMode mode) {
+    public void turnToHeadingPID(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
         heading = normalizeAngle(heading);
         turnController.setSp(heading);
-        while (mode.opModeIsActive() && !estop && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
+        while (mode.opModeIsActive() && Math.abs(normalizeAngle(orientation.getOrientation()) - heading) > tolerance) {
             double turnRate = turnController.calculatePID(normalizeAngle(orientation.getOrientation()));
             turnRate /= maxTurnRPS;
             if(turnRate > percentOfMaxTurnRate) turnRate = percentOfMaxTurnRate;
             turn(turnRate);
         }
+    }
+
+    public void turnToHeadingEnhanced(double heading, double percentOfMaxTurnRate, LinearOpMode mode) {
+        turnToHeadingEnhanced(heading, percentOfMaxTurnRate, HEADING_THRESHOLD, mode);
+    }
+
+    public void turnToHeadingEnhanced(double heading, double percentOfMaxTurnRate, double tolerance, LinearOpMode mode) {
+        heading = normalizeAngle(heading);
+        turnController.setSp(heading);
+
+        double deltaHeading = normalizeAngle(heading - normalizeAngle(orientation.getOrientation()));
+
+        // calculate turn amount
+        double amountToTurnWheels = ticksPerRev * 20.5 * deltaHeading / (4.0 * 360.0); // w = TPR*(20.5in * theta) / (4in * 360deg)
+        turn(amountToTurnWheels, percentOfMaxTurnRate);
+        Log.d("Ticks to turn", amountToTurnWheels+"");
+        Log.d("TPR", ticksPerRev+"");
+//        turnToHeadingPID(heading, percentOfMaxTurnRate, tolerance, mode);
     }
 
     /**
@@ -292,6 +327,21 @@ public class UltimateNavigationSimple {
             if(Double.isNaN(powers[i])) powers[i] = 0;
         }
         return powers;
+    }
+
+    private void runMotorsToPosition(double[] powers, double amountToTurnWheels) {
+        for(int i = 0; i < driveMotors.length; i++) {
+            Log.d("Motor " + i + " tick", ""+driveMotors[i].getCurrentTick());
+            Log.d("Motor " + i + " turn amt", ""+amountToTurnWheels);
+            if(i == 0 || i == 3) driveMotors[i].setPositionTicks((int)driveMotors[i].getCurrentTick() + (int)(amountToTurnWheels + 0.5));
+            else driveMotors[i].setPositionTicks((int)driveMotors[i].getCurrentTick() - (int)(amountToTurnWheels + 0.5));
+            driveMotors[i].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        Log.d("Powers", Arrays.toString(powers));
+        driveMotors[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR].setMotorPower(powers[FRONT_LEFT_HOLONOMIC_DRIVE_MOTOR]);
+        driveMotors[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR].setMotorPower(powers[FRONT_RIGHT_HOLONOMIC_DRIVE_MOTOR]);
+        driveMotors[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR].setMotorPower(powers[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR]);
+        driveMotors[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR].setMotorPower(powers[BACK_RIGHT_HOLONOMIC_DRIVE_MOTOR]);
     }
 
     /**

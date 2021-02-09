@@ -92,7 +92,7 @@ public class ConfigVariables {
     public static final Location CENTER = new Location(0,0);
 
     public static final Location RED_WOBBLE_GOAL_LEFT_CHECKPOINT = new Location(57, -55);
-    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(22, -38.5); // this is not meant to be the true y of the wobble goal, we have some offset in place that is used in the obtain function
+    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(22, -35.5); // this is not meant to be the true y of the wobble goal, we have some offset in place that is used in the obtain function
     public static final Location RED_WOBBLE_GOAL_RIGHT = new Location(48.8, -47.3); // shouldn't need this one
 
     public static final Location WOBBLE_GOAL_PLACEMENT_OFFSET = new Location(5.5, -3);

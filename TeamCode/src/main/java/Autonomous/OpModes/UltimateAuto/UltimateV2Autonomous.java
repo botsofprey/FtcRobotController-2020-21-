@@ -1,5 +1,7 @@
 package Autonomous.OpModes.UltimateAuto;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Actions.Ultimate.RingIntakeSystemV2;
@@ -26,6 +28,10 @@ import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.RING_STACK_TRUE_LOC;
 import static Autonomous.ConfigVariables.SHOOTING_LINE_POINT;
 import static Autonomous.ConfigVariables.WOBBLE_OFFSET;
+import static DriveEngine.Ultimate.UltimateNavigation2.BACK;
+import static DriveEngine.Ultimate.UltimateNavigation2.BACK_SENSOR;
+import static DriveEngine.Ultimate.UltimateNavigation2.LEFT;
+import static DriveEngine.Ultimate.UltimateNavigation2.LEFT_SENSOR;
 import static DriveEngine.Ultimate.UltimateNavigation2.NORTH;
 import static DriveEngine.Ultimate.UltimateNavigation2.SOUTH;
 
@@ -46,7 +52,7 @@ public class UltimateV2Autonomous {
     protected ShooterSystemV2 shooter;
     protected RingIntakeSystemV2 intake;
 
-    protected VisionHelperUltimateGoal vision;
+//    protected VisionHelperUltimateGoal vision;
 
 
     protected static final double MAX_SPEED = 50;
@@ -74,7 +80,7 @@ public class UltimateV2Autonomous {
             e.printStackTrace();
         }
 
-        vision = new VisionHelperUltimateGoal(VisionHelperUltimateGoal.WEBCAM, mode.hardwareMap);
+//        vision = new VisionHelperUltimateGoal(VisionHelperUltimateGoal.WEBCAM, mode.hardwareMap);
     }
 
     // converts red to blue. If it is red, nothing happens
@@ -171,8 +177,8 @@ public class UltimateV2Autonomous {
     // drives to the correct wobble goal delivery zone from the current robot location
     protected void deliverWobbleGoal(LinearOpMode mode, RingCount ringCount, double runtime, int wobbleNum) {
         if(mode.opModeIsActive()) {
+            wobbleGrabber.setGrabAndDropAngle();
             robot.turnToHeading(NORTH, mode);
-            wobbleGrabber.setGrabAngleSlow();
             Location targetLocation = RED_ZONE_ONE;
             switch(ringCount){
                 case SINGLE_STACK:
@@ -216,8 +222,8 @@ public class UltimateV2Autonomous {
             shooter.setHighGoalPower();
 //            robot.driveToLocationPID(RING_STACK_START_POINT, HIGH_SPEED, mode);
 //            robot.turnToHeading(UltimateNavigation2.EAST, mode);
-            turnToRingStack();
-            robot.driveDistance(32, NORTH, KIND_OF_SLOW_SPEED, mode);
+            turnToRingStack(ringCount);
+            robot.driveDistance(22, NORTH, KIND_OF_SLOW_SPEED, mode);
             robot.turnToHeading(NORTH, mode);
         }
     }
@@ -267,7 +273,7 @@ public class UltimateV2Autonomous {
                 if(ringCount == RingCount.SINGLE_STACK) { // if there is only one extra ring, only index once
                     for(int i = 0; i < 2; i++) {
                         indexShooter();
-                        shooter.setShooterMotorPower(0.65+.005); // Due to PID overshooting, decrease power for second shot
+                        shooter.setShooterMotorPower(0.65+.005 - i*(0.02)); // Due to PID overshooting, decrease power for second shot
                     }
                 }
                 else { // otherwise (there are four rings), index three times
@@ -296,15 +302,58 @@ public class UltimateV2Autonomous {
 
     protected void dropIntakeAndWobble(LinearOpMode mode) {
         if(mode.opModeIsActive()){
+            wobbleGrabber.setGrabAndDropAngle();
             intake.intakeServoOut();
             shooter.spinUp();
         }
     }
 
-    protected void turnToRingStack(){
+    protected void driveToRingStack(LinearOpMode mode){
+        if(mode.opModeIsActive()){
+            robot.driveDistance(37.6, NORTH, MED_SPEED, mode);
+        }
+    }
+
+    protected RingCount distSensorCountRings(){
+        RingCount ringCount = RingCount.NO_RINGS;
+        double bottomCount = 0;
+        double topCount = 0;
+        double iterations = 10.0;
+
+        for(int i = 0; i < iterations; i++){
+            if(robot.distanceSensors[BACK_SENSOR].getDistance() <= 18.0){
+                bottomCount++;
+            }
+            Log.d("Bottom Dist Sensor", robot.distanceSensors[BACK_SENSOR].getDistance() + "");
+            if (robot.distanceSensors[LEFT_SENSOR].getDistance() <= 18.0){
+                topCount++;
+            }
+            Log.d("Top Dist Sensor", robot.distanceSensors[LEFT_SENSOR].getDistance() + "");
+        }
+
+        if (bottomCount / iterations >= 0.6) {
+            if (topCount / iterations >= 0.6) {
+                ringCount = RingCount.QUAD_STACK;
+            }
+            else {
+                ringCount = RingCount.SINGLE_STACK;
+            }
+        }
+
+
+        mode.telemetry.addData("Top Dist Sensor", robot.distanceSensors[LEFT_SENSOR].getDistance());
+        mode.telemetry.update();
+
+        return ringCount;
+    }
+
+    protected void turnToRingStack(RingCount ringCount){
             double heading = Math.atan2(RING_STACK_TRUE_LOC.getX() - robot.getRobotLocation().getX(), RING_STACK_TRUE_LOC.getY() - robot.getRobotLocation().getY());
             heading = Math.toDegrees(heading);
 //            heading = (360.0 - heading) % 360;
+        if(ringCount == RingCount.QUAD_STACK){
+            heading = heading - 2.5;
+        }
             robot.turnToHeading(heading, mode);
     }
 
