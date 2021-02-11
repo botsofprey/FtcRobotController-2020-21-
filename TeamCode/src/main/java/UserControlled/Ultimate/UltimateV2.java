@@ -35,7 +35,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Actions.Ultimate.RingIntakeSystemV2;
-import Actions.Ultimate.ShooterSystemV2;
 import Actions.Ultimate.ShooterSystemV2Test;
 import Actions.Ultimate.WobbleGrabberV2;
 import Autonomous.Location;
@@ -47,6 +46,7 @@ import static Autonomous.ConfigVariables.HIGH_GOAL_HEADING;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
+import static DriveEngine.Ultimate.UltimateNavigationSimple.RIGHT_SENSOR;
 
 /**
  * Author: Software Team 2020-2021
@@ -161,8 +161,10 @@ public class UltimateV2 extends LinearOpMode {
 				}
 				telemetry.addData("Wheel Power", shooter.shooterMotor.getMotorPower());
 				telemetry.addData("Wheel Speed (ticks/sec)", shooter.shooterMotor.getCurrentTicksPerSecond());
+				telemetry.addData("Shooter RPM", shooter.getRPM());
 				telemetry.addData("Robot Heading", robot.orientation.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
+				telemetry.addData("Right Dist", robot.distanceSensors[RIGHT_SENSOR].getDistance());
 				telemetry.update();
 
 				updateEStop();
@@ -216,10 +218,12 @@ public class UltimateV2 extends LinearOpMode {
 	}
 	
 	private void playerOneFunctions(GamepadController controller) {
-		if(gamepad1.dpad_up) powerShots();
+		if(gamepad1.dpad_up) {
+			shooter.setPowerShotRPM();
+		}
 		else if(gamepad1.dpad_left) {
 //			robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
-			powerShotLeft();
+			shooter.setPowerShotRPM();
 		}
 		else if(gamepad1.dpad_down) {
 //			robot.driveToXY(ConfigVariables.POWER_SHOT_MIDDLE_ON_LINE, 25, this);
@@ -316,16 +320,16 @@ public class UltimateV2 extends LinearOpMode {
 
 		if (gamepad2.dpad_up) {
 			usingDpad = true;
-			grabber.setArmAngle(WobbleGrabberV2.WALL_ANGLE);
+			grabber.setWallAngle();
 		} else if (gamepad2.dpad_right) {
 			usingDpad = true;
-			grabber.setArmAngle(WobbleGrabberV2.LIFT_ANGLE);
+			grabber.setLiftAngle();
 		} else if (gamepad2.dpad_down) {
 			usingDpad = true;
-			grabber.setArmAngle(WobbleGrabberV2.GRAB_AND_DROP_ANGLE);
+			grabber.setGrabAndDropAngle();
 		} else if (gamepad2.dpad_left) {
 			usingDpad = true;
-			grabber.setArmAngle(WobbleGrabberV2.INIT_ANGLE);
+			grabber.setInitAngle();
 		}
 
 		if(gamepad2.right_trigger > 0.1) {
@@ -336,6 +340,10 @@ public class UltimateV2 extends LinearOpMode {
 			grabber.setArmPower(-0.35);
 		} else if(!usingDpad) {
 			grabber.holdArm();
+		}
+
+		if(grabber.armLimit.isActivated()) {
+			grabber.resetArm(this);
 		}
 
 		// Intake servo toggle
@@ -352,11 +360,11 @@ public class UltimateV2 extends LinearOpMode {
 		}
 
 		if (gamepad2.right_bumper) {
-			shooter.setRPM(ShooterSystemV2Test.HIGH_GOAL_RPM);
+			shooter.setHighGoalRPM();
 		}
 
 		if(gamepad2.left_bumper) {
-			shooter.setRPM(ShooterSystemV2Test.POWER_SHOT_RPM);
+			shooter.setPowerShotRPM();
 		}
 	}
 	

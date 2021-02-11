@@ -5,21 +5,19 @@ import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Actions.Ultimate.RingIntakeSystemV2;
-import Actions.Ultimate.ShooterSystemV2;
+import Actions.Ultimate.ShooterSystemV2Test;
 import Actions.Ultimate.WobbleGrabberV2;
 import Autonomous.AutoAlliance;
 import Autonomous.Location;
 import Autonomous.RingCount;
-import Autonomous.VisionHelperUltimateGoal;
+import DriveEngine.Ultimate.Behavior;
 import DriveEngine.Ultimate.UltimateNavigation2;
 
-import static Actions.Ultimate.ShooterSystemV2Test.LEFT_POWER_SHOT_POWER;
-import static Actions.Ultimate.ShooterSystemV2Test.MIDDLE_POWER_SHOT_POWER;
-import static Actions.Ultimate.ShooterSystemV2Test.RIGHT_POWER_SHOT_POWER;
 import static Autonomous.ConfigVariables.HIGH_GOAL_LOC;
 import static Autonomous.ConfigVariables.LEFT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.MIDDLE_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.PARKING_LOCATION;
+import static Autonomous.ConfigVariables.POWER_SHOT_END_STRAFE;
 import static Autonomous.ConfigVariables.RED_WOBBLE_GOAL_LEFT;
 import static Autonomous.ConfigVariables.RED_ZONE_ONE;
 import static Autonomous.ConfigVariables.RED_ZONE_THREE;
@@ -28,11 +26,11 @@ import static Autonomous.ConfigVariables.RIGHT_POWER_SHOT_HEADING;
 import static Autonomous.ConfigVariables.RING_STACK_TRUE_LOC;
 import static Autonomous.ConfigVariables.SHOOTING_LINE_POINT;
 import static Autonomous.ConfigVariables.WOBBLE_OFFSET;
-import static DriveEngine.Ultimate.UltimateNavigation2.BACK;
 import static DriveEngine.Ultimate.UltimateNavigation2.BACK_SENSOR;
 import static DriveEngine.Ultimate.UltimateNavigation2.LEFT;
 import static DriveEngine.Ultimate.UltimateNavigation2.LEFT_SENSOR;
 import static DriveEngine.Ultimate.UltimateNavigation2.NORTH;
+import static DriveEngine.Ultimate.UltimateNavigation2.RIGHT_SENSOR;
 import static DriveEngine.Ultimate.UltimateNavigation2.SOUTH;
 
 /**
@@ -49,7 +47,7 @@ public class UltimateV2Autonomous {
     protected UltimateNavigation2 robot;
 
     protected WobbleGrabberV2 wobbleGrabber;
-    protected ShooterSystemV2 shooter;
+    protected ShooterSystemV2Test shooter;
     protected RingIntakeSystemV2 intake;
 
 //    protected VisionHelperUltimateGoal vision;
@@ -70,7 +68,7 @@ public class UltimateV2Autonomous {
         this.mode = mode;
 
         wobbleGrabber = new WobbleGrabberV2(mode.hardwareMap);
-        shooter = new ShooterSystemV2(mode.hardwareMap);
+        shooter = new ShooterSystemV2Test(mode.hardwareMap);
         intake = new RingIntakeSystemV2(mode.hardwareMap);
 
         startLocation = redToBlue(startLocation);
@@ -113,48 +111,84 @@ public class UltimateV2Autonomous {
     // performs power shots from right to left
     protected void performPowerShots(LinearOpMode mode, RingCount ringCount, double runtime) {
         if(mode.opModeIsActive()) { // if the time remaining is more than the required action time, perform it
-            shooter.setShooterMotorPower(RIGHT_POWER_SHOT_POWER);
-            robot.driveToLocationPID(SHOOTING_LINE_POINT, MED_SPEED, mode);
+            shooter.setPowerShotRPM();
+            robot.driveToLocationPID(SHOOTING_LINE_POINT, KIND_OF_SLOW_SPEED, mode);
+            robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1, mode);
+            powerShotIndex();
+            robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode);
+            powerShotIndex();
+            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode);
+            powerShotIndex();
+//            robot.driveToLocationPID(new Location(robot.getRobotLocation().getX(), SHOOTING_LINE_POINT.getY()), KIND_OF_SLOW_SPEED, mode);
+//
+//            // strafe across the field shooting power shots
+//            robot.driveToLocationPID(POWER_SHOT_END_STRAFE, LOW_SPEED, mode, new Behavior() {
+//                private int shotCount = 0;
+//
+//                public boolean doBehavior() {
+//                    double d = robot.distanceSensors[RIGHT_SENSOR].getDistance();
+//                    Log.d("RightDistance", d + "");
+//                    if (shotCount == 0 && d >= 29) {
+//                        shooter.setIndexLeft();
+//                        Log.d("PowerShot", "1");
+//                        shotCount++;
+//                    }
+//                    else if (shotCount == 1 && d >= 36) {
+//                        shooter.setIndexRight();
+//                        Log.d("PowerShot", "2");
+//                        shotCount++;
+//                    }
+//                    else if (shotCount == 2 && d >= 42) {
+//                        shooter.setIndexLeft();
+//                        Log.d("PowerShot", "3");
+//                        shotCount++;
+//                    }
+//
+//            return true; // continue to drive, false would mean stop immediately
+//        }
+//    });
+
+
             // this is really gross but each path requires slightly different headings
-            switch(ringCount){
-                case NO_RINGS:
-                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
-                    powerShotIndex();
-
-                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
-                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING - 0.5, 1, mode);
-                    powerShotIndex();
-
-                    shooter.setPowerShotPower();
-                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
-                    powerShotIndex();
-                    break;
-                case SINGLE_STACK:
-                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
-                    powerShotIndex();
-
-                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER - 0.005);
-                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode);
-                    powerShotIndex();
-
-                    shooter.setPowerShotPower();
-                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
-                    powerShotIndex();
-                    break;
-                case QUAD_STACK:
-                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING + 3.2, 1,  mode); // turn to heading for first power shot and shoot
-                    powerShotIndex();
-
-                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
-                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING + 3.0, 1, mode);
-                    powerShotIndex();
-
-                    shooter.setPowerShotPower();
-                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING + 2.5, 1, mode); // turn to heading for third power shot and shoot
-                    powerShotIndex();
-                    break;
-
-            }
+//            switch(ringCount){
+//                case NO_RINGS:
+//                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
+//                    powerShotIndex();
+//
+//                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+//                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING - 0.5, 1, mode);
+//                    powerShotIndex();
+//
+//                    shooter.setPowerShotPower();
+//                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
+//                    powerShotIndex();
+//                    break;
+//                case SINGLE_STACK:
+//                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING, 1,  mode); // turn to heading for first power shot and shoot
+//                    powerShotIndex();
+//
+//                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER - 0.005);
+//                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode);
+//                    powerShotIndex();
+//
+//                    shooter.setPowerShotPower();
+//                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
+//                    powerShotIndex();
+//                    break;
+//                case QUAD_STACK:
+//                    robot.turnToHeading(RIGHT_POWER_SHOT_HEADING + 3.2, 1,  mode); // turn to heading for first power shot and shoot
+//                    powerShotIndex();
+//
+//                    shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
+//                    robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING + 3.0, 1, mode);
+//                    powerShotIndex();
+//
+//                    shooter.setPowerShotPower();
+//                    robot.turnToHeading(LEFT_POWER_SHOT_HEADING + 2.5, 1, mode); // turn to heading for third power shot and shoot
+//                    powerShotIndex();
+//                    break;
+//
+//            }
 
 //            if(ringCount == RingCount.NO_RINGS) {
 //                shooter.setShooterMotorPower(MIDDLE_POWER_SHOT_POWER);
@@ -164,8 +198,8 @@ public class UltimateV2Autonomous {
 //                robot.turnToHeading(MIDDLE_POWER_SHOT_HEADING, 1, mode); // turn to heading for second power shot and shoot
 //            }
 //            powerShotIndex();
-//
-//
+
+
 //            shooter.setPowerShotPower();
 //            robot.turnToHeading(LEFT_POWER_SHOT_HEADING, 1, mode); // turn to heading for third power shot and shoot
 //            powerShotIndex();
@@ -207,8 +241,7 @@ public class UltimateV2Autonomous {
                 robot.driveToLocationPID(offsetTarget, MED_SPEED, mode);
                 while(mode.opModeIsActive() && wobbleGrabber.armIsBusy());
             }
-            shooter.spinUp();
-            shooter.setShooterMotorPower(LEFT_POWER_SHOT_POWER); // spin up motor to expected power shot rpm
+            shooter.setPowerShotRPM(); // spin up motor to expected power shot rpm
 
             wobbleGrabber.releaseWobble();
             wobbleGrabber.setInitAngle();
@@ -219,7 +252,7 @@ public class UltimateV2Autonomous {
     protected void intakeExtraRings(LinearOpMode mode, RingCount ringCount, double runtime) {
         if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
             intake.intake();
-            shooter.setHighGoalPower();
+            shooter.setHighGoalRPM();
 //            robot.driveToLocationPID(RING_STACK_START_POINT, HIGH_SPEED, mode);
 //            robot.turnToHeading(UltimateNavigation2.EAST, mode);
             turnToRingStack(ringCount);
@@ -266,14 +299,13 @@ public class UltimateV2Autonomous {
     // drives to the correct position to shoot the extra rings then shoots them if there are extra rings
     protected void shootExtraRings(LinearOpMode mode, RingCount ringCount, double runtime) {
         if(mode.opModeIsActive() && ringCount != RingCount.NO_RINGS) {
-            shooter.setShooterMotorPower(0.665);
+            shooter.setHighGoalRPM();
             turnToHighGoalFromRings(robot.getRobotLocation());
 
                 // shoot rings
                 if(ringCount == RingCount.SINGLE_STACK) { // if there is only one extra ring, only index once
                     for(int i = 0; i < 2; i++) {
                         indexShooter();
-                        shooter.setShooterMotorPower(0.65+.005 - i*(0.02)); // Due to PID overshooting, decrease power for second shot
                     }
                 }
                 else { // otherwise (there are four rings), index three times

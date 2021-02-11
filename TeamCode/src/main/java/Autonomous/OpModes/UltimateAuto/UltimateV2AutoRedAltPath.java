@@ -88,6 +88,7 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
         robot.dropIntakeAndWobble(this);
 
         robot.driveToRingStack(this);
+        // TODO one ring is the least reliable to detect, tune tolerances
         RingCount ringCount = robot.distSensorCountRings();
         telemetry.addData("Ring Count", ringCount);
 

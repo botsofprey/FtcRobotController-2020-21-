@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 import Autonomous.ConfigVariables;
 import Autonomous.HeadingVector;
-import Autonomous.ImageProcessing.SkystoneImageProcessor;
 import Autonomous.Location;
 import Autonomous.Rectangle;
 import MotorControllers.JsonConfigReader;
@@ -1254,6 +1253,10 @@ public class UltimateNavigation2 extends Thread {
     }
 
     public void driveToLocationPID(Location startLocation, Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode) {
+        driveToLocationPID(startLocation, targetLocation, desiredSpeed, locationTolerance, mode, null);
+    }
+
+    public void driveToLocationPID(Location startLocation, Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode, Behavior behavior) {
         if(targetLocation.getHeading() == Double.MIN_VALUE) targetLocation.setHeading(startLocation.getHeading()); // this should help to avoid having heading issues
 
         xPositionController.setSp(0);
@@ -1272,7 +1275,7 @@ public class UltimateNavigation2 extends Thread {
         double distToHeading = targetLocation.getHeading() - startLocation.getHeading();
         distToHeading = restrictAngle(distToHeading, 0, mode);
         long startTime = System.currentTimeMillis();
-        while (mode.opModeIsActive() && (Math.abs(xDist) > locationTolerance || Math.abs(yDist) > locationTolerance || Math.abs(distToHeading) > HEADING_THRESHOLD)) {
+        while ((behavior == null || behavior.doBehavior()) && mode.opModeIsActive() && (Math.abs(xDist) > locationTolerance || Math.abs(yDist) > locationTolerance || Math.abs(distToHeading) > HEADING_THRESHOLD)) {
             xDist = targetLocation.getX() - startLocation.getX();
             yDist = targetLocation.getY() - startLocation.getY();
             distToHeading = targetLocation.getHeading() - startLocation.getHeading();
@@ -1483,6 +1486,10 @@ public class UltimateNavigation2 extends Thread {
 
     public void driveToLocationPID(Location targetLocation, double desiredSpeed, LinearOpMode mode) {
         driveToLocationPID(myLocation, targetLocation, desiredSpeed, mode);
+    }
+
+    public void driveToLocationPID(Location targetLocation, double desiredSpeed, LinearOpMode mode, Behavior behavior) {
+        driveToLocationPID(myLocation, targetLocation, desiredSpeed, LOCATION_DISTANCE_TOLERANCE, mode, behavior);
     }
 
     public void driveToLocationPID(Location targetLocation, double desiredSpeed, double locationTolerance, LinearOpMode mode) {

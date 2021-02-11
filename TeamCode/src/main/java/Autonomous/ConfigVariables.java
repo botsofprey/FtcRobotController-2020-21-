@@ -70,7 +70,7 @@ public class ConfigVariables {
     public static final Location RED_FOUNDATION_STACK_LEFT = new Location(20+9+4, 37.5, 270);
     public static final Location BLUE_FOUNDATION_CENTER = new Location(-24-10-5, 49.5, 90);
 
-    public static final Location RED_ZONE_ONE = new Location(62, -2); // may want to use something like 60 for the x value
+    public static final Location RED_ZONE_ONE = new Location(60, 0); // may want to use something like 60 for the x value
     public static final Location RED_ZONE_ONE_EAST = new Location(50, 16);
     public static final Location RED_ZONE_TWO = new Location(40, 22);
     public static final Location RED_ZONE_THREE = new Location(62, 48.5);
@@ -86,6 +86,7 @@ public class ConfigVariables {
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(30, 0);
     public static final Location SHOOTING_LINE_POINT = new Location(22, -3); // may need to adjust
+    public static final Location POWER_SHOT_END_STRAFE = new Location(12, -3); // TODO fix this
     public static final Location ALT_HIGH_GOAL_POINT = new Location(51, -12); // This is used after we intake the rings, to see if we can avoid going back to the shooting loc
     public static final Location POWER_SHOT_POINT = new Location(18.75, 10);
     public static final Location SHOOTING_LINE_WAYPOINT = new Location(22, 30);
@@ -102,8 +103,8 @@ public class ConfigVariables {
     public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(56.8, -61.6, 0);
 
     // TODO find these locations
-    public static final double RIGHT_POWER_SHOT_HEADING = 7.0;
-    public static final double MIDDLE_POWER_SHOT_HEADING = 0;
+    public static final double RIGHT_POWER_SHOT_HEADING = 8.0;
+    public static final double MIDDLE_POWER_SHOT_HEADING = 1.0;
     public static final double LEFT_POWER_SHOT_HEADING = -5.0;
     public static final Location POWER_SHOT_LEFT = new Location(24, 0, LEFT_POWER_SHOT_HEADING);
     public static final Location POWER_SHOT_MIDDLE = new Location(24, 0, MIDDLE_POWER_SHOT_HEADING);

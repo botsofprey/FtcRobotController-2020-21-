@@ -1,5 +1,6 @@
 package Actions.Ultimate;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -31,9 +32,9 @@ public class WobbleGrabberV2 implements ActionHandler {
     public static final double CLAW_RELEASE_POSITION = -1;
 
     public static final double ANGLE_INCREMENT = 25;
-    public static final double WALL_ANGLE = 60.29;
-    public static final double LIFT_ANGLE = 90.86;
-    public static final double GRAB_AND_DROP_ANGLE = 112.43;
+    public static final double WALL_ANGLE = 70;
+    public static final double LIFT_ANGLE = 85;
+    public static final double GRAB_AND_DROP_ANGLE = 80;
     public static final double INIT_ANGLE = 0;
 
     public boolean wobbleGrabbed;
@@ -79,6 +80,11 @@ public class WobbleGrabberV2 implements ActionHandler {
         rightClaw.setPosition(CLAW_RELEASE_POSITION);
     }
 
+    public void resetArm(LinearOpMode mode) {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mode.idle();
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
     public void setArmAngle(double angle) {
         if(arm.getDegree() < angle){

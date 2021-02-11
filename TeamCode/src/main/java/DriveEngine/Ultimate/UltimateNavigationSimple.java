@@ -5,6 +5,7 @@ import android.util.Log;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import MotorControllers.JsonConfigReader;
 import MotorControllers.MotorController;
 import MotorControllers.PIDController;
 import SensorHandlers.ImuHandler;
+import SensorHandlers.LIDARSensor;
 
 /**
  * Created by robotics on 2/15/18.
@@ -30,6 +32,8 @@ public class UltimateNavigationSimple {
     private PIDController headingController, turnController;
     private volatile HeadingVector[] wheelVectors = new HeadingVector[4];
     private volatile HeadingVector robotMovementVector = new HeadingVector();
+    public LIDARSensor[] distanceSensors = new LIDARSensor[3];
+    public static final int LEFT_SENSOR = 0, BACK_SENSOR = 1, RIGHT_SENSOR = 2, DRIVE_BASE = 3, FRONT_SENSOR = 4;
     public ImuHandler orientation;
     private double orientationOffset = 0;
     private volatile boolean shouldRun = true;
@@ -465,6 +469,9 @@ public class UltimateNavigationSimple {
             else if(reader.getString("BACK_LEFT_MOTOR_DIRECTION").equals("FORWARD")) {
                 driveMotors[BACK_LEFT_HOLONOMIC_DRIVE_MOTOR].setDirection(DcMotorSimple.Direction.FORWARD);
             }
+            distanceSensors[LEFT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "left"), LEFT_SENSOR, "left");
+            distanceSensors[BACK_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "back"), BACK_SENSOR, "back");
+            distanceSensors[RIGHT_SENSOR] = new LIDARSensor(hardwareMap.get(DistanceSensor.class, "right"), RIGHT_SENSOR, "right");
             headingController = new PIDController(reader.getDouble("HEADING_Kp"), reader.getDouble("HEADING_Ki"), reader.getDouble("HEADING_Kd"));
             headingController.setIMax(reader.getDouble("HEADING_Ki_MAX"));
             turnController = new PIDController(reader.getDouble("TURN_Kp"), reader.getDouble("TURN_Ki"), reader.getDouble("TURN_Kd"));

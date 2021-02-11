@@ -41,11 +41,12 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public static final double LEFT_POWER_SHOT_POWER = 0.58;
 	public static final double POWER_SHOT_POWER = 0.615;
 
-	public static final double HIGH_GOAL_RPM = 3440;
+	public static final double HIGH_GOAL_RPM = 3850;
 	public static final double RIGHT_POWER_SHOT_RPM = 3000;
 	public static final double MIDDLE_POWER_SHOT_RPM = 2800;
 	public static final double LEFT_POWER_SHOT_RPM = 2800;
-	public static final double POWER_SHOT_RPM = 3000;
+	public static final double POWER_SHOT_RPM = 3550;
+	public static double rpm = HIGH_GOAL_RPM;
 
 	private double power = HIGH_GOAL_POWER;
 
@@ -73,7 +74,8 @@ public class ShooterSystemV2Test implements ActionHandler {
 	}
 
 	public void spinUp() {
-		shooterMotor.setMotorPower(power);
+		shooterMotor.setRPM(rpm);
+		Log.d("Shooter RPM set", rpm + "");
 	}
 
 	public void setRPM(double rpm) {
@@ -102,18 +104,18 @@ public class ShooterSystemV2Test implements ActionHandler {
 		indexAngle = INDEX_RIGHT;
 	}
 
-	public void setHighGoalPower() {
-		power = HIGH_GOAL_POWER;
+	public void setHighGoalRPM() {
+		rpm = HIGH_GOAL_RPM;
 		spinUp();
 	}
 
-	public void setShooterMotorPower(double power) {
-		this.power = power;
+	public void setShooterMotorRPM(double rpm) {
+		this.rpm = rpm;
 		spinUp();
 	}
 
-	public void setPowerShotPower() {
-		power = POWER_SHOT_POWER;
+	public void setPowerShotRPM() {
+		rpm = POWER_SHOT_RPM;
 		spinUp();
 	}
 
