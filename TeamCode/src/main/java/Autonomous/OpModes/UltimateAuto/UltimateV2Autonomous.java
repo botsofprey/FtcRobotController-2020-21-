@@ -14,6 +14,7 @@ import Autonomous.AutoAlliance;
 import Autonomous.Line;
 import Autonomous.Location;
 import Autonomous.RingCount;
+import Autonomous.VisionHelperUltimateGoal;
 import DriveEngine.Ultimate.Behavior;
 import DriveEngine.Ultimate.UltimateNavigation2;
 
@@ -54,7 +55,7 @@ public class UltimateV2Autonomous {
     protected ShooterSystemV2Test shooter;
     protected RingIntakeSystemV2 intake;
 
-//    protected VisionHelperUltimateGoal vision;
+    protected VisionHelperUltimateGoal vision;
 
 
     protected static final double MAX_SPEED = 50;
@@ -358,9 +359,9 @@ public class UltimateV2Autonomous {
         }
     }
 
-    protected RingCount driveToRingStack(LinearOpMode mode){
-        final List<Double> bottomDistances = new ArrayList<>();
-        final List<Double> topDistances = new ArrayList<>();
+    protected RingCount driveToRingStack(LinearOpMode mode) {
+        final int[] bottomHits = {0};
+        final int[] topHits = {0};
 
         if(mode.opModeIsActive()) {
 //            robot.driveDistance(37.6, NORTH, MED_SPEED, mode);
@@ -370,30 +371,23 @@ public class UltimateV2Autonomous {
                 public boolean doBehavior() {
                     double bottomDistance = robot.distanceSensors[BACK_SENSOR].getDistance();
                     if (bottomDistance <= 16.0) { // lower, because of 2nd wobble goal
-                        bottomDistances.add(bottomDistance);
+                        bottomHits[0]++;
                     }
                     double topDistance = robot.distanceSensors[LEFT_SENSOR].getDistance();
                     if (topDistance <= 16.0) {
-                        topDistances.add(topDistance);
+                        topHits[0]++;
                     }
-                    Log.d("Bottom Hits", bottomDistances.size() + "");
-                    Log.d("Top Hits", topDistances.size() + "");
+                    Log.d("Bottom Hits", bottomHits[0] + "");
+                    Log.d("Top Hits", topHits[0] + "");
                     return true;
                 }
             });
             intake.pauseIntake();
         }
 
-        RingCount ringCount = RingCount.NO_RINGS;
-        if (bottomDistances.size() >= 1) {
-            if (topDistances.size() >= 1) {
-                ringCount = RingCount.QUAD_STACK;
-            }
-            else {
-                ringCount = RingCount.SINGLE_STACK;
-            }
-        }
-        return ringCount;
+        if (topHits[0] > 2)
+            return RingCount.QUAD_STACK;
+        return (bottomHits[0] > 1) ? RingCount.SINGLE_STACK : RingCount.NO_RINGS;
     }
 
     protected RingCount distSensorCountRings(){

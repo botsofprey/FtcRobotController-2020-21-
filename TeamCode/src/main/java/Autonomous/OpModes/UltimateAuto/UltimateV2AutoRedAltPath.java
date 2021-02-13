@@ -95,7 +95,6 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
 
             telemetry.addData("deliver wobble goal", "");
             telemetry.update();
-
             // next we deliver the first wobble goal to the zone
             robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
 
