@@ -579,6 +579,10 @@ public class UltimateNavigation2 extends Thread {
     }
 
     public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode) {
+        driveDistance(distanceInInches, heading, desiredVelocity, mode, null);
+    }
+
+    public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode, Behavior behavior) {
 //        for(MotorController m : driveMotors) {
 //            m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        }
@@ -600,7 +604,7 @@ public class UltimateNavigation2 extends Thread {
         else if (heading < 0) heading += 360;
         double curOrientation = orientation.getOrientation();
         turnController.setSp(curOrientation);
-        while (distanceTraveled < distanceInInches && mode.opModeIsActive()) {
+        while ((behavior == null || behavior.doBehavior()) && distanceTraveled < distanceInInches && mode.opModeIsActive()) {
             //from our motor position, determine location
             driveOnHeadingPID(heading,desiredVelocity,0, mode);
             motorPositionsInches = getMotorPositionsInches();
@@ -1177,8 +1181,8 @@ public class UltimateNavigation2 extends Thread {
             Log.d("Dist to travel: ", ""+distToTravel);
             Log.d("Dist travelled: ", ""+distTravelled);
             Log.d("Velocity: ", ""+velocity);
-            mode.telemetry.addData("Velocity", velocity);
-            mode.telemetry.update();
+//            mode.telemetry.addData("Velocity", velocity);
+//            mode.telemetry.update();
             if (distTravelled >= distToTravel - distToStop) {
                 Log.d("Decelerating", "...");
                 velocity = velocity - decel * (System.currentTimeMillis() - startTime) / 1000.0;
@@ -1294,8 +1298,8 @@ public class UltimateNavigation2 extends Thread {
             Log.d("Dist to travel: ", ""+distToTravel);
             Log.d("Dist travelled: ", ""+distTravelled);
             Log.d("Velocity: ", ""+velocity);
-            mode.telemetry.addData("Velocity", velocity);
-            mode.telemetry.update();
+//            mode.telemetry.addData("Velocity", velocity);
+//            mode.telemetry.update();
             if (distTravelled >= distToTravel - distToStop) {
                 Log.d("Decelerating", "...");
                 velocity = velocity - decel * (System.currentTimeMillis() - startTime) / 1000.0;
@@ -1405,8 +1409,8 @@ public class UltimateNavigation2 extends Thread {
             Log.d("Dist to travel: ", ""+distToTravel);
             Log.d("Dist travelled: ", ""+distTravelled);
             Log.d("Velocity: ", ""+velocity);
-            mode.telemetry.addData("Velocity", velocity);
-            mode.telemetry.update();
+//            mode.telemetry.addData("Velocity", velocity);
+//            mode.telemetry.update();
             if (distTravelled >= distToTravel - distToStop) {
                 Log.d("Decelerating", "...");
                 velocity = velocity - decel * (System.currentTimeMillis() - startTime) / 1000.0;

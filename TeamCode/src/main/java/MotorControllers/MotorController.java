@@ -232,7 +232,7 @@ public class MotorController extends Thread {
     }
 
     public void setInchesPerSecondVelocity(double inchesPerSec) {
-        long ticksPerSec = (long)(inchesPerSec/(wheelDiameterInInches* Math.PI)*ticksPerRevolution + .5);
+        long ticksPerSec = (long)(inchesPerSec/(wheelDiameterInInches* Math.PI)*ticksPerRevolution + 0.5);
         setTicksPerSecondVelocity(ticksPerSec);
     }
 
@@ -305,8 +305,9 @@ public class MotorController extends Thread {
     public void brake() {
         controllingRPM = false;
         takenStartValue = false;
-        if(getMotorRunMode() == DcMotor.RunMode.RUN_TO_POSITION)
+        if(getMotorRunMode() == DcMotor.RunMode.RUN_TO_POSITION) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
         motor.setPower(0);
     }
 

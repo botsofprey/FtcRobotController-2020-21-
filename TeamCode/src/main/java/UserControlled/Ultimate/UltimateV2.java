@@ -164,7 +164,7 @@ public class UltimateV2 extends LinearOpMode {
 				telemetry.addData("Shooter RPM", shooter.getRPM());
 				telemetry.addData("Robot Heading", robot.orientation.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
-				telemetry.addData("Right Dist", robot.distanceSensors[RIGHT_SENSOR].getDistance());
+//				telemetry.addData("Right Dist", robot.distanceSensors[RIGHT_SENSOR].getDistance());
 				telemetry.update();
 
 				updateEStop();
@@ -334,15 +334,19 @@ public class UltimateV2 extends LinearOpMode {
 
 		if(gamepad2.right_trigger > 0.1) {
 			usingDpad = false;
-			grabber.setArmPower(0.35);
+			grabber.setArmPower(0.55);
 		} else if(gamepad2.left_trigger > 0.1) {
 			usingDpad = false;
-			grabber.setArmPower(-0.35);
+			grabber.setArmPower(-0.55);
 		} else if(!usingDpad) {
 			grabber.holdArm();
 		}
 
-		if(grabber.armLimit.isActivated()) {
+//		if(grabber.armLimit.isActivated()) {
+//			grabber.resetArm(this);
+//		}
+		if(gamepad2.start) {
+			grabber.arm.brake();
 			grabber.resetArm(this);
 		}
 
@@ -364,7 +368,7 @@ public class UltimateV2 extends LinearOpMode {
 		}
 
 		if(gamepad2.left_bumper) {
-			shooter.setPowerShotRPM();
+			shooter.setRPM(ShooterSystemV2Test.POWER_SHOT_RPM + 150);
 		}
 	}
 	

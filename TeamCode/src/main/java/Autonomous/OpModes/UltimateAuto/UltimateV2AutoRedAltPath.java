@@ -58,74 +58,77 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        // initialize robot // TODO: check starting location
-        UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, STARTING_ROBOT_LOCATION_RIGHT, this);
+            // initialize robot // TODO: check starting location
+            UltimateV2Autonomous robot = new UltimateV2Autonomous(AutoAlliance.RED, STARTING_ROBOT_LOCATION_RIGHT, this);
 
-        robot.init();
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
-        // the loop below updates the ring count as the camera runs in a background thread
-        while(!opModeIsActive()) {
+            robot.init();
             telemetry.addData("Status", "Initialized");
-            telemetry.addData("# of rings", 0);
-//            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
             telemetry.update();
-        }
+        try {
 
-        waitForStart();
+            // the loop below updates the ring count as the camera runs in a background thread
+            while (!opModeIsActive()) {
+                telemetry.addData("Status", "Initialized");
+                telemetry.addData("# of rings", 0);
+//            telemetry.addData("# of rings", robot.vision.numOfSeenRings());
+                telemetry.update();
+            }
 
-        // first determine the number of rings to assist in the wobble goal position
+            waitForStart();
+
+            // first determine the number of rings to assist in the wobble goal position
 //        RingCount ringCount = robot.vision.getRingCount();
 //        RingCount ringCount = RingCount.QUAD_STACK;
 //        telemetry.addData("# of rings", robot.vision.numOfSeenRings());
 //        telemetry.addData("# of rings", ringCount);
-        telemetry.addData("Drop intake and wobble", "");
-        telemetry.update();
+            telemetry.addData("Drop intake and wobble", "");
+            telemetry.update();
 //        robot.vision.stopDetection(); // stop using the camera after we have taken our count, if you don't it may underperform
 
-        // start by dropping down the intake
-        robot.dropIntakeAndWobble(this);
+            // start by dropping down the intake
+            robot.dropIntakeAndWobble(this);
 
-        robot.driveToRingStack(this);
-        // TODO one ring is the least reliable to detect, tune tolerances
-        RingCount ringCount = robot.distSensorCountRings();
-        telemetry.addData("Ring Count", ringCount);
+            RingCount ringCount = robot.driveToRingStack(this);
+            // TODO one ring is the least reliable to detect, tune tolerances
+//        RingCount ringCount = robot.distSensorCountRings();
+            telemetry.addData("Ring Count", ringCount);
 
-        telemetry.addData("deliver wobble goal", "");
-        telemetry.update();
+            telemetry.addData("deliver wobble goal", "");
+            telemetry.update();
 
-        // next we deliver the first wobble goal to the zone
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
+            // next we deliver the first wobble goal to the zone
+            robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
 
-        telemetry.addData("power shots", "");
-        telemetry.update();
+            telemetry.addData("power shots", "");
+            telemetry.update();
 
-        // following the delivery we shoot the preloaded rings at the power shot targets
-        robot.performPowerShots(this, ringCount, this.getRuntime());
+            // following the delivery we shoot the preloaded rings at the power shot targets
+            robot.performPowerShots(this, ringCount, this.getRuntime());
 
-        telemetry.addData("intake rings, obtain second wobble", "");
-        telemetry.update();
-        // next we can intake the extra rings if there are some while we travel to the second wobble goal
-        robot.obtainSecondWobbleGoal(this, ringCount, this.getRuntime());
-        robot.intakeExtraRings(this, ringCount, this.getRuntime());
+            telemetry.addData("intake rings, obtain second wobble", "");
+            telemetry.update();
+            // next we can intake the extra rings if there are some while we travel to the second wobble goal
+            robot.obtainSecondWobbleGoal(this, ringCount, this.getRuntime());
+            robot.intakeExtraRings(this, ringCount, this.getRuntime());
 
-        // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
-        telemetry.addData("deliver second wobble, shoot extra rings", "");
-        telemetry.update();
-        // todo: added wobbleNum parameter to differentiate between the first and second wobble goals
-        robot.shootExtraRings(this, ringCount, this.getRuntime());
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
+            // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
+            telemetry.addData("deliver second wobble, shoot extra rings", "");
+            telemetry.update();
+            // todo: added wobbleNum parameter to differentiate between the first and second wobble goals
+            robot.shootExtraRings(this, ringCount, this.getRuntime());
+            robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
 
 
-        telemetry.addData("park", "");
-        telemetry.update();
-        // finally we park
-        robot.park(this, ringCount);
+            telemetry.addData("park", "");
+            telemetry.update();
+            // finally we park
+            robot.park(this, ringCount);
 
-        // run until the end of the match (driver presses STOP)
-//        while (opModeIsActive());
-        // TODO once the camera is back in, uncomment vision.kill() in robot.kill()
-        robot.kill();
+            // run until the end of the match (driver presses STOP)
+        while (opModeIsActive());
+            // TODO once the camera is back in, uncomment vision.kill() in robot.kill()
+        } finally {
+            robot.kill();
+        }
     }
 }

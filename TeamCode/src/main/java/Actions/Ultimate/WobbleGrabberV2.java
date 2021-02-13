@@ -32,10 +32,10 @@ public class WobbleGrabberV2 implements ActionHandler {
     public static final double CLAW_RELEASE_POSITION = -1;
 
     public static final double ANGLE_INCREMENT = 25;
-    public static final double WALL_ANGLE = 70;
-    public static final double LIFT_ANGLE = 85;
-    public static final double GRAB_AND_DROP_ANGLE = 80;
-    public static final double INIT_ANGLE = 0;
+    public static final double WALL_ANGLE = 114.0;
+    public static final double LIFT_ANGLE = 160.0;
+    public static final double GRAB_AND_DROP_ANGLE = 195.0;
+    public static final double INIT_ANGLE = 0.0;
 
     public boolean wobbleGrabbed;
 
@@ -115,6 +115,8 @@ public class WobbleGrabberV2 implements ActionHandler {
     public void setGrabAngleSlow(){
         arm.setPositionDegrees(GRAB_AND_DROP_ANGLE, SLOW_ARM_POWER);
     }
+
+    public void setLiftAngleSlow() { arm.setPositionDegrees(LIFT_ANGLE, SLOW_ARM_POWER); }
 
     public void pause() {
         arm.brake();
