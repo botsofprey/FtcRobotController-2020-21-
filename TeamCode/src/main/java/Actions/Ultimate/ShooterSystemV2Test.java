@@ -57,6 +57,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public static final double INDEX_RIGHT = 1;
 
 
+
 	public ShooterSystemV2Test(HardwareMap hardwareMap) {
 		try {
 			shooterMotor = new MotorControllerTest("wheelMotor", "ActionConfig/ShooterMotor.json", hardwareMap);

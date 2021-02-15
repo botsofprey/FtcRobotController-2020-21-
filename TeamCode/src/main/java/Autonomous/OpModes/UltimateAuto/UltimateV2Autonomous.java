@@ -385,9 +385,13 @@ public class UltimateV2Autonomous {
             intake.pauseIntake();
         }
 
-        if (topHits[0] > 2)
+//        mode.telemetry.addData("top", topHits[0]);
+//        mode.telemetry.addData("bottom", bottomHits[0]);
+        int top = topHits[0];
+        int bottom = bottomHits[0];
+        if (top > 0)
             return RingCount.QUAD_STACK;
-        return (bottomHits[0] > 1) ? RingCount.SINGLE_STACK : RingCount.NO_RINGS;
+        return (bottom > 0) ? RingCount.SINGLE_STACK : RingCount.NO_RINGS;
     }
 
     protected RingCount distSensorCountRings(){
