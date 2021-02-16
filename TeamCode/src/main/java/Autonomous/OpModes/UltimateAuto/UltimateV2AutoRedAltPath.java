@@ -125,7 +125,7 @@ public class UltimateV2AutoRedAltPath extends LinearOpMode {
             robot.park(this, ringCount);
 
             // run until the end of the match (driver presses STOP)
-        while (opModeIsActive());
+            while (opModeIsActive());
             // TODO once the camera is back in, uncomment vision.kill() in robot.kill()
         } finally {
             robot.kill();

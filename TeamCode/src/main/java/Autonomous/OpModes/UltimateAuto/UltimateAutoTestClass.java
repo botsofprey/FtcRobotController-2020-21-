@@ -45,9 +45,9 @@ import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 /*
     An opmode for testing the robot's ability to drive in a square
  */
-@Autonomous(name="UltimateV2SquareTest", group="Testers")  // @Autonomous(...) is the other common choice
-@Disabled
-public class UltimateV2SquareTest extends LinearOpMode {
+@Autonomous(name="UltimateAutoTestClass", group="test")  // @Autonomous(...) is the other common choice
+//@Disabled
+public class UltimateAutoTestClass extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -61,11 +61,11 @@ public class UltimateV2SquareTest extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive())
-            robot.driveInSquare();
+        robot.shooter.setRPM(1000);
 
-        telemetry.addData("park", "");
-        telemetry.update();
+        while (opModeIsActive()) {
+            robot.powerShotIndex();
+        }
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive());

@@ -34,7 +34,7 @@ public class WobbleGrabberV2 implements ActionHandler {
     public static final double ANGLE_INCREMENT = 25;
     public static final double WALL_ANGLE = 114.0;
     public static final double LIFT_ANGLE = 160.0;
-    public static final double GRAB_AND_DROP_ANGLE = 195.0;
+    public static final double GRAB_AND_DROP_ANGLE = 190.0;
     public static final double INIT_ANGLE = 0.0;
 
     public boolean wobbleGrabbed;
@@ -54,7 +54,7 @@ public class WobbleGrabberV2 implements ActionHandler {
             arm.setDirection(DcMotorSimple.Direction.REVERSE);
             arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             arm.setDefaultTicksPerDegree();
-            arm.setTicksPerDegree(arm.getTicksPerDegree() * 3.0/2.0); // 2:3 gear ratio
+            arm.setTicksPerDegree(arm.getTicksPerDegree() * 3.0 / 2.0); // 2:3 gear ratio
         } catch (Exception e) {
             e.printStackTrace();
         }
