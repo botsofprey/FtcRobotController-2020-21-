@@ -40,7 +40,7 @@ import Actions.Ultimate.ShooterSystemV2Test;
 //@Disabled
 public class ShooterMotorTest extends LinearOpMode {
     ShooterSystemV2Test shooter;
-    int targetRPM = 3850;
+    int targetRPM = 3915;
     boolean dpadUpPressed = false, dpadDownPressed = false, triggerPressed = false, index = false;
 
     @Override

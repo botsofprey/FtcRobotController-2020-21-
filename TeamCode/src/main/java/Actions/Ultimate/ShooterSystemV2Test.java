@@ -41,7 +41,7 @@ public class ShooterSystemV2Test implements ActionHandler {
 	public static final double LEFT_POWER_SHOT_POWER = 0.58;
 	public static final double POWER_SHOT_POWER = 0.615;
 
-	public static final double HIGH_GOAL_RPM = 3885;
+	public static final double HIGH_GOAL_RPM = 3915;
 	public static final double RIGHT_POWER_SHOT_RPM = 3000;
 	public static final double MIDDLE_POWER_SHOT_RPM = 2800;
 	public static final double LEFT_POWER_SHOT_RPM = 2800;
