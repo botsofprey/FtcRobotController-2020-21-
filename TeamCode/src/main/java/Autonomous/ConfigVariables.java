@@ -73,7 +73,7 @@ public class ConfigVariables {
     public static final Location RED_ZONE_ONE = new Location(60, -4); // may want to use something like 60 for the x value
     public static final Location RED_ZONE_ONE_EAST = new Location(50, 16);
     public static final Location RED_ZONE_TWO = new Location(40, 23);
-    public static final Location RED_ZONE_THREE = new Location(62, 48.5);
+    public static final Location RED_ZONE_THREE = new Location(62, 46);
     public static final Location ZONE_WAYPOINT = new Location(12, 60);
 
     public static final Location RING_DETECTION_POINT = new Location(52, -20, 180);
@@ -93,7 +93,7 @@ public class ConfigVariables {
     public static final Location CENTER = new Location(0,0);
 
     public static final Location RED_WOBBLE_GOAL_LEFT_CHECKPOINT = new Location(57, -55);
-    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(20.5, -23); // this is not meant to be the true y of the wobble goal, we have some offset in place that is used in the obtain function
+    public static final Location RED_WOBBLE_GOAL_LEFT = new Location(23.5, -23, 180); // this is not meant to be the true y of the wobble goal, we have some offset in place that is used in the obtain function
     public static final Location RED_WOBBLE_GOAL_RIGHT = new Location(48.8, -47.3); // shouldn't need this one
 
     public static final Location WOBBLE_GOAL_PLACEMENT_OFFSET = new Location(5.5, -3);

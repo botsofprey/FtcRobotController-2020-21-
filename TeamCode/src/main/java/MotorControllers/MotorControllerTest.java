@@ -44,8 +44,8 @@ public class MotorControllerTest extends Thread {
     PIDFCoefficients holdPIDCoefficients, rpmPIDCoefficients;
 //    PIDController holdController, rpmController;
     private double initialDegree = 0;
-    private long LOOP_MILLIS = 200;
-    private int startPos = 0;
+    private static final long LOOP_MILLIS = 200;
+    private static final int startPos = 0;
 
     HardwareMap hardwareMap;
 

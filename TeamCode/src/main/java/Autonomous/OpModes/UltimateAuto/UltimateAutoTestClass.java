@@ -64,7 +64,7 @@ public class UltimateAutoTestClass extends LinearOpMode {
         robot.shooter.setRPM(1000);
 
         while (opModeIsActive()) {
-            robot.powerShotIndex();
+            robot.indexShooter();
         }
 
         // run until the end of the match (driver presses STOP)

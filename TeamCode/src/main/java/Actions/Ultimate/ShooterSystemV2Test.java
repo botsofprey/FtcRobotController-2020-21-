@@ -22,7 +22,7 @@ import MotorControllers.MotorControllerTest;
  *
  * Used for shooting rings
  */
-public class ShooterSystemV2Test implements ActionHandler {
+public class ShooterSystemV2Test implements ActionHandler{
 
 	public MotorControllerTest shooterMotor;
 
@@ -72,6 +72,8 @@ public class ShooterSystemV2Test implements ActionHandler {
 		indexServo.setDirection(Servo.Direction.FORWARD);
 
 		indexAngle = INDEX_LEFT;
+
+
 	}
 
 	public void spinUp() {

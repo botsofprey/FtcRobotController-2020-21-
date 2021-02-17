@@ -579,10 +579,10 @@ public class UltimateNavigation2 extends Thread {
     }
 
     public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode) {
-        driveDistance(distanceInInches, heading, desiredVelocity, mode, null);
+        driveDistance(distanceInInches, heading, desiredVelocity, mode, null, true);
     }
 
-    public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode, Behavior behavior) {
+    public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode, Behavior behavior, boolean brake) {
 //        for(MotorController m : driveMotors) {
 //            m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        }
@@ -634,6 +634,10 @@ public class UltimateNavigation2 extends Thread {
                 distanceTraveled = averagePosition / Math.sin(Math.toRadians(45.0));
             }
             Log.d("Distance Travelled", "" + distanceTraveled);
+        }
+        if(!brake){
+            Log.d("Location", getRobotLocation().toString());
+            return;
         }
         brake();
         Log.d("Location", getRobotLocation().toString());

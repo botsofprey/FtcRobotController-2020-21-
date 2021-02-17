@@ -87,29 +87,39 @@ public class WobbleGrabberV2 implements ActionHandler {
     }
 
     public void setArmAngle(double angle) {
-        if(arm.getDegree() < angle){
-            arm.setPositionDegrees(angle, ARM_POWER);
-        }
-        else {
-            arm.setPositionDegrees(angle, -ARM_POWER);
-        }
+
+            if(arm.getDegree() < angle){
+                arm.setPositionDegrees(angle, ARM_POWER);
+            }
+            else {
+                if(sensor.isPressed() == false) {
+                arm.setPositionDegrees(angle, -ARM_POWER); }
+                while(arm.getTargetPosition() != (arm.getCurrentTick()) / 4) {
+                    armSensorCheck();
+                }
+            }
     }
 
     public void setGrabAndDropAngle(){
         setArmAngle(GRAB_AND_DROP_ANGLE);
+        armSensorCheck();
+
     }
 
     public void setLiftAngle(){
         setArmAngle(LIFT_ANGLE);
+        armSensorCheck();
     }
 
 
     public void setWallAngle(){
         setArmAngle(WALL_ANGLE);
+        armSensorCheck();
     }
 
     public void setInitAngle(){
         setArmAngle(INIT_ANGLE);
+        armSensorCheck();
     }
 
     public void setGrabAngleSlow(){
@@ -124,6 +134,14 @@ public class WobbleGrabberV2 implements ActionHandler {
 
     public boolean armIsBusy() {
         return arm.isBusy();
+    }
+
+    public void armSensorCheck() {
+        if(sensor.isPressed() == true) {
+            arm.setMotorPower(0);
+            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     @Override
