@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,6 +16,7 @@ import Actions.HardwareWrappers.ServoHandler;
 import Autonomous.ConfigVariables;
 import MotorControllers.MotorController;
 import MotorControllers.MotorControllerTest;
+import SensorHandlers.LIDARSensor;
 
 /**
  * Author: Jordan Martin
@@ -22,8 +24,10 @@ import MotorControllers.MotorControllerTest;
  *
  * Used for shooting rings
  */
-public class ShooterSystemV2Test implements ActionHandler{
+public class ShooterSystemV2Test implements ActionHandler {
 
+	private static final double DISTANCE_TO_RINGS = 0; // TODO find this value
+	private static final double RING_WIDTH = 0.75;
 	public MotorControllerTest shooterMotor;
 
 	// TODO fix PID controller in rpm class
@@ -55,6 +59,8 @@ public class ShooterSystemV2Test implements ActionHandler{
 	private double indexAngle;
 	public static final double INDEX_LEFT = -1;
 	public static final double INDEX_RIGHT = 1;
+
+	public LIDARSensor hopperSensor;
 
 
 
@@ -121,6 +127,13 @@ public class ShooterSystemV2Test implements ActionHandler{
 	public void setPowerShotRPM() {
 		rpm = POWER_SHOT_RPM;
 		spinUp();
+	}
+
+	public int getRingsInHopper() {
+		double distance = hopperSensor.getDistance();
+		distance -= DISTANCE_TO_RINGS;
+		distance /= RING_WIDTH;
+		return 3 - (int)Math.round(distance);
 	}
 
 	@Override

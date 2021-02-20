@@ -20,7 +20,7 @@ import MotorControllers.MotorController;
 
 public class RingIntakeSystemV2 implements ActionHandler {
 	
-	private static final int MOTOR_POWER = 1;
+	private static final double MOTOR_POWER = 1;
 	
 	private static final int OFF = 0;
 	private static final int ON = 1;
@@ -56,7 +56,7 @@ public class RingIntakeSystemV2 implements ActionHandler {
 			intakeMotor = new MotorController("intakeMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 			intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-			intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+			intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
 			rollerMotor = new MotorController("rollerMotor", "MotorConfig/NeverRest40.json", hardwareMap);
 			rollerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // there is no encoder on this motor currently
@@ -115,12 +115,12 @@ public class RingIntakeSystemV2 implements ActionHandler {
 	}
 
 	public void intake() {
-		intakeMotor.setMotorPower(ON);
-		rollerMotor.setMotorPower(ON);
+		intakeMotor.setMotorPower(MOTOR_POWER);
+		rollerMotor.setMotorPower(1);
 	}
 
 	public void spit() {
-		intakeMotor.setMotorPower(-1);
+		intakeMotor.setMotorPower(-MOTOR_POWER);
 		rollerMotor.setMotorPower(-1);
 	}
 

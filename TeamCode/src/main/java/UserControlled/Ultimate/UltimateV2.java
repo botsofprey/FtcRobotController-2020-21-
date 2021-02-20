@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import Actions.Ultimate.RingIntakeSystemV2;
 import Actions.Ultimate.ShooterSystemV2Test;
@@ -96,7 +97,7 @@ public class UltimateV2 extends LinearOpMode {
 	protected static final double MED_SPEED = 25;
 	protected static final double LOW_SPEED = 15;
 	protected static final double MIN_SPEED = 5;
-	protected static final long SLEEP_TIME = 500;
+	protected static final long SLEEP_TIME = 550;
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
 			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
@@ -162,6 +163,8 @@ public class UltimateV2 extends LinearOpMode {
 				telemetry.addData("Wheel Power", shooter.shooterMotor.getMotorPower());
 				telemetry.addData("Wheel Speed (ticks/sec)", shooter.shooterMotor.getCurrentTicksPerSecond());
 				telemetry.addData("Shooter RPM", shooter.getRPM());
+				Log.d("ShooterRPM", shooter.getRPM() + "");
+				Log.d("ShooterVelocity", ((DcMotorEx) (shooter.shooterMotor.getMotor())).getVelocity() + "");
 				telemetry.addData("Robot Heading", robot.orientation.getOrientation());
 				telemetry.addData("Wobble Angle", grabber.arm.getDegree());
 //				telemetry.addData("Right Dist", robot.distanceSensors[RIGHT_SENSOR].getDistance());
@@ -418,5 +421,6 @@ public class UltimateV2 extends LinearOpMode {
 	
 	private void updateMiscFunctions() {
 //		shooter.update();
+		grabber.armSensorCheck(this);
 	}
 }

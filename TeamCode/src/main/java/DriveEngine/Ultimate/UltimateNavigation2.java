@@ -54,7 +54,7 @@ public class UltimateNavigation2 extends Thread {
 
     public volatile double robotHeading = 0;
 
-    private volatile double [] lastMotorPositionsInInches = {0,0,0,0};
+    private volatile double [] lastMotorPositionsInInches = { 0, 0, 0, 0 };
 
     public PIDController headingController, turnController, cameraTranslationYController, cameraTranslationXController, cameraOrientationController, xPositionController, yPositionController;
     private volatile Location myLocation;
@@ -580,6 +580,10 @@ public class UltimateNavigation2 extends Thread {
 
     public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode) {
         driveDistance(distanceInInches, heading, desiredVelocity, mode, null, true);
+    }
+
+    public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode, Behavior behavior){
+        driveDistance(distanceInInches, heading, desiredVelocity, mode, behavior, true);
     }
 
     public void driveDistance(double distanceInInches, double heading, double desiredVelocity, LinearOpMode mode, Behavior behavior, boolean brake) {

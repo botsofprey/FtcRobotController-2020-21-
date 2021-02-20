@@ -73,7 +73,7 @@ public class ConfigVariables {
     public static final Location RED_ZONE_ONE = new Location(60, -4); // may want to use something like 60 for the x value
     public static final Location RED_ZONE_ONE_EAST = new Location(50, 16);
     public static final Location RED_ZONE_TWO = new Location(40, 23);
-    public static final Location RED_ZONE_THREE = new Location(62, 46);
+    public static final Location RED_ZONE_THREE = new Location(62, 45);
     public static final Location ZONE_WAYPOINT = new Location(12, 60);
 
     public static final Location RING_DETECTION_POINT = new Location(52, -20, 180);
@@ -81,7 +81,7 @@ public class ConfigVariables {
     public static final Location RING_STACK_START_POINT = new Location(12, -24);// may need to adjust
     public static final Location QUAD_STACK_END_POINT = new Location(42, -24);
     public static final Location SINGLE_STACK_END_POINT = new Location(30, -24);
-    public static final Location RING_STACK_TRUE_LOC = new Location(38, -24);
+    public static final Location RING_STACK_TRUE_LOC = new Location(36, -22);
 
 //    public static final HorizontalLine SHOOT_LINE = new HorizontalLine(new Location(-120, 30), 240);
     public static final Location PARKING_LOCATION = new Location(30, 0);

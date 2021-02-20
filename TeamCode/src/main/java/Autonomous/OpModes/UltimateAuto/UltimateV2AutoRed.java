@@ -85,36 +85,36 @@ public class UltimateV2AutoRed extends LinearOpMode {
 //        robot.vision.stopDetection(); // stop using the camera after we have taken our count, if you don't it may underperform
 
         // start by dropping down the intake
-        robot.dropIntakeAndWobble(this);
+        robot.dropIntakeAndWobble();
 
         telemetry.addData("shoot power shots", "");
         telemetry.update();
         // next we deliver the first wobble goal to the zone
-        robot.performPowerShots(this, ringCount, this.getRuntime());
+        robot.performPowerShots(ringCount);
 
         telemetry.addData("deliver wobble goal", "");
         telemetry.update();
 
         // following the delivery we shoot the preloaded rings at the power shot targets
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 1);
+        robot.deliverWobbleGoal(ringCount, 1);
 
         telemetry.addData("intake rings, obtain second wobble", "");
         telemetry.update();
         // next we can intake the extra rings if there are some while we travel to the second wobble goal
-        robot.intakeExtraRings(this, ringCount, this.getRuntime());
-        robot.obtainSecondWobbleGoal(this, ringCount, this.getRuntime());
+        robot.intakeExtraRings(ringCount);
+        robot.obtainSecondWobbleGoal(ringCount);
 
         // after grabbing the second wobble goal, we can shoot the extra rings while travelling to deliver it
         telemetry.addData("deliver second wobble, shoot extra rings", "");
         telemetry.update();
         // todo: added wobbleNum parameter to differentiate between the first and second wobble goals
-        robot.deliverWobbleGoal(this, ringCount, this.getRuntime(), 2);
-        robot.shootExtraRings(this, ringCount, this.getRuntime());
+        robot.deliverWobbleGoal(ringCount, 2);
+        robot.shootExtraRings(ringCount);
 
         telemetry.addData("park", "");
         telemetry.update();
         // finally we park
-        robot.park(this, ringCount);
+        robot.park(ringCount);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive());

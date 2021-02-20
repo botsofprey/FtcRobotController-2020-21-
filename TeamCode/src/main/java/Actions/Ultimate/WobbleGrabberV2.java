@@ -25,8 +25,8 @@ public class WobbleGrabberV2 implements ActionHandler {
     public LimitSwitch sensor;
     public MagneticLimitSwitch armLimit;
 
-    private static final double ARM_POWER = .35;
-    private static final double SLOW_ARM_POWER = 0.175;
+    public static final double ARM_POWER = .45;
+    private static final double SLOW_ARM_POWER = 0.23;
 
     public static final double CLAW_GRAB_POSITION = 1;
     public static final double CLAW_RELEASE_POSITION = -1;
@@ -92,34 +92,31 @@ public class WobbleGrabberV2 implements ActionHandler {
                 arm.setPositionDegrees(angle, ARM_POWER);
             }
             else {
-                if(sensor.isPressed() == false) {
+                if(!armLimit.isActivated()) {
                 arm.setPositionDegrees(angle, -ARM_POWER); }
-                while(arm.getTargetPosition() != (arm.getCurrentTick()) / 4) {
-                    armSensorCheck();
-                }
             }
     }
 
     public void setGrabAndDropAngle(){
         setArmAngle(GRAB_AND_DROP_ANGLE);
-        armSensorCheck();
 
     }
 
     public void setLiftAngle(){
         setArmAngle(LIFT_ANGLE);
-        armSensorCheck();
     }
 
 
     public void setWallAngle(){
         setArmAngle(WALL_ANGLE);
-        armSensorCheck();
     }
 
     public void setInitAngle(){
         setArmAngle(INIT_ANGLE);
-        armSensorCheck();
+    }
+
+    public void setInitAngleSlow(){
+        arm.setPositionDegrees(INIT_ANGLE, SLOW_ARM_POWER);
     }
 
     public void setGrabAngleSlow(){
@@ -136,13 +133,13 @@ public class WobbleGrabberV2 implements ActionHandler {
         return arm.isBusy();
     }
 
-    public void armSensorCheck() {
-        if(sensor.isPressed() == true) {
+    public void armSensorCheck(LinearOpMode mode) {
+        if(armLimit.isActivated()) {
             arm.setMotorPower(0);
-            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            resetArm(mode);
         }
     }
+
 
     @Override
     public boolean doAction(String action, long maxTimeAllowed) {
