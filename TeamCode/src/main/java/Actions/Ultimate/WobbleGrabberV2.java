@@ -37,7 +37,7 @@ public class WobbleGrabberV2 implements ActionHandler {
     public static final double GRAB_AND_DROP_ANGLE = 190.0;
     public static final double INIT_ANGLE = 0.0;
 
-    public boolean wobbleGrabbed;
+    public boolean wobbleGrabbed, armReset = true;
 
     public WobbleGrabberV2(HardwareMap hardwareMap) {
         leftClaw = new ServoHandler("leftWobbleClaw", hardwareMap);
@@ -66,6 +66,7 @@ public class WobbleGrabberV2 implements ActionHandler {
     }
 
     public void setArmPower(double power) {
+        armReset = false;
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMotorPower(power);
     }
@@ -84,17 +85,18 @@ public class WobbleGrabberV2 implements ActionHandler {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mode.idle();
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armReset = true;
     }
 
     public void setArmAngle(double angle) {
-
-            if(arm.getDegree() < angle){
-                arm.setPositionDegrees(angle, ARM_POWER);
-            }
-            else {
-                if(!armLimit.isActivated()) {
-                arm.setPositionDegrees(angle, -ARM_POWER); }
-            }
+        armReset = false;
+        if(arm.getDegree() < angle){
+            arm.setPositionDegrees(angle, ARM_POWER);
+        }
+        else {
+            if(!armLimit.isActivated()) {
+            arm.setPositionDegrees(angle, -ARM_POWER); }
+        }
     }
 
     public void setGrabAndDropAngle(){
@@ -134,7 +136,7 @@ public class WobbleGrabberV2 implements ActionHandler {
     }
 
     public void armSensorCheck(LinearOpMode mode) {
-        if(armLimit.isActivated()) {
+        if(armLimit.isActivated() && !armReset) {
             arm.setMotorPower(0);
             resetArm(mode);
         }

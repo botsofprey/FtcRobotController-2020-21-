@@ -98,10 +98,13 @@ public class UltimateV2 extends LinearOpMode {
 	protected static final double LOW_SPEED = 15;
 	protected static final double MIN_SPEED = 5;
 	protected static final long SLEEP_TIME = 550;
+
+	long indexTimer = 0;
 	
 	boolean eStop = false, slowMode = false, intakeOn = false, outakeOn = false, y2Pressed = false, x2Pressed = false, toggleShooterWheel = false, toggleWobbleGrabbed = false,
 			rt1Pressed = false, rightTriggerPressed = false, toggleIndex = false, toggleIntakeServo = false, rt2Pressed = false, a2Pressed = false, b2Pressed = false,
-			dpadD2pressed = false, dpadU2pressed = false, toggleDecrement = false, x1Pressed = false, usingDpad = false, extraSlowMode = false, start1Pressed = false;
+			dpadD2pressed = false, dpadU2pressed = false, toggleDecrement = false, x1Pressed = false, usingDpad = false, extraSlowMode = false, start1Pressed = false, shouldCheckArmLimit = false,
+			indexed = true;
 	
 	@Override
 	public void runOpMode() {
@@ -122,9 +125,6 @@ public class UltimateV2 extends LinearOpMode {
 		intake = new RingIntakeSystemV2(hardwareMap);
 		shooter = new ShooterSystemV2Test(hardwareMap);
 		grabber = new WobbleGrabberV2(hardwareMap);
-
-		/** ideally we can use these gamepads for inputs, however the logic is flawed within the
-		    gamepad class which causes multiple button presses to be necessary for any kind of response */
 
 		// initialize joysticks
 		leftStick = new JoystickHandler(gamepad1, JoystickHandler.LEFT_JOYSTICK);
@@ -194,8 +194,7 @@ public class UltimateV2 extends LinearOpMode {
 	}
 	
 	private void controlDrive() {
-		if(controllerOne.leftTriggerHeld) slowMode = true;
-		else slowMode = false;
+		slowMode = controllerOne.leftTriggerHeld;
 
 		if(gamepad1.start && !start1Pressed) {
 			start1Pressed = true;
@@ -211,7 +210,7 @@ public class UltimateV2 extends LinearOpMode {
 		double turnPower = rightStick.x();
 		if(slowMode) {
 			drivePower /= 1.5;
-			turnPower /= 2.0;
+			turnPower /= 2.5;
 		} else if(extraSlowMode) {
 			drivePower /= 2.0;
 			turnPower /= 3.0;
@@ -239,18 +238,16 @@ public class UltimateV2 extends LinearOpMode {
 
 
 		// Indexer toggle
-		if(gamepad1.right_trigger > 0.1 && !rt1Pressed){
+		if(indexed && gamepad1.right_trigger > 0.1 && !rt1Pressed){
 			rt1Pressed = true;
-			toggleIndex = !toggleIndex;
+			indexed = false;
+			indexTimer = System.currentTimeMillis();
 		}
 		else if(!(gamepad1.right_trigger > 0.1)){
 			rt1Pressed = false;
 		}
-		if(toggleIndex){
-			shooter.setIndexLeft();
-		}
-		else{
-			shooter.setIndexRight();
+		if(!indexed){
+			indexShooter();
 		}
 
 		// Shoot three rings
@@ -265,13 +262,10 @@ public class UltimateV2 extends LinearOpMode {
 	}
 
 	private void highGoalShot() {
+		shooter.setShooterMotorRPM(ShooterSystemV2Test.HIGH_GOAL_RPM);
 		robot.turnToHeadingEnhanced(HIGH_GOAL_HEADING, 0.25,this);
-		indexShooter();
-		sleep(SLEEP_TIME);
-		indexShooter();
-		sleep(SLEEP_TIME);
-		indexShooter();
-		indexShooter();
+		indexed = false;
+		while (opModeIsActive() && !indexed) indexShooter();
 	}
 	
 	private void playerTwoFunctions(GamepadController controller) {
@@ -323,23 +317,29 @@ public class UltimateV2 extends LinearOpMode {
 
 		if (gamepad2.dpad_up) {
 			usingDpad = true;
+			shouldCheckArmLimit = false;
 			grabber.setWallAngle();
 		} else if (gamepad2.dpad_right) {
 			usingDpad = true;
+			shouldCheckArmLimit = false;
 			grabber.setLiftAngle();
 		} else if (gamepad2.dpad_down) {
 			usingDpad = true;
+			shouldCheckArmLimit = false;
 			grabber.setGrabAndDropAngle();
 		} else if (gamepad2.dpad_left) {
 			usingDpad = true;
+			shouldCheckArmLimit = true;
 			grabber.setInitAngle();
 		}
 
 		if(gamepad2.right_trigger > 0.1) {
 			usingDpad = false;
+			shouldCheckArmLimit = false;
 			grabber.setArmPower(0.55);
 		} else if(gamepad2.left_trigger > 0.1) {
 			usingDpad = false;
+			shouldCheckArmLimit = true;
 			grabber.setArmPower(-0.55);
 		} else if(!usingDpad) {
 			grabber.holdArm();
@@ -384,30 +384,32 @@ public class UltimateV2 extends LinearOpMode {
 	// TODO: Modify the functions below to actually go to the correct positions and score power shots
 	
 	private void powerShotLeft() {
-//		shooter.setPowerShotPower();
+		shooter.setShooterMotorRPM(ShooterSystemV2Test.POWER_SHOT_RPM + 150);
 		robot.turnToHeadingEnhanced(LEFT_POWER_SHOT_HEADING, 0.25, this);
-		indexShooter();
+		indexed = false;
+		while (opModeIsActive() && !indexed) indexShooter();
 	}
 	
 	private void powerShotCenter() {
-//		shooter.setPowerShotPower();
+		shooter.setShooterMotorRPM(ShooterSystemV2Test.POWER_SHOT_RPM + 150);
 		robot.turnToHeadingEnhanced(MIDDLE_POWER_SHOT_HEADING, 0.25, this);
-		indexShooter();
+		indexed = false;
+		while (opModeIsActive() && !indexed) indexShooter();
 	}
 	
 	private void powerShotRight() {
-//		shooter.setPowerShotPower();
+		shooter.setShooterMotorRPM(ShooterSystemV2Test.POWER_SHOT_RPM + 150);
 		robot.turnToHeadingEnhanced(RIGHT_POWER_SHOT_HEADING, 0.25, this);
-		indexShooter();
+		indexed = false;
+		while (opModeIsActive() && !indexed) indexShooter();
 	}
 
 	protected void indexShooter(){
-		if(toggleIndex) {
-			toggleIndex = false;
+		indexed = false;
+		shooter.setIndexLeft();
+		if(System.currentTimeMillis() - indexTimer >= SLEEP_TIME) {
 			shooter.setIndexRight();
-		} else {
-			toggleIndex = true;
-			shooter.setIndexLeft();
+			indexed = true;
 		}
 	}
 	
@@ -421,6 +423,6 @@ public class UltimateV2 extends LinearOpMode {
 	
 	private void updateMiscFunctions() {
 //		shooter.update();
-		grabber.armSensorCheck(this);
+		if(shouldCheckArmLimit) grabber.armSensorCheck(this);
 	}
 }

@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Autonomous.AutoAlliance;
 import Autonomous.Location;
 import Autonomous.OpModes.UltimateAuto.UltimateV2Autonomous;
+import DriveEngine.Ultimate.UltimateNavigation2;
 
 import static Autonomous.ConfigVariables.STARTING_ROBOT_LOCATION_RIGHT;
 
@@ -61,14 +62,11 @@ public class UltimateAutoTestClass extends LinearOpMode {
 
         waitForStart();
 
-        robot.shooter.setRPM(1000);
-
-        while (opModeIsActive()) {
-            robot.indexShooter();
-        }
-
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive());
+        while (opModeIsActive()) {
+            telemetry.addData("Sensor", robot.robot.distanceSensors[UltimateNavigation2.BACK_SENSOR].getDistance() < 100 ? "Object detected" : "Nothing detected");
+            telemetry.update();
+        }
         robot.kill();
     }
 }

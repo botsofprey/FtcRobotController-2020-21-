@@ -54,7 +54,7 @@ public class UltimateNavigation2 extends Thread {
 
     public volatile double robotHeading = 0;
 
-    private volatile double [] lastMotorPositionsInInches = { 0, 0, 0, 0 };
+    private final double[] lastMotorPositionsInInches = { 0, 0, 0, 0 };
 
     public PIDController headingController, turnController, cameraTranslationYController, cameraTranslationXController, cameraOrientationController, xPositionController, yPositionController;
     private volatile Location myLocation;
@@ -65,12 +65,12 @@ public class UltimateNavigation2 extends Thread {
 
     private volatile boolean shouldRun = true, loggingData = true, usingSensors = false;
     private volatile long startTime = System.nanoTime();
-    private volatile HeadingVector IMUTravelVector = new HeadingVector();
+    private final HeadingVector IMUTravelVector = new HeadingVector();
 
-    private volatile Location IMUDistance = new Location(0, 0);
+    private final Location IMUDistance = new Location(0, 0);
     public LIDARSensor[] distanceSensors;
     public static final int LEFT_SENSOR = 0, BACK_SENSOR = 1, RIGHT_SENSOR = 2, DRIVE_BASE = 3, FRONT_SENSOR = 4;
-    private HashMap<Integer, int[]>[] updateLocationInformation = new HashMap[4]; // structure: {direction, {xSensor, ySensor}}
+    private final HashMap<Integer, int[]>[] updateLocationInformation = new HashMap[4]; // structure: {direction, {xSensor, ySensor}}
     public static final int Q1 = 0, Q2 = 1, Q3 = 2, Q4 = 3, NORTH = 0, SOUTH = 180, EAST = 90, WEST = 270;
     public static final double HEADING_TOLERANCE = 2.5;
 
@@ -80,8 +80,7 @@ public class UltimateNavigation2 extends Thread {
     private final double FR_WHEEL_HEADING_OFFSET = 315;
     private final double BR_WHEEL_HEADING_OFFSET = 45;
     private final double BL_WHEEL_HEADING_OFFSET = 315;
-    private double acceleration = 0;
-    private HardwareMap hardwareMap;
+    private final HardwareMap hardwareMap;
 
     public UltimateNavigation2(HardwareMap hw, Location startLocation, double robotOrientationOffset, String configFile, boolean ignoreInitialSensorLocation) throws RuntimeException {
         hardwareMap = hw;
@@ -519,8 +518,8 @@ public class UltimateNavigation2 extends Thread {
         double [] velocities = determineMotorVelocitiesToDriveOnHeading(heading, desiredVelocity);
 
         Log.d("Initial Velocities:", "-----------");
-        for(int i = 0; i < velocities.length; i++) {
-            Log.d("Motor " + " Velocity", "" + velocities[i]);
+        for (double v : velocities) {
+            Log.d("Motor " + " Velocity", "" + v);
         }
 
         double [] rotationalCorrections = calculateTurnVelocities(turnCorrection);
@@ -560,8 +559,8 @@ public class UltimateNavigation2 extends Thread {
 //        }
 
         Log.d("Final Velocities:", "-----------");
-        for(int i = 0; i < velocities.length; i++) {
-            Log.d("Motor " + " Velocity", "" + velocities[i]);
+        for (double velocity : velocities) {
+            Log.d("Motor " + " Velocity", "" + velocity);
         }
 
         applyMotorVelocities(velocities);

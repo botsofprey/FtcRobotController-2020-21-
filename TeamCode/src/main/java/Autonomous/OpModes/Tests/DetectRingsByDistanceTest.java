@@ -63,28 +63,25 @@ public class DetectRingsByDistanceTest extends LinearOpMode {
 
     protected RingCount distSensorCountRings() {
         RingCount ringCount = RingCount.NO_RINGS;
-        double bottomCount = 0;
-        double topCount = 0;
-        double iterations = 10.0;
+        final int[] bottomHits = {0};
+        final int[] topHits = {0};
 
-        for (int i = 0; i < iterations; i++) {
-            if (robot.distanceSensors[BACK_SENSOR].getDistance() <= 15.0) {
-                bottomCount++;
+            double bottomDistance = robot.distanceSensors[BACK_SENSOR].getDistance();
+            if (bottomDistance <= 16.0) { // lower, because of 2nd wobble goal
+                bottomHits[0]++;
             }
-            Log.d("Bottom Dist Sensor", robot.distanceSensors[BACK_SENSOR].getDistance() + "");
-            if (robot.distanceSensors[LEFT_SENSOR].getDistance() <= 24.0) {
-                topCount++;
+            double topDistance = robot.distanceSensors[LEFT_SENSOR].getDistance();
+            if (topDistance <= 16.0) {
+                topHits[0]++;
             }
-            Log.d("Top Dist Sensor", robot.distanceSensors[LEFT_SENSOR].getDistance() + "");
+            Log.d("Bottom Hits", bottomHits[0] + "");
+            Log.d("Top Hits", topHits[0] + "");
+        int top = topHits[0];
+        int bottom = bottomHits[0];
+        if (top > 0) {
+            return RingCount.QUAD_STACK;
         }
-
-        if (bottomCount / iterations >= 0.6) {
-            if (topCount / iterations >= 0.6) {
-                ringCount = RingCount.QUAD_STACK;
-            } else {
-                ringCount = RingCount.SINGLE_STACK;
-            }
-        }
-        return ringCount;
+        return (bottom > 0) ? RingCount.SINGLE_STACK : RingCount.NO_RINGS;
     }
 }
+
