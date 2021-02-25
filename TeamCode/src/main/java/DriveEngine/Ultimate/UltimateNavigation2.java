@@ -71,7 +71,7 @@ public class UltimateNavigation2 extends Thread {
     public LIDARSensor[] distanceSensors;
     public static final int LEFT_SENSOR = 0, BACK_SENSOR = 1, RIGHT_SENSOR = 2, DRIVE_BASE = 3, FRONT_SENSOR = 4;
     private final HashMap<Integer, int[]>[] updateLocationInformation = new HashMap[4]; // structure: {direction, {xSensor, ySensor}}
-    public static final int Q1 = 0, Q2 = 1, Q3 = 2, Q4 = 3, NORTH = 0, SOUTH = 180, EAST = 90, WEST = 270;
+    public static final int Q1 = 0, Q2 = 1, Q3 = 2, Q4 = 3, NORTH = 0, SOUTH = 180, EAST = 90, WEST = 270, NORTH_ON_45 = 315, SOUTH_ON_45 = 135, EAST_ON_45 = 45, WEST_ON_45 = 225;
     public static final double HEADING_TOLERANCE = 2.5;
 
     private final double HEADING_THRESHOLD = 2;

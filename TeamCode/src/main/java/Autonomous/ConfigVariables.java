@@ -101,6 +101,7 @@ public class ConfigVariables {
 
     public static final Location STARTING_ROBOT_LOCATION_LEFT = new Location(24, -61.6);
     public static final Location STARTING_ROBOT_LOCATION_RIGHT = new Location(56.8, -61.6, 0);
+    public static final Location STARTING_ROBOT_LOCATION_RIGHT_ON_45 = new Location(56.8, -61.6, 45);
 
     // TODO find these locations
     public static final double RIGHT_POWER_SHOT_HEADING = 8.0;
