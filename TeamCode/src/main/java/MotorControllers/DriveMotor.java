@@ -74,7 +74,7 @@ public class DriveMotor {
 		return motor.getMotor();
 	}
 	
-	public MotorController getMotorController() {
+	protected MotorController getMotorController() {
 		return motor;
 	}
 }

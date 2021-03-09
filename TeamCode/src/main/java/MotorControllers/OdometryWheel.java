@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class OdometryWheel {
 	private MotorController encoder;
 	
-	public OdometryWheel(MotorController encoder) {
-		this.encoder = encoder;
+	public OdometryWheel(DriveMotor encoder) {
+		this.encoder = encoder.getMotorController();
 	}
 	
 	public long getCurrentTicksPerSecond() {
