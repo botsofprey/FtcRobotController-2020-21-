@@ -73,4 +73,8 @@ public class DriveMotor {
 	public DcMotor getMotor() {
 		return motor.getMotor();
 	}
+	
+	public MotorController getMotorController() {
+		return motor;
+	}
 }
