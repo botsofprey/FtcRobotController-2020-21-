@@ -72,5 +72,5 @@ public class DriveMotor {
 	
 	protected MotorController getMotorController() {
 		return motor;
-	}
+	}//don't change this to public
 }
