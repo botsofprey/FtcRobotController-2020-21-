@@ -70,10 +70,6 @@ public class DriveMotor {
 		return motor.getMaxSpeed();
 	}
 	
-	public DcMotor getMotor() {
-		return motor.getMotor();
-	}
-	
 	protected MotorController getMotorController() {
 		return motor;
 	}
